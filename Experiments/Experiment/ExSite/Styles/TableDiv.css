@@ -1,0 +1,39 @@
+﻿/* TableCss.aspx */
+
+table {
+    width: 100%;
+}
+
+.navigation {
+    text-align: center;
+    background-color: #99ccff;
+}
+
+.status {
+    background-color: #ccffff;
+}
+
+.position {
+    background-color: #33cccc;
+}
+
+/* DivCss.aspx */
+
+#logo {
+    float: left;
+    width: 30%;
+}
+
+#navigation {
+    background-color: #99ccff;
+    height: 30px;
+}
+
+#status {
+    background-color: #ccffff;
+    height: 30px;
+}
+
+#position {
+    background-color: #33cccc;
+}
