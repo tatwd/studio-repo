@@ -1,0 +1,84 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Expt1Site", "Expt1Site\", "{B647FABB-9BEA-4F74-9085-8B6F709429B5}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_50115"
+		Debug.AspNetCompiler.PhysicalPath = "Expt1Site\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50115\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_50115"
+		Release.AspNetCompiler.PhysicalPath = "Expt1Site\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50115\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "50115"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Expt2Site", "Expt2Site\", "{462B36B7-F503-4677-A64C-C87C2BDEADFE}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_50119"
+		Debug.AspNetCompiler.PhysicalPath = "Expt2Site\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50119\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_50119"
+		Release.AspNetCompiler.PhysicalPath = "Expt2Site\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50119\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "50119"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ExSite", "ExSite\", "{FAA7E119-312A-47EC-A9CD-F5878D3538A8}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_50560"
+		Debug.AspNetCompiler.PhysicalPath = "ExSite\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50560\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_50560"
+		Release.AspNetCompiler.PhysicalPath = "ExSite\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50560\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "50560"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B647FABB-9BEA-4F74-9085-8B6F709429B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B647FABB-9BEA-4F74-9085-8B6F709429B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{462B36B7-F503-4677-A64C-C87C2BDEADFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{462B36B7-F503-4677-A64C-C87C2BDEADFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAA7E119-312A-47EC-A9CD-F5878D3538A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAA7E119-312A-47EC-A9CD-F5878D3538A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
