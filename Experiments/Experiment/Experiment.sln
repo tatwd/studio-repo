@@ -66,6 +66,27 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ExSite", "ExSite\", "{FAA7E
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Ex6ChatSite", "Ex6ChatSite\", "{178D257C-F7C5-4C77-88E3-96538C71B782}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_60523"
+		Debug.AspNetCompiler.PhysicalPath = "Ex6ChatSite\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60523\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_60523"
+		Release.AspNetCompiler.PhysicalPath = "Ex6ChatSite\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60523\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "60523"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +98,8 @@ Global
 		{462B36B7-F503-4677-A64C-C87C2BDEADFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAA7E119-312A-47EC-A9CD-F5878D3538A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FAA7E119-312A-47EC-A9CD-F5878D3538A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{178D257C-F7C5-4C77-88E3-96538C71B782}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{178D257C-F7C5-4C77-88E3-96538C71B782}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
