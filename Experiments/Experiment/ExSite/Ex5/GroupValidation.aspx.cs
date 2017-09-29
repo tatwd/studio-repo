@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class Ex5_Register : System.Web.UI.Page
+public partial class Ex5_GroupValidation : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -38,6 +38,18 @@ public partial class Ex5_Register : System.Web.UI.Page
             lblMsg.Text = "验证通过";
 
             // TODO:存入数据库
+        }
+    }
+
+    protected void btnValidateName_Click(object sender, EventArgs e)
+    {
+        if (txtName.Text == "root")
+        {
+            lblName.Text = "抱歉！改用户名已被占用！";
+        }
+        else
+        {
+            lblName.Text = "恭喜！该用户名可用！";
         }
     }
 }
