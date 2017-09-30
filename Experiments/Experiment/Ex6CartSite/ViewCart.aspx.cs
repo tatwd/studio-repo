@@ -21,7 +21,7 @@ public partial class ViewCart : System.Web.UI.Page
                 // 用数组列表存储每个宠物名
 
                 #region 法一：利用IndexOf()和Substring()方法
-
+                /*
                 string petStr = Session["cart"].ToString();
 
                 // 创建数组列表对象
@@ -42,29 +42,28 @@ public partial class ViewCart : System.Web.UI.Page
                         index = petStr.IndexOf(",");
                     }
                 }
+                */
 
                 #endregion
 
                 #region 法二：利用Substring()和Split()方法
 
-                //string petStr = Session["cart"].ToString();
+                string petStr = Session["cart"].ToString();
 
-                //// 创建数组列表对象
-                //System.Collections.ArrayList pets = new System.Collections.ArrayList();
+                // 创建数组列表对象
+                System.Collections.ArrayList pets = new System.Collections.ArrayList();
 
-                //petStr = petStr.Substring(0, petStr.Length - 1); // 去除最后一个逗号
+                petStr = petStr.Substring(0, petStr.Length - 1); // 去除最后一个逗号
 
-                //string[] arrPets = petStr.Split(','); // 按逗号分割字符串
+                string[] arrPets = petStr.Split(','); // 按逗号分割字符串
 
-                //foreach (var item in arrPets)
-                //{
-                //    // Response.Write(item + "==");
-                //    pets.Add(item);
-                //}
+                foreach (var item in arrPets)
+                {
+                    // Response.Write(item + "==");
+                    pets.Add(item);
+                }
 
                 #endregion
-
-
 
                 lblMsg.Text = "购物车中现有宠物：";
 
