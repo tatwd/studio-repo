@@ -7,6 +7,8 @@ obj/
 packages/
 .vs/
 
+Bin/
+
 #some folders
 _docs/
 _examples/
