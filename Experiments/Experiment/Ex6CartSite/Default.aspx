@@ -17,8 +17,8 @@
                 <asp:ListItem>千里马</asp:ListItem>
                 <asp:ListItem>绵羊</asp:ListItem>
             </asp:CheckBoxList>
-            <asp:Button ID="btnBuy" runat="server" Text="放入购物车" />
-            <asp:Button ID="btnView" runat="server" Text="查看购物车" />
+            <asp:Button ID="btnBuy" runat="server" Text="放入购物车" OnClick="btnBuy_Click" />
+            <asp:Button ID="btnView" runat="server" Text="查看购物车" OnClick="btnView_Click" />
         </div>
     </form>
 </body>
