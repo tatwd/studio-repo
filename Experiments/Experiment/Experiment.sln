@@ -21,6 +21,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Expt1Site", "Expt1Site\", "
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "50115"
+		SlnRelativePath = "Expt1Site\"
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
@@ -42,6 +43,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Expt2Site", "Expt2Site\", "
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "50119"
+		SlnRelativePath = "Expt2Site\"
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
@@ -63,6 +65,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ExSite", "ExSite\", "{FAA7E
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "50560"
+		SlnRelativePath = "ExSite\"
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
@@ -84,6 +87,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Ex6ChatSite", "Ex6ChatSite\
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "60523"
+		SlnRelativePath = "Ex6ChatSite\"
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
@@ -105,6 +109,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Ex6CartSite", "Ex6CartSite\
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "49446"
+		SlnRelativePath = "Ex6CartSite\"
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
