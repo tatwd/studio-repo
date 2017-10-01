@@ -10,6 +10,13 @@
 <body>
     <form id="form1" runat="server">
         <div>
+            姓名：<asp:TextBox ID="txtName" runat="server"></asp:TextBox>
+            <br />
+            邮箱：<asp:TextBox ID="txtEmail" runat="server"></asp:TextBox>
+            <br />
+            电话：<asp:TextBox ID="txtTelephone" runat="server"></asp:TextBox>
+            <br />
+            <asp:Button ID="btnSubmit" runat="server" Text="确定" OnClick="btnSubmit_Click" />
         </div>
     </form>
 </body>

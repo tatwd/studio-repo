@@ -10,6 +10,11 @@
 <body>
     <form id="form1" runat="server">
         <div>
+            姓名：<asp:Label ID="lblName" runat="server"></asp:Label>
+            <br />
+            邮箱：<asp:Label ID="lblEmail" runat="server"></asp:Label>
+            <br />
+            电话：<asp:Label ID="lblTelephone" runat="server"></asp:Label>
         </div>
     </form>
 </body>

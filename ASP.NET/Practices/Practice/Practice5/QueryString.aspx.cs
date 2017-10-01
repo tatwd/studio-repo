@@ -11,4 +11,11 @@ public partial class QueryString : System.Web.UI.Page
     {
 
     }
+
+    protected void btnSubmit_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/QueryString_Hello.aspx?userName=" + txtName.Text.Trim() +
+            "&userEmail=" + txtEmail.Text.Trim() +
+            "&userTelephone=" + txtTelephone.Text.Trim());
+    }
 }
