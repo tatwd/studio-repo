@@ -20,4 +20,6 @@ temp/
 Study/
 Tasks/
 Tests/
-Databases/
+
+# sql server databases
+_msserver/
