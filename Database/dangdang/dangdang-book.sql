@@ -13,6 +13,8 @@ File Encoding         : 65001
 Date: 2017-10-07 21:07:45
 */
 
+use dangdang;
+
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
