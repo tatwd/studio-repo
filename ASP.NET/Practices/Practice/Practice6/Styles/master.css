@@ -17,7 +17,7 @@ body {
   ----*/
 
 #header {
-    background-color: #ccc;
+    background-color: #bbb;
     /*padding: 15px;*/
 }
 
@@ -27,8 +27,12 @@ body {
     padding: 35px;
 }
 
+.logo-text {
+    color: #234;
+}
+
 .menu {
-    background-color: #ddd;
+    background-color: #ccc;
     padding: 5px;
     overflow: hidden;  /* ie 6+ */
 }
@@ -40,7 +44,8 @@ body {
 }
 
 .menu-h .item {
-    display: inline;
+    display: inline-block;
+    padding: 5px;
 }
 
 .menu-h .item a {
@@ -49,7 +54,7 @@ body {
 }
 
 .menu-h .item a:hover {
-    text-decoration: underline;
+    color: #888;
 }
 
 /*---- 
@@ -57,7 +62,7 @@ body {
   ----*/
 
 #mainer {
-    background-color: #eee;
+    background-color: #ddd;
     padding: 15px;
 }
 
@@ -69,6 +74,7 @@ body {
 
 .sidebar {
     float: left;
+    margin-bottom: 15px;
 }
 
 /* signbox */
@@ -76,12 +82,10 @@ body {
 .signbox {
     width: 40%;
     text-align: center;
-
-    background-color: aquamarine;
 }
 
 .container {
-    width: 60%;
+    width: 55%;
     display: inline-block;
     background-color: #fff;
 
@@ -90,23 +94,21 @@ body {
 }
 
 .title {
+    color: #234;
     text-align: center;
 }
 
 .inputbox {
-    /*padding: 15px;*/
-    border: 1px solid red;
-    display: inline-block;
+    padding: 15px 15px 0 15px;
+    display: inline-block; 
 }
 
 .inputbox .item {
-    width: 80%;
-    padding: 5px 8px;
+    padding: 8px 15px;
     border: 1px solid #ddd;
     border-radius: 3px;
-    margin: 0 auto;
 
-    margin-bottom: 25px;
+    margin-bottom: 15px;
 }
 
 .serverbox {
@@ -115,37 +117,22 @@ body {
     border: 0;
     outline: 0;
     background: inherit;
-    margin: 8px;
 }
+
+/* btn-sign */
 
 .btn-sign {
     padding: 0 15px 15px 15px;
-    text-align: center;
-
-    /*display: inline-block;*/
 }
-
-/*.btn-sign:after {
-    content: '';
-    clear: both;
-    display: block;
-}*/
 
 .sign {
-    width: 80%;
-    display: block;
-    padding: 10px;
-
-    /*float: left;*/
-    margin: 0 auto;
+    margin: 15px;
 }
 
-.signin {
-    /*text-align: left;*
+.signin {  
 }
 
 .signup {
-    /*padding-left: 15px*/
 }
 
 .serverbtn {
@@ -154,17 +141,17 @@ body {
     outline: 0;
 
     border: 1px solid #ddd;
-    padding: 5px 20px;
     border-radius: 3px;
 
-    width: 100%;
+    /*width: 100%;*/
+    padding: 6px 45px
 }
 
 /* content */
 
 .content {
     width: 60%;
-    background-color: #ddd;
+    background-color: #fff;
 }
 
 .content div {
@@ -174,24 +161,28 @@ body {
 /*---- 
   footer start 
   ----*/
+
 #footer {
     background-color: #234;
     color: #fff;
-    /*padding: 15px;*/
     text-align: center;
 
-    /*position: absolute;
+    /*
+    position: absolute;
     bottom: 0;
     display: block;
-    width: inherit;*/
+    width: inherit;
+    */
 }
 
 .copyright {
-    padding: 15px;
+    padding: 25px;
 }
+
 /*---- 
   media screen 
   ----*/
+
 @media screen and (max-width: 768px) {
     .menu-h {
         float: none;

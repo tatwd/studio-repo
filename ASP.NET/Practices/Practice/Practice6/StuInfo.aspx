@@ -2,5 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server"></asp:Content>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="SiadebarContent" Runat="Server">Hello StuInfo.aspx</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="SiadebarContent" Runat="Server">
+    <h2>Hello StuInfo.aspx!</h2>
+</asp:Content>
 
