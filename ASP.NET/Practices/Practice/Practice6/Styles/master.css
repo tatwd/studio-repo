@@ -76,6 +76,8 @@ body {
 .signbox {
     width: 40%;
     text-align: center;
+
+    background-color: aquamarine;
 }
 
 .container {
@@ -92,39 +94,58 @@ body {
 }
 
 .inputbox {
-    padding: 25px;
+    /*padding: 15px;*/
+    border: 1px solid red;
+    display: inline-block;
 }
 
 .inputbox .item {
     width: 80%;
-    padding: 8px 10px;
+    padding: 5px 8px;
     border: 1px solid #ddd;
     border-radius: 3px;
     margin: 0 auto;
-    margin-bottom: 15px;
+
+    margin-bottom: 25px;
 }
 
 .serverbox {
     width: 100%;
+    
     border: 0;
     outline: 0;
     background: inherit;
+    margin: 8px;
 }
 
 .btn-sign {
     padding: 0 15px 15px 15px;
-    text-align:center;
+    text-align: center;
+
+    /*display: inline-block;*/
 }
 
+/*.btn-sign:after {
+    content: '';
+    clear: both;
+    display: block;
+}*/
+
 .sign {
-    width: 50%;
-    display: inline;
+    width: 80%;
+    display: block;
+    padding: 10px;
+
+    /*float: left;*/
+    margin: 0 auto;
 }
 
 .signin {
+    /*text-align: left;*
 }
 
 .signup {
+    /*padding-left: 15px*/
 }
 
 .serverbtn {
@@ -135,6 +156,8 @@ body {
     border: 1px solid #ddd;
     padding: 5px 20px;
     border-radius: 3px;
+
+    width: 100%;
 }
 
 /* content */
@@ -178,5 +201,11 @@ body {
 
     .sidebar {
         width: 100%;
+    }
+
+    .container {
+        width: 100%;
+        padding: 0;
+        margin: 0;
     }
 }
