@@ -170,8 +170,91 @@ GO
 
 -- 3.
 
--- TODO
+-- a)
+
+ALTER TABLE sales
+ADD CONSTRAINT FK_sale_id
+    FOREIGN KEY(sale_id)
+    REFERENCES employee(emp_no)
+
+GO
+
+-- b)
+
+ALTER TABLE sales
+ADD CONSTRAINT FK_cust_id
+    FOREIGN KEY(cust_id)
+    REFERENCES customer(cust_id)
+
+GO
+
+-- c)
+
+ALTER TABLE sale_item
+ADD CONSTRAINT FK_order_no
+    FOREIGN KEY(order_no)
+    REFERENCES sales(order_no)
+
+GO
+
+-- d)
+
+ALTER TABLE sale_item
+ADD CONSTRAINT FK_prod_id
+    FOREIGN KEY(prod_id)
+    REFERENCES product(prod_id)
+
+GO
+
+-- 4.
+
+-- a)
+
+ALTER TABLE employee
+ADD CONSTRAINT CK_salary
+    CHECK(salary BETWEEN 1000 AND 10000)
+
+GO
+
+-- b)
+
+ALTER TABLE employee
+ADD CONSTRAINT CK_emp_no
+    CHECK(emp_no LIKE '^[E][0-9]{5}')
+
+GO
+
+-- c)
+
+ALTER TABLE employee
+ADD CONSTRAINT CK_sex
+    CHECK(sex IN('男', '女'))
+
+GO
+
+-- d)
+
+ALTER TABLE sales
+ADD CONSTRAINT CK_inno
+    CHECK(invoice_no LIKE '^[I][0-9]{9}')
+
+GO
+
+-- 5.
+
+ALTER TABLE sales
+ADD CONSTRAINT UN_inno
+    UNIQUE(invoice_no)
+
+GO
+
+-- 6.
+
+ALTER TABLE sales
+DROP COLUMN invoice_no
 
 -- --------
 -- END!
 -- --------
+
+SELECT * FROM sales
