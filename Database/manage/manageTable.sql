@@ -256,5 +256,3 @@ DROP COLUMN invoice_no
 -- --------
 -- END!
 -- --------
-
-SELECT * FROM sales
