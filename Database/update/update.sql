@@ -160,11 +160,26 @@ WHERE sale_id = '10007'
 
 -- 9.
 
--- TODO
+DELETE employee
+FROM employee
+WHERE NOT EXISTS(
+    SELECT sale_id
+    FROM sales
+    WHERE employee.emp_no = sales.sale_id
+)
+
+GO
+
+-- 10.
+
+UPDATE employee
+SET salary = salary + 500
+WHERE emp_no IN(
+    SELECT sale_id
+    FROM sales
+    WHERE tot_amt > 20000 -- 只有一笔即可
+)
 
 -- --------
 -- END!
 -- -- --------
-
--- SELECT * FROM sales
--- SELECT * FROM sale_item
