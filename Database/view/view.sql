@@ -8,7 +8,7 @@ GO
 
 -- 1.
 
-CREATE VIEW CS_S1 -- 创建视图
+CREATE VIEW CS_S1   -- 创建视图
 AS
 SELECT student.sno, sname, grade
 FROM student, sc
