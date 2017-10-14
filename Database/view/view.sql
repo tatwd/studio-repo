@@ -140,7 +140,7 @@ GO
 
 -- 3.
 
-CREATE VIEW cust_view
+ALTER VIEW cust_view
 AS
 SELECT cust_id, cust_name, addr, tel_no
 FROM customer
@@ -150,11 +150,48 @@ GO
 
 -- 4.
 
--- TODO
+DELETE FROM cust_view
+WHERE cust_name LIKE '王%'
+
+GO
+
+-- 5.
+
+UPDATE cust_view
+SET cust_name = '客户辛'
+WHERE cust_name = '客户庚'
+
+GO
+
+-- 6.
+
+CREATE VIEW empl_sales_view
+AS
+SELECT emp_no, emp_name, order_no, tot_amt
+FROM employee, sales
+WHERE employee.emp_no = sales.sale_id
+
+GO
+
+-- 7.
+
+UPDATE empl_sales_view
+SET tot_amt = 60000
+WHERE order_no = '10001'
+
+GO
+
+-- 8.
+
+INSERT INTO empl_sales_view
+VALUES('E0005', '李珊珊', '10005', '75000')
+
+GO
+
+-- 9.
+
+DROP VIEW cust_view, empl_sales_view
 
 -- --------
 -- END!
 -- --------
-
-SELECT * FROM customer
--- SELECT * FROM 
