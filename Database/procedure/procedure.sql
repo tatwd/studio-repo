@@ -73,7 +73,7 @@ GO
 
 CREATE PROCEDURE get_total(
     @order_no INT,
-    @total INT OUT -- 输出参数
+    @total INT OUTPUT -- 输出参数
 )
 AS
     SELECT @total = SUM(qty * unit_price)
@@ -85,14 +85,32 @@ DECLARE @total INT
 EXEC get_total '10003', @total OUT
 SELECT @total
 
+GO
+
 -- 6、创建一存储过程，根据给出的职称，返回该职称的所有员工的平均工资。（带一输入参数和返回值）
+
+CREATE PROCEDURE get_avg_total(@dept CHAR(4))
+AS
+    DECLARE @avg_total DECIMAL
+    SELECT @avg_total = AVG(salary)
+    FROM employee
+    WHERE dept = @dept
+    RETURN @avg_total
+GO
+
 -- 7、请创建一个存储过程，修改sales表中的订单金额tot_amt，使之等于各订单对应的所有订单明细的数量与单价的总和。
 
--- DROP PROCEDURE emp_insert, get_emp_sale_cust, emp_query
--- DROP PROCEDURE emp_query_lee
+CREATE PROCEDURE update_sales
+AS
+    UPDATE sales
+    SET tot_amt = (
+        SELECT qty * unit_price
+        FROM sale_item
+        WHERE sales.order_no = sale_item.order_no
+    )
 
--- SELECT * FROM employee
+-- DROP PROCEDURE emp_insert, get_emp_sale_cust, emp_query, emp_query_lee, get_total, get_avg_total, update_sales
 
--- DELETE FROM employee WHERE emp_no = 'E0021'
-
--- SELECT * FROM sale_item
+-- --------
+-- END!
+-- --------
