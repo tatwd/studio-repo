@@ -43,25 +43,56 @@ GO
 
 CREATE PROCEDURE emp_query(@emp_name CHAR(10))
 AS
-    SELECT sale_id, order_no, tot_amt
-    FROM employee, sales
-    WHERE emp_name = @emp_name
-        AND employee.emp_no = sales.sale_id
-GO
-
--- EXEC emp_query '刘刚'
-
+    SELECT employee.emp_no, sales.order_no, sales.tot_amt
+    FROM employee
+    JOIN sales
+        ON employee.emp_no = sales.sale_id
+    WHERE emp_name LIKE @emp_name
 GO
 
 -- 4、创建带两个输入参数的存储过程，查找姓“李”并且职称为“职员”的员工编号、订单编号、销售金额。
+
+CREATE PROCEDURE emp_query_lee(
+    @emp_name CHAR(10) = '李%',
+    @dept VARCHAR(4) = '职员'
+)
+AS
+    SELECT a.emp_no, b.order_no, b.tot_amt
+    FROM employee AS a
+    JOIN sales AS b
+        ON a.emp_no = b.sale_id
+    WHERE a.emp_name LIKE @emp_name
+        AND a.dept LIKE @dept
+GO
+
+EXEC emp_query_lee
+
+GO
+
 -- 5、利用存储过程计算出订单编号为10003的订单的销售金额。（带一输入参数和一输出参数）（提示：sales表中的tot_amt应该等于sale_item表中的同一张订单的不同销售产品的qty*unit_price之和）
+
+CREATE PROCEDURE get_total(
+    @order_no INT,
+    @total INT OUT -- 输出参数
+)
+AS
+    SELECT @total = SUM(qty * unit_price)
+    FROM sale_item
+    WHERE order_no = @order_no
+GO
+
+DECLARE @total INT
+EXEC get_total '10003', @total OUT
+SELECT @total
+
 -- 6、创建一存储过程，根据给出的职称，返回该职称的所有员工的平均工资。（带一输入参数和返回值）
 -- 7、请创建一个存储过程，修改sales表中的订单金额tot_amt，使之等于各订单对应的所有订单明细的数量与单价的总和。
 
--- DROP PROCEDURE emp_query
+-- DROP PROCEDURE emp_insert, get_emp_sale_cust, emp_query
+-- DROP PROCEDURE emp_query_lee
 
 -- SELECT * FROM employee
 
 -- DELETE FROM employee WHERE emp_no = 'E0021'
 
--- SELECT * FROM sales
+-- SELECT * FROM sale_item
