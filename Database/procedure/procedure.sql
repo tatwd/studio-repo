@@ -89,13 +89,13 @@ GO
 
 -- 6、创建一存储过程，根据给出的职称，返回该职称的所有员工的平均工资。（带一输入参数和返回值）
 
-CREATE PROCEDURE get_avg_total(@dept CHAR(4))
+CREATE PROCEDURE get_avg_salary(@total CHAR(4))
 AS
-    DECLARE @avg_total DECIMAL
-    SELECT @avg_total = AVG(salary)
+    DECLARE @avg_salary DECIMAL
+    SELECT @avg_salary = AVG(salary)
     FROM employee
-    WHERE dept = @dept
-    RETURN @avg_total
+    WHERE total = @total
+    RETURN @avg_salary
 GO
 
 -- 7、请创建一个存储过程，修改sales表中的订单金额tot_amt，使之等于各订单对应的所有订单明细的数量与单价的总和。
