@@ -14,6 +14,10 @@
             var ele = this.element;
             var val = this.validator;
 
+            if (!ele) {
+                return;
+            }
+
             ele.addEventListener('focus', function () {
                 var validatorName = this.parentElement.getElementsByClassName(val);
 

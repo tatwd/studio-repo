@@ -12,12 +12,12 @@
 .container {
     border: 2px solid #ddd;
     background-color: #fff;
-    padding: 25px 35px 45px 35px;
+    padding: 25px 35px 25px 35px;
     display: inline-block;
     width: 20%;
 }
 
-@media (max-width:768px) {
+@media screen and (max-width:768px) {
     .container {
         width: auto;
     }
@@ -74,6 +74,17 @@
     /*transition: 0.25s ease-out;*/
 }
 
+.tip {
+
+    margin-top: 25px;
+    color: #888;
+}
+
+.tip a {
+    color: #888;
+    font-size: 12px;
+    text-decoration: none;
+}
 
 
 #nameBox,
@@ -86,7 +97,8 @@
     outline: 0;
 }
 
-#signUpBtn {
+#signUpBtn,
+#signInBtn {
     font-size: larger;
     border: 0;
     outline: 0;
