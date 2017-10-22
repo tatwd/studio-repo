@@ -74,6 +74,7 @@ public partial class EditEmployee : System.Web.UI.Page
             }
         }
     }
+
     protected string getInfoWithSqlString()
     {
         String infoSqlString = null;

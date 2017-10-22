@@ -11,6 +11,14 @@
     <form id="form1" runat="server">
     <div>
         <h2>断开模式查询指定部门的员工记录</h2>
+
+        <h4>请输入部门：</h4>
+        <div><asp:TextBox ID="DepartmentName" runat="server"></asp:TextBox></div>
+
+        <p><asp:Button ID="QueryBtn" runat="server" Text="查询" OnClick="QueryInfo"/></p>
+
+        <h4>查询结果：</h4>
+        <div><asp:GridView ID="ResultView" runat="server"></asp:GridView></div>
     </div>
     </form>
 </body>
