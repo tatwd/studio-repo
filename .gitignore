@@ -1,7 +1,9 @@
 # ignore node_modules
+
 node_modules/
 
 # ignore asp.net bin dir and obj dir
+
 bin/
 obj/
 packages/
@@ -10,9 +12,11 @@ packages/
 Bin/
 
 #some folders
+
 _docs/
 _examples/
 _videos/
+
 _tmp/
 tmp/
 temp/
@@ -22,4 +26,5 @@ Tasks/
 Tests/
 
 # sql server databases
+
 _msserver/

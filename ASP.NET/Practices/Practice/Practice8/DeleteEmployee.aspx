@@ -11,6 +11,8 @@
     <form id="form1" runat="server">
     <div>
         <h2>连接模式删除指定员工记录</h2>
+
+        <h4>请输入要删除员工的姓名：</h4>
     </div>
     </form>
 </body>
