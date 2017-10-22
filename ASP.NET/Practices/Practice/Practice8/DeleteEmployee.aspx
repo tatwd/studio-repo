@@ -13,6 +13,9 @@
         <h2>连接模式删除指定员工记录</h2>
 
         <h4>请输入要删除员工的姓名：</h4>
+        <div><asp:TextBox ID="EmpName" runat="server"></asp:TextBox></div>
+
+        <p><asp:Button ID="DeleteBtn" runat="server" Text="删除" OnClick="DeleteInfo"/></p>
     </div>
     </form>
 </body>
