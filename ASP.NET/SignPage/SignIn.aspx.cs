@@ -14,7 +14,7 @@ public partial class SignIn : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            if (hasUser()) // 清除上一个用户的会话
+            if (hasUserInSession()) // 清除上一个用户的会话
             {
                 Session["Username"] = "";
             }
@@ -27,7 +27,7 @@ public partial class SignIn : System.Web.UI.Page
         if (IsValid)
         {
 
-            if (hasUser()) // 判断Session["Username"]已经存了用户
+            if (hasUserInSession()) // 判断Session["Username"]已经存了用户
             {
                 tipLabel.Text = Session["Username"] + "已登录";
 
@@ -38,7 +38,7 @@ public partial class SignIn : System.Web.UI.Page
             {
                 queryUser(); // 查询数据库
 
-                if (hasUser())
+                if (hasUserInSession())
                 {
                     tipLabel.Text = Session["Username"] + "登录成功！";
                 }
@@ -55,16 +55,16 @@ public partial class SignIn : System.Web.UI.Page
     }
 
     // 判断用是否已经登录
-    protected bool hasUser()
+    protected bool hasUserInSession()
     {
-        bool hasUser = false;
+        bool hasUserInSession = false;
 
         if (Session["Username"] != null && Session["Username"].ToString() != "")
         {
-            hasUser = true;
+            hasUserInSession = true;
         }
 
-        return hasUser;
+        return hasUserInSession;
     }
 
     // 查询用户数据
@@ -78,11 +78,11 @@ public partial class SignIn : System.Web.UI.Page
 
         // 字符串拼接访问数据库
 
-        cmd = getCmd(conn);
+        // cmd = getCmd(conn);
 
         // 带参数访问数据库
 
-        // cmd = getCmdWithParam(conn);
+        cmd = getCmdWithParam(conn);
 
         openDB(conn);
 
