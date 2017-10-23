@@ -23,7 +23,14 @@ public partial class SignIn : System.Web.UI.Page
             {
                 queryUser(); // 添加到数据库
 
-                tipLabel.Text = Session["Username"] + "登录成功！";
+                if (Session["Username"] != null)
+                {
+                    tipLabel.Text = Session["Username"] + "登录成功！";
+                }
+                else
+                {
+                    tipLabel.Text = "账户或密码错误！";
+                }
             }
             catch (Exception ex)
             {
@@ -47,9 +54,12 @@ public partial class SignIn : System.Web.UI.Page
 
         MySqlDataReader reader =  cmd.ExecuteReader(); // 查询用户数据
 
-        if (reader.Read())
+        if (reader.HasRows) // 判断reader数据集是否为空
         {
-            Session["Username"] = nameBox.Text.Trim(); // 会话保存用户名
+            if (reader.Read())
+            {
+                Session["Username"] = nameBox.Text.Trim(); // 会话保存用户名
+            }
         }
 
         closeDB(conn);

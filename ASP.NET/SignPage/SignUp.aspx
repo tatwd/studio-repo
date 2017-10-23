@@ -74,3 +74,10 @@
 </body>
 </html>
 <script src="js/sign-validator.js"></script>
+<script>
+    (new FocusEvent('nameBox',          'validator')).addFocus(clicked);
+    (new FocusEvent('emailBox',         'validator')).addFocus(clicked);
+    (new FocusEvent('phoneBox',         'validator')).addFocus(clicked);
+    (new FocusEvent('passwdBox',        'validator')).addFocus(clicked);
+    (new FocusEvent('confirmPasswdBox', 'validator')).addFocus(clicked);
+</script>

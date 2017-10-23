@@ -60,10 +60,10 @@
     //        document.getElementsByClassName('validator')[0].style.visibility = '';
     //}, false);
 
-    (new FocusEvent('nameBox',          'validator')).addFocus(clicked);
-    (new FocusEvent('emailBox',         'validator')).addFocus(clicked);
-    (new FocusEvent('phoneBox',         'validator')).addFocus(clicked);
-    (new FocusEvent('passwdBox',        'validator')).addFocus(clicked);
-    (new FocusEvent('confirmPasswdBox', 'validator')).addFocus(clicked);
+    // (new FocusEvent('nameBox',          'validator')).addFocus(clicked);
+    // (new FocusEvent('emailBox',         'validator')).addFocus(clicked);
+    // (new FocusEvent('phoneBox',         'validator')).addFocus(clicked);
+    // (new FocusEvent('passwdBox',        'validator')).addFocus(clicked);
+    // (new FocusEvent('confirmPasswdBox', 'validator')).addFocus(clicked);
 
 }(window);
