@@ -19,7 +19,11 @@ public class Connector
 
     // Summary:
     //   The database connection.
-    private string DbConnection { set; get; }
+    private object DbConnection { set; get; }
+
+    // Summary:
+    //   Connection string.
+    private string ConnectionString { set; get; }
 
     // Summary:
     //   The type of database is 'mssql'.
@@ -36,5 +40,18 @@ public class Connector
     public Connector(string dbType)
     {
         this.DbType = dbType;
+    }
+
+    // Summary:
+    //   This constructor will set the 'DbType', 'ConnectionString'.
+    //
+    // Parameters:
+    //   dbType: the type of database - 'mssql' or 'mysql'.
+    //
+    //   connectionString: the connection string.
+    public Connector(string dbType, string connectionString)
+    {
+        this.DbType           = dbType;
+        this.ConnectionString = connectionString;
     }
 }
