@@ -12,18 +12,33 @@ public partial class SignIn : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!IsPostBack)
+        {
+            if (hasUser()) // 清除上一个用户的会话
+            {
+                Session["Username"] = "";
+            }
+        }
     }
 
     protected void signInBtn_Click(object sender, EventArgs e)
     {
+
         if (IsValid)
         {
+
+            if (hasUser()) // 判断Session["Username"]已经存了用户
+            {
+                tipLabel.Text = Session["Username"] + "已登录";
+
+                return; // 终止
+            }
+
             try
             {
-                queryUser(); // 添加到数据库
+                queryUser(); // 查询数据库
 
-                if (Session["Username"] != null)
+                if (hasUser())
                 {
                     tipLabel.Text = Session["Username"] + "登录成功！";
                 }
@@ -34,9 +49,22 @@ public partial class SignIn : System.Web.UI.Page
             }
             catch (Exception ex)
             {
-                tipLabel.Text = "用户名或密码错误：" + ex.Message;
+                tipLabel.Text = "登录失败：" + ex.Message;
             }
         }
+    }
+
+    // 判断用是否已经登录
+    protected bool hasUser()
+    {
+        bool hasUser = false;
+
+        if (Session["Username"] != null && Session["Username"].ToString() != "")
+        {
+            hasUser = true;
+        }
+
+        return hasUser;
     }
 
     // 查询用户数据
@@ -46,9 +74,15 @@ public partial class SignIn : System.Web.UI.Page
 
         MySqlConnection conn = new MySqlConnection(connStr);
 
-        string sql = getUserInfoWithSql();
+        MySqlCommand cmd = new MySqlCommand();
 
-        MySqlCommand cmd = new MySqlCommand(sql, conn);
+        // 字符串拼接访问数据库
+
+        cmd = getCmd(conn);
+
+        // 带参数访问数据库
+
+        // cmd = getCmdWithParam(conn);
 
         openDB(conn);
 
@@ -66,7 +100,7 @@ public partial class SignIn : System.Web.UI.Page
     }
 
     // 获取用户数据并以SQL语句形式返回
-    protected string getUserInfoWithSql()
+    protected MySqlCommand getCmd(MySqlConnection cnn)
     {
         string infoSql = null;
 
@@ -75,7 +109,49 @@ public partial class SignIn : System.Web.UI.Page
 
         infoSql = String.Format("SELECT * FROM user_info WHERE username = '{0}' AND password = '{1}'", username, password);
 
-        return infoSql;
+        MySqlCommand cmd = new MySqlCommand(infoSql, cnn);
+
+        return cmd;
+    }
+
+    // 使用带参处理SQL语句并返回一个MySqlCommand对象
+    protected MySqlCommand getCmdWithParam(MySqlConnection cnn)
+    {
+        string infoSql = null;
+
+        string username = nameBox.Text.Trim();
+        string password = passwdBox.Text.Trim();
+
+        infoSql = "SELECT * FROM user_info WHERE username = @username AND password = @password";
+
+        MySqlCommand cmd = setParam(username, password); // 得到一个设置了参数的MySqlCommand对象
+
+        cmd.CommandText = infoSql;
+        cmd.Connection  = cnn;
+
+        return cmd;
+    }
+
+    protected MySqlCommand setParam(string username, string password)
+    {
+        MySqlCommand cmd = new MySqlCommand();
+
+        MySqlParameter nameParam = new MySqlParameter("@username", MySqlDbType.VarChar, 45);
+        MySqlParameter pswdParam = new MySqlParameter("@password", MySqlDbType.VarChar, 45);
+
+        nameParam.Direction = ParameterDirection.Input;
+        nameParam.Value     = username;
+
+        pswdParam.Direction = ParameterDirection.Input;
+        pswdParam.Value     = password;
+
+        // 添加参数到cmd
+
+        cmd.Parameters.Add(nameParam); 
+        cmd.Parameters.Add(pswdParam);
+
+        return cmd;
+
     }
 
     // 打开数据库
