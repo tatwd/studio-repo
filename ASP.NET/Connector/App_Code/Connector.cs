@@ -22,8 +22,8 @@ public class Connector
     private object DbConnection { set; get; }
 
     // Summary:
-    //   Connection string.
-    private string ConnectionString { set; get; }
+    //   The connection string of database, can be getted and setted by a object. 
+    public string ConnectionString { set; get; }
 
     // Summary:
     //   The type of database is 'mssql'.
@@ -36,10 +36,19 @@ public class Connector
     //   This constructor will set the type of database by a parameter.
     //
     // Parameters:
-    //   dbType: the type of database - 'mssql' or 'mysql'.
-    public Connector(string dbType)
+    //   dbType_connectionString: the string is the type of database or connection string.
+    public Connector(string dbType_connectionString)
     {
-        this.DbType = dbType;
+        if(dbType_connectionString != "mssql" || dbType_connectionString != "mysql")
+        {
+            // If input a connection string, the type of database will be setted to 'mssql'.
+            this.DbType           = "mssql";
+            this.ConnectionString = dbType_connectionString;
+        }
+        else
+        {
+            this.DbType = dbType_connectionString;
+        }
     }
 
     // Summary:

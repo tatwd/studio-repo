@@ -11,21 +11,23 @@ public partial class _Default : System.Web.UI.Page
     {
         string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["TestDB"].ConnectionString;
 
-        //Connector connector = new Connector("mssql", connStr);
+        Connector connector = new Connector("mssql", connStr);
 
-        System.Data.SqlClient.SqlConnection conn = new System.Data.SqlClient.SqlConnection(connStr);
+        //System.Data.SqlClient.SqlConnection conn = new System.Data.SqlClient.SqlConnection(connStr);
 
-        try
-        {
-            conn.Open();
+        //try
+        //{
+        //    conn.Open();
 
-            prompt.InnerText = "成功连接！";
+        //    prompt.InnerText = "成功连接！";
 
-            conn.Close();
-        }
-        catch (Exception ex)
-        {
-            prompt.InnerText = ex.Message;
-        }
+        //    conn.Close();
+        //}
+        //catch (Exception ex)
+        //{
+        //    prompt.InnerText = ex.Message;
+        //}
+
+        prompt.InnerText = connector.ConnectionString + "==" + connector.ToString();
     }
 }
