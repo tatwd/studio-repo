@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-using DbHelper;
+using DbKit;
 
 public partial class _Default : System.Web.UI.Page
 {
@@ -30,7 +30,7 @@ public partial class _Default : System.Web.UI.Page
 
             prompt.InnerText = "成功连接！";
 
-            ViewData.DataSource = msconn.SelectData("user_info", "@username", "@password", "test", "test");
+            ViewData.DataSource = msconn.SelectData("username, password", "user_info", "@username", "@password", "10", "10", "test", "test");
             ViewData.DataBind();
 
             //conn.DbConnection.Close();

@@ -9,7 +9,7 @@ using System.Data.SqlClient;  // for 'mssql'
 
 // using MySql.Data.MySqlClient; // for 'mysql'
 
-namespace DbHelper
+namespace DbKit
 {
 
     // Summary
@@ -47,7 +47,7 @@ namespace DbHelper
             if (dbType_connectionString != "mssql" || dbType_connectionString != "mysql")
             {
                 // If input a connection string, the type of database will be setted to 'mssql'.
-                this.DbType = "mssql";
+                this.DbType           = "mssql";
                 this.ConnectionString = dbType_connectionString;
             }
             else
@@ -67,7 +67,7 @@ namespace DbHelper
         //     The connection string.
         public Connector(string dbType, string connectionString)
         {
-            this.DbType = dbType;
+            this.DbType           = dbType;
             this.ConnectionString = connectionString;
         }
 
@@ -150,46 +150,105 @@ namespace DbHelper
         //   Query database table by using 'SelectString'
         //
         // Parameters:
-        //   tableName: 
-        //     The data table name.
+        //   commandText: 
+        //     A command text string.
         //   
-        //   ags:
+        //   args:
         //     This is parameters array.
         //
         // Returns:
         //   Return a SqlDataReader object.
-        public SqlDataReader SelectData(string tableName, params string[] args)
+        public SqlDataReader SelectData(string commandText, params string[] args)
         {
             SqlDataReader reader = null;
             SqlCommand    cmd    = new SqlCommand();
 
             // 字符串拼接查询
-            // cmd.CommandText = String.Format("select * from {0}", tableName);
-
-            // 带参查询
-            if (args.Length != 0)
-            {
-                cmd.CommandText = String.Format("select * from {0} where {1} and {2}", tableName, args[0], args[1]);
-
-                for (int i = 0, length = args.Length / 2; i < length; i++)
-                {
-                    SqlParameter parms = new SqlParameter(args[i], SqlDbType.NChar, 10);
-                    parms.Direction = ParameterDirection.Input;
-
-                    // error here
-                    parms.Value = args[i + length ].Trim();
-
-                    cmd.Parameters.Add(parms);
-                }
-            }
-
+            cmd.CommandText = commandText;
             cmd.Connection  = this.DbConnection;
+
+            for (int i = 0, length = args.Length; i < length; i++)
+            {
+
+            }
 
             reader = cmd.ExecuteReader();
 
             // reader.Close();
 
             return reader;
+        }
+
+        // Summary:
+        //   Query data by parameters.
+        //
+        // Parameters:
+        //   tableName: 
+        //     The data table name.
+        //   
+        //   selectString:
+        //     Need to select strings. eg: "*" or "username, password"
+        // 
+        //   args:
+        //     Threen parts of it, frist are parameters, second are sizes, last are values. eg: "@username, @password, 10, 10, test, test"
+        // 
+        //  Returns:
+        //   Return a SqlDataReader object.
+        public SqlDataReader SelectData(string selectString, string tableName, params string[] args)
+        {
+            SqlDataReader reader   = null;
+            SqlCommand    cmd      = new SqlCommand();
+            string        paramStr = null;
+
+            if (args.Length != 0)
+            {
+                paramStr = getParamStr(args);
+            }
+
+            cmd.CommandText = String.Format("select {0} from {1} {2}", selectString, tableName, paramStr);
+            cmd.Connection  = this.DbConnection;
+
+            AddParameters(ref cmd, args);
+
+            reader = cmd.ExecuteReader();
+
+            return reader;
+        }
+
+        private string getParamStr(params string[] args)
+        {
+            string paramStr = "";
+
+            for (int i = 0, length = args.Length / 3; i < length; i++)
+            {
+                var str = args[i].Substring(1) + " = " + args[i];
+
+                if (paramStr != "") // 不是第一个元素
+                {
+                    paramStr = paramStr + " and " + str;
+                }
+                else
+                {
+                    paramStr = paramStr + str;
+                }
+            }
+
+            return ("where " + paramStr).Trim();
+        }
+
+        // Summary:
+        //   Add parameters to a SqlCommand object.
+        private void AddParameters(ref SqlCommand cmd, params string[] args)
+        {
+            for (int i = 0, length = args.Length / 3; i < length; i++)
+            {
+                SqlParameter parms = new SqlParameter(args[i], SqlDbType.NChar, int.Parse(args[i + length]));
+                parms.Direction    = ParameterDirection.Input;
+
+                parms.Value = args[i + length * 2].Trim();
+
+                cmd.Parameters.Add(parms);
+            }
         }
     }
 
