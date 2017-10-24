@@ -5,29 +5,42 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+using DbHelper;
+
 public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["TestDB"].ConnectionString;
 
-        Connector connector = new Connector("mssql", connStr);
+        //Connector conn = new Connector("mssql", connStr);
+        MsSqlConnector msconn = new MsSqlConnector("mssql", connStr);
 
-        //System.Data.SqlClient.SqlConnection conn = new System.Data.SqlClient.SqlConnection(connStr);
+        //conn.CreateConnection();
+        msconn.CreateConnection();
 
-        //try
-        //{
-        //    conn.Open();
+        //object cnn = new System.Data.SqlClient.SqlConnection(connStr); //装箱
 
-        //    prompt.InnerText = "成功连接！";
+        //System.Data.SqlClient.SqlConnection conn = (System.Data.SqlClient.SqlConnection)cnn; // 拆箱
 
-        //    conn.Close();
-        //}
-        //catch (Exception ex)
-        //{
-        //    prompt.InnerText = ex.Message;
-        //}
+        try
+        {
+            //conn.DbConnection.Open();
+            msconn.OpenDb();
 
-        prompt.InnerText = connector.ConnectionString + "==" + connector.ToString();
+            prompt.InnerText = "成功连接！";
+
+            ViewData.DataSource = msconn.SelectData("user_info", "@username", "@password", "test", "test");
+            ViewData.DataBind();
+
+            //conn.DbConnection.Close();
+            msconn.CloseDb();
+        }
+        catch (Exception ex)
+        {
+            prompt.InnerText = ex.Message;
+        }
+
+        //prompt.InnerText = connector.ConnectionString + "==" + connector.ToString();
     }
 }

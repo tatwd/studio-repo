@@ -11,6 +11,8 @@
     <form id="form1" runat="server">
         <div>
             <h3 id="prompt" runat="server"></h3>
+
+            <asp:GridView ID="ViewData" runat="server"></asp:GridView>
         </div>
     </form>
 </body>
