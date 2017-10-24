@@ -36,7 +36,10 @@ public partial class _Default : System.Web.UI.Page
 
             string[] arr = { "@username", "@password", "10", "10", username, password };
 
-            ViewData1.DataSource = mssql.SelectData("select * from user_info");
+            string[] arr1 = { username, password, "10", "10" };
+
+
+            ViewData1.DataSource = mssql.SelectData("select * from user_info where username = @username and password = @password", arr1);
             ViewData1.DataBind();
 
             mssql.CloseReader(); // 关闭reader
