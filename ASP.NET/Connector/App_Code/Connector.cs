@@ -97,20 +97,6 @@ namespace DbKit
                 this.DbConnection = new SqlConnection(connectionString); // for 'mssql'
             }
         }
-    }
-
-    // Summary:
-    //   This class is for 'mssql', and it inherit from Connector class.
-    //
-    public class MsSqlConnector : Connector
-    {
-        // These class constructors inherit from base class.
-
-        public MsSqlConnector() : base() { }
-
-        public MsSqlConnector(string dbType_connectionString) : base(dbType_connectionString) { }
-
-        public MsSqlConnector(string dbType, string connectionString) : base(dbType, connectionString) { }
 
         // Summary:
         //  This is a open databse method.
@@ -131,6 +117,20 @@ namespace DbKit
                 this.DbConnection.Close();
             }
         }
+    }
+
+    // Summary:
+    //   This class is for 'mssql', and it inherit from Connector class.
+    //
+    public class MsSqlConnector : Connector
+    {
+        // These class constructors inherit from base class.
+
+        public MsSqlConnector() : base() { }
+
+        public MsSqlConnector(string dbType_connectionString) : base(dbType_connectionString) { }
+
+        public MsSqlConnector(string dbType, string connectionString) : base(dbType, connectionString) { }
 
         // Summary:
         //   Close SqlDataReader.
@@ -193,7 +193,7 @@ namespace DbKit
         //     Threen parts of it, frist are parameters, second are sizes, last are values. eg: "@username, @password, 10, 10, test, test"
         // 
         //  Returns:
-        //   Return a SqlDataReader object.
+        //     A SqlDataReader object.
         public SqlDataReader SelectData(string selectString, string tableName, params string[] args)
         {
             SqlDataReader reader   = null;
