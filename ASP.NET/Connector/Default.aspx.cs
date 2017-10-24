@@ -9,38 +9,53 @@ using DbKit;
 
 public partial class _Default : System.Web.UI.Page
 {
+    static string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["TestDB"].ConnectionString;
+
+    MsSqlConnector mssql = new MsSqlConnector("mssql", connStr);
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["TestDB"].ConnectionString;
 
-        //Connector conn = new Connector("mssql", connStr);
-        MsSqlConnector msconn = new MsSqlConnector("mssql", connStr);
+        
+    }
 
-        //conn.CreateConnection();
-        msconn.CreateConnection();
 
-        //object cnn = new System.Data.SqlClient.SqlConnection(connStr); //装箱
 
-        //System.Data.SqlClient.SqlConnection conn = (System.Data.SqlClient.SqlConnection)cnn; // 拆箱
+    protected void SignInBtn_Click(object sender, EventArgs e)
+    {
+        mssql.CreateConnection();
 
         try
         {
-            //conn.DbConnection.Open();
-            msconn.OpenDb();
+            // 连接模式访问
 
-            prompt.InnerText = "成功连接！";
+            // mssql.OpenDb();
 
-            ViewData.DataSource = msconn.SelectData("username, password", "user_info", "@username", "@password", "10", "10", "test", "test");
-            ViewData.DataBind();
+            string username = Username.Text.Trim();
+            string password = Password.Text.Trim();
 
-            //conn.DbConnection.Close();
-            msconn.CloseDb();
+            string[] arr = { "@username", "@password", "10", "10", username, password };
+
+            ViewData1.DataSource = mssql.SelectData("select * from user_info");
+            ViewData1.DataBind();
+
+            mssql.CloseReader(); // 关闭reader
+
+            //ViewData2.DataSource = mssql.SelectData("*", "user_info", arr);
+            //ViewData2.DataBind();
+
+            //mssql.CloseReader(); // 关闭reader
+
+            mssql.CloseDb();
         }
         catch (Exception ex)
         {
             prompt.InnerText = ex.Message;
         }
+    }
 
-        //prompt.InnerText = connector.ConnectionString + "==" + connector.ToString();
+    protected void SignUpBtn_Click(object sender, EventArgs e)
+    {
+
     }
 }

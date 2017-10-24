@@ -29,9 +29,11 @@
                     <asp:RequiredFieldValidator ID="notNull" CssClass="validator" runat="server" ControlToValidate="passwdBox" Display="Dynamic" ErrorMessage="不能为空"></asp:RequiredFieldValidator>
                 </div>
             </div>
+            
             <div class="sign-btn">
                 <asp:Button ID="signInBtn" runat="server" Text="提交" OnClick="signInBtn_Click"/>
             </div>
+            
             <div class="tip">
                 <a href="SignUp.aspx">还没注册？马上注册！</a>
             </div>

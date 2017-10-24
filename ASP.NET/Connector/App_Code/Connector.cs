@@ -126,6 +126,10 @@ namespace DbKit
     {
         // These class constructors inherit from base class.
 
+        // Summary:
+        //   A reader to read data from execute sql string.
+        private SqlDataReader reader { set; get; }
+
         public MsSqlConnector() : base() { }
 
         public MsSqlConnector(string dbType_connectionString) : base(dbType_connectionString) { }
@@ -134,17 +138,21 @@ namespace DbKit
 
         // Summary:
         //   Close SqlDataReader.
-        public  void CloseReader(SqlDataReader reader)
+        public  void CloseReader()
         {
-            reader.Close();
+            if (!this.reader.IsClosed)
+            {
+                this.reader.Close();
+            }
         }
 
         // Summary:
         //   Close all resources.
         public void CloseAll()
         {
-            // TODO
-        }
+            this.CloseReader();
+            this.CloseDb();
+        } 
 
         // Summary:
         //   Query database table by using 'SelectString'
@@ -160,23 +168,27 @@ namespace DbKit
         //   Return a SqlDataReader object.
         public SqlDataReader SelectData(string commandText, params string[] args)
         {
-            SqlDataReader reader = null;
-            SqlCommand    cmd    = new SqlCommand();
+            this.OpenDb(); // 打开数据库
+
+            SqlCommand cmd = new SqlCommand();
 
             // 字符串拼接查询
             cmd.CommandText = commandText;
             cmd.Connection  = this.DbConnection;
 
-            for (int i = 0, length = args.Length; i < length; i++)
+            if (args.Length != 0)
             {
-
+                for (int i = 0, length = args.Length; i < length; i++)
+                {
+                    // TODO
+                }
             }
 
-            reader = cmd.ExecuteReader();
+            this.reader = cmd.ExecuteReader();
 
-            // reader.Close();
+            // this.CloseAll(); // 关闭所以资源
 
-            return reader;
+            return this.reader;
         }
 
         // Summary:
@@ -196,7 +208,8 @@ namespace DbKit
         //     A SqlDataReader object.
         public SqlDataReader SelectData(string selectString, string tableName, params string[] args)
         {
-            SqlDataReader reader   = null;
+            OpenDb(); // 打开数据库
+
             SqlCommand    cmd      = new SqlCommand();
             string        paramStr = null;
 
@@ -210,11 +223,15 @@ namespace DbKit
 
             AddParameters(ref cmd, args);
 
-            reader = cmd.ExecuteReader();
+            this.reader = cmd.ExecuteReader();
 
-            return reader;
+            // this.CloseAll(); // 关闭所以资源
+
+            return this.reader;
         }
 
+        // Summary:
+        //   Format parameters for sql string.
         private string getParamStr(params string[] args)
         {
             string paramStr = "";
