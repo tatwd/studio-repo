@@ -11,21 +11,20 @@ public partial class Test : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        // ConnecterFactory cf = new ConnecterFactory();
-
-        Connector connector = ConnecterFactory.GetConnector("MSSQL");
 
         try
         {
+            Connector connector = ConnecterFactory.GetConnector("MSSQL");
+
             connector.Connect("TestDB");
 
-            Response.Write("OK");
+            prompt.InnerText = "OK";
 
             connector.CloseAll();
         }
         catch (Exception ex)
         {
-            Response.Write(ex.Message);
+            prompt.InnerText = ex.Message;
         }
 
         

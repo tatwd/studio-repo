@@ -10,7 +10,20 @@
 <body>
     <form id="form1" runat="server">
     <div>
-    
+        <h3 id="prompt" runat="server"></h3>
+
+        <h4>Username:</h4>
+        <div><asp:TextBox ID="Username" runat="server"></asp:TextBox></div>
+
+        <h4>Password:</h4>
+        <div><asp:TextBox ID="Password" runat="server"></asp:TextBox></div>
+
+        <p><asp:Button ID="SignInBtn" runat="server" Text="登录"/></p>
+
+        <p><asp:Button ID="SignUpBtn" runat="server" Text="注册"/></p>
+
+        <asp:GridView ID="ViewData1" runat="server"></asp:GridView>
+        <asp:GridView ID="ViewData2" runat="server"></asp:GridView>
     </div>
     </form>
 </body>
