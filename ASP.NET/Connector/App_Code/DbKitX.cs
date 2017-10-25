@@ -56,9 +56,9 @@ namespace DbKitX
         }
 
 
-        // ------------------------------
-        // Extend other connectors here.
-        // ------------------------------
+        // -------------------------------------
+        // Extend other connector creators here.
+        // -------------------------------------
     }
 
     // Summary
