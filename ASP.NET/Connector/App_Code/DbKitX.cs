@@ -27,13 +27,13 @@ namespace DbKitX
                 return null;
             }
 
-            if (dbType.Equals("MSSQL", StringComparison.CurrentCultureIgnoreCase))
+            if (dbType.Equals("MSSQL", StringComparison.CurrentCultureIgnoreCase)) // 忽视大小写
             {
                 return new MsSqlConnector(); // 创建mssql数据库连接器
             }
             else
             {
-                return new MySQLConnector(); // 创建mysql数据库连接器
+                return new MySqlConnector(); // 创建mysql数据库连接器
             }
 
             // return null;
@@ -45,11 +45,16 @@ namespace DbKitX
     //
     public interface Connector
     {
-        void Connect();              // connect database
-        void Connect(string dbName); // connect database with a connection string
+        void Connect();                          // connect database
+        void Connect(string dbName);             // connect database with a connection string
+        void SetConnectionString(string dbName); // 处理连接字符串
 
-        void ManageDataOnMode();  // 连接模式（On Mode）管理数据 
+        void ManageData();        // 连接模式（On Mode）管理数据 
         void ManageDataOffMode(); // 连接模式（Off Mode）管理数据 
+
+        void OpenDb();   // 打开数据库
+        void CloseDb();  // 关闭数据库
+        void CloseAll(); // 关闭所有资源
 
     }
 
@@ -58,6 +63,10 @@ namespace DbKitX
     //
     public class MsSqlConnector : Connector
     {
+        private SqlConnection DbConnection { set; get; }
+
+        private string ConnectionString { set; get; }
+
         // Override
         public void Connect()
         {
@@ -65,6 +74,23 @@ namespace DbKitX
         }
 
         public void Connect(string dbName)
+        {
+            SetConnectionString(dbName); // 设置连接字符串
+
+            this.DbConnection = new SqlConnection(this.ConnectionString);
+
+            OpenDb();
+        }
+
+        public void SetConnectionString(string dbName)
+        {
+            if (this.ConnectionString != "")
+            {
+                this.ConnectionString = ConfigurationManager.ConnectionStrings[dbName].ConnectionString;
+            }
+        }
+
+        public void ManageData()
         {
             throw new NotImplementedException();
         }
@@ -74,15 +100,38 @@ namespace DbKitX
             throw new NotImplementedException();
         }
 
-        public void ManageDataOnMode()
+        public void OpenDb()
         {
-            throw new NotImplementedException();
+            if (this.DbConnection.State != ConnectionState.Open)
+            {
+                this.DbConnection.Open(); // 打开数据库
+            }
+        }
+
+        public void CloseDb()
+        {
+            if (this.DbConnection.State != ConnectionState.Closed)
+            {
+                this.DbConnection.Close(); // 关闭数据库
+            }
+        }
+
+        public void CloseAll()
+        {
+            CloseDb();
+        }
+
+        public MsSqlConnector() { }
+
+        public MsSqlConnector(string dbName)
+        {
+            SetConnectionString(dbName);
         }
     }
 
     // Summary:
     //   This class is for 'MYSQL'.
-    public class MySQLConnector : Connector
+    public class MySqlConnector : Connector
     {
         // Override
         public void Connect() { }
@@ -92,12 +141,32 @@ namespace DbKitX
             throw new NotImplementedException();
         }
 
+        public void SetConnectionString(string dbName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ManageData()
+        {
+            throw new NotImplementedException();
+        }
+
         public void ManageDataOffMode()
         {
             throw new NotImplementedException();
         }
 
-        public void ManageDataOnMode()
+        public void OpenDb()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CloseDb()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CloseAll()
         {
             throw new NotImplementedException();
         }

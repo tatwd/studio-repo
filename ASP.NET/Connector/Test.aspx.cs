@@ -17,7 +17,7 @@ public partial class Test : System.Web.UI.Page
 
         try
         {
-            connector.Connect();
+            connector.Connect("TestDB");
 
             Response.Write("OK");
         }
