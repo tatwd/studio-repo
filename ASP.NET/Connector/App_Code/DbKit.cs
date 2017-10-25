@@ -4,6 +4,8 @@
 // using System.Linq;
 // using System.Web;
 
+using System.Configuration;
+
 using System.Data;
 using System.Data.SqlClient;  // for 'mssql'
 
@@ -20,6 +22,10 @@ namespace DbKit
         // Summary:
         //   Type of database.
         private string DbType { set; get; }
+
+        // Summary:
+        //   Name of database connection string in 'web.config'.
+        private string DbName { set; get; }
 
         // Summary:
         //   The database connection, will be converted(boxing and unboxing) to different database connections.
@@ -117,6 +123,16 @@ namespace DbKit
                 this.DbConnection.Close();
             }
         }
+
+        // Summary:
+        //   Get connection string.
+        // 
+        // Returns:
+        //   A connection string.
+        public string GetConnectionString()
+        {
+            return ConfigurationManager.ConnectionStrings[this.DbName].ConnectionString;
+        }
     }
 
     // Summary:
@@ -138,7 +154,7 @@ namespace DbKit
 
         // Summary:
         //   Close SqlDataReader.
-        public  void CloseReader()
+        public void CloseReader()
         {
             if (!this.reader.IsClosed)
             {
@@ -160,12 +176,14 @@ namespace DbKit
         // Parameters:
         //   commandText: 
         //     A command text string.
+        //     eg: "select * from user_name where username = @username and password = @password"
         //   
         //   args:
         //     This is parameters array, includes vlues, sizes.
+        //     eg: "test, test, 10, 10"
         //
         // Returns:
-        //   Return a SqlDataReader object.
+        //   A SqlDataReader object.
         public SqlDataReader SelectData(string commandText, params string[] args)
         {
             this.OpenDb(); // 打开数据库
@@ -239,7 +257,8 @@ namespace DbKit
         //     Need to select strings. eg: "*" or "username, password"
         // 
         //   args:
-        //     Threen parts of it, frist are parameters, second are sizes, last are values. eg: "@username, @password, 10, 10, test, test"
+        //     Threen parts of it, frist are parameters, second are sizes, last are values. 
+        //     eg: "@username, @password, 10, 10, test, test"
         // 
         //  Returns:
         //     A SqlDataReader object.
