@@ -41,7 +41,7 @@ namespace DbKitX
     }
 
     // Summary
-    //   Connector 连接器 - 基类, 封装一些数据库连接的通用方法, 包含连接模式（SOME OK）和断开模式（TODO）
+    //   Connector 连接器 - 接口, 定义了一些与ADO.NET相关的通用方法, 包含连接模式（SOME OK）和断开模式（TODO）
     //
     public interface Connector
     {

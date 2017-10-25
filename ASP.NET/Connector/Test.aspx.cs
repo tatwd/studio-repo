@@ -20,6 +20,8 @@ public partial class Test : System.Web.UI.Page
             connector.Connect("TestDB");
 
             Response.Write("OK");
+
+            connector.CloseAll();
         }
         catch (Exception ex)
         {
