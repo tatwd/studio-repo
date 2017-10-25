@@ -45,16 +45,34 @@ namespace DbKitX
     //
     public interface Connector
     {
-        void Connect();                          // connect database
-        void Connect(string dbName);             // connect database with a connection string
+        // Summary:
+        //   Connect database.
+        void Connect();
+
+        // Summary:
+        //   Connect database with a connection string.
+        void Connect(string dbName);
         void SetConnectionString(string dbName); // 处理连接字符串
 
-        void ManageData();        // 连接模式（On Mode）管理数据 
-        void ManageDataOffMode(); // 连接模式（Off Mode）管理数据 
+        // Summary:
+        //   连接模式（On Mode）管理数据 
+        void ManageData();
 
-        void OpenDb();   // 打开数据库
-        void CloseDb();  // 关闭数据库
-        void CloseAll(); // 关闭所有资源
+        // Summary:
+        //   断开模式（Off Mode）管理数据 
+        void ManageDataOffMode();
+
+        // Summary:
+        //   打开数据库
+        void OpenDb();
+
+        // Summary:
+        //   关闭数据库
+        void CloseDb();
+
+        // Summary:
+        //   关闭所有资源
+        void CloseAll(); 
 
     }
 
@@ -70,7 +88,7 @@ namespace DbKitX
         // Override
         public void Connect()
         {
-            //
+            // TODO
         }
 
         public void Connect(string dbName)
