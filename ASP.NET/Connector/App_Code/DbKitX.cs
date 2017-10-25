@@ -16,6 +16,7 @@ using MySql.Data.MySqlClient; // for 'mysql'
 namespace DbKitX
 {
     // 抽象工厂模式（Abstract factory pattern） + 反射（Reflection）
+    //
 
     // Summary:
     //   ConnectorFactory - 连接器生产工厂
@@ -25,7 +26,7 @@ namespace DbKitX
         // 连接器类名
         private static string ConnectorClassName { set; get; }
 
-        // 获取当前程序集全名
+        // 获取当前程序集全名，只读
         private static readonly string AssemblyName = Assembly.GetExecutingAssembly().FullName;
 
         // Summary:
@@ -55,14 +56,15 @@ namespace DbKitX
             return (Connector)Assembly.Load(AssemblyName).CreateInstance(ConnectorClassName); // 利用反射创建一个连接器
         }
 
-
         // -------------------------------------
         // Extend other connector creators here.
         // -------------------------------------
+
+        // User ...
     }
 
     // Summary
-    //   Connector 连接器 - 接口, 定义了一些与ADO.NET相关的通用方法, 包含连接模式（SOME OK）和断开模式（TODO）
+    //   Connector 连接器 - 接口, 定义了一些与ADO.NET相关的通用方法，包含连接模式（SOME OK）和断开模式（TODO）
     //
     public interface Connector
     {
@@ -75,12 +77,24 @@ namespace DbKitX
         void Connect(string dbName);
 
         // Summary:
-        //   处理连接字符串
+        //   设置连接字符串
+        //
+        // Parameters:
+        //   dbName:
+        //     数据库名
         void SetConnectionString(string dbName);
 
         // Summary:
         //   连接模式（On Mode）管理数据 
-        void ManageData();
+        void ManageData(string mager, string sql, params string[] param);
+
+        T ManageData<T>(string mager, string sql, params string[] param); // 泛型
+
+        T ManageData<T>(string sql, params object[] param); // 泛型
+
+        //void ManageData(object dataReader, string sql, params object[] param);
+
+        //void ManageData(ref SqlDataReader reader, string sql, SqlParameter[] param);
 
         // Summary:
         //   断开模式（Off Mode）管理数据 
@@ -96,8 +110,19 @@ namespace DbKitX
 
         // Summary:
         //   关闭所有资源
-        void CloseAll(); 
+        void CloseAll();
+    }
 
+    // Summary:
+    //   辅助管理类
+    //
+    public class Manager
+    {
+        public static readonly string SELECT = "select";
+        public static readonly string DELETE = "delete";
+        public static readonly string UPDATE = "update";
+        public static readonly string INSERT = "delete";
+        public static readonly string DROP   = "drop";
     }
 
     // Summary:
@@ -108,6 +133,8 @@ namespace DbKitX
         private SqlConnection DbConnection { set; get; }
 
         private string ConnectionString { set; get; }
+
+        public SqlDataReader reader = null;
 
         // Override
         public void Connect()
@@ -128,13 +155,63 @@ namespace DbKitX
         {
             if (this.ConnectionString != "")
             {
-                this.ConnectionString = ConfigurationManager.ConnectionStrings[dbName].ConnectionString;
+                ConnectionString = ConfigurationManager.ConnectionStrings[dbName].ConnectionString; // 从Web.config中获取连接字符串
             }
         }
 
-        public void ManageData()
+        public void ManageData(string mager, string sql, params string[] param)
         {
-            throw new NotImplementedException();
+            using (SqlCommand cmd = new SqlCommand(sql, DbConnection))
+            {
+                if (param.Length != 0)
+                {
+                    cmd.Parameters.AddRange(param);
+                }
+
+                if (mager != Manager.SELECT)
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    reader = cmd.ExecuteReader(CommandBehavior.CloseConnection); // 查询后关闭连接 CommandBehavior.CloseConnection
+                }
+
+                cmd.Cancel(); // 终止执行sql
+            }
+        }
+
+        public T ManageData<T>(string mager, string sql, params string[] param)
+        {
+            using (SqlCommand cmd = new SqlCommand(sql, DbConnection))
+            {
+                T readData = (T)cmd.ExecuteScalar();
+
+                reader = cmd.ExecuteReader(); // 执行SQL语句
+
+                cmd.Cancel(); // 终止执行sql
+
+                return readData;
+            }
+        }
+
+        public T ManageData<T>(string sql, params object[] param)
+        {
+            using (SqlCommand cmd = new SqlCommand(sql, DbConnection))
+            {
+                if (param.Length != 0)
+                {
+                    SqlParameter[] parameters = (SqlParameter[])param;
+
+                    cmd.Parameters.AddRange(parameters);
+                }
+
+                reader = cmd.ExecuteReader();
+
+                cmd.Cancel(); //  终止执行sql
+
+                return (T)((object)reader); // 装箱与拆箱
+            }
         }
 
         public void ManageDataOffMode()
@@ -158,9 +235,21 @@ namespace DbKitX
             }
         }
 
+        // Summary
+        //   关闭阅读器
+        public void CloseReader()
+        {
+            if (!reader.IsClosed)
+            {
+                reader.Close();
+            }
+        }
+
         public void CloseAll()
         {
-            CloseDb();
+            CloseReader(); // 关闭阅读器
+
+            CloseDb();     // 关闭数据库
         }
 
         public MsSqlConnector() { }
@@ -173,6 +262,9 @@ namespace DbKitX
 
     // Summary:
     //   This class is for 'MYSQL'.
+    //
+    // TODO 
+    //
     public class MySqlConnector : Connector
     {
         // Override
@@ -188,7 +280,17 @@ namespace DbKitX
             throw new NotImplementedException();
         }
 
-        public void ManageData()
+        public void ManageData(string mager, string sql, params string[] param)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T ManageData<T>(string mager, string sql, params string[] param)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T ManageData<T>(string sql, params object[] param)
         {
             throw new NotImplementedException();
         }
@@ -212,5 +314,6 @@ namespace DbKitX
         {
             throw new NotImplementedException();
         }
+
     }
 }

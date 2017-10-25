@@ -18,7 +18,7 @@
         <h4>Password:</h4>
         <div><asp:TextBox ID="Password" runat="server"></asp:TextBox></div>
 
-        <p><asp:Button ID="SignInBtn" runat="server" Text="登录"/></p>
+        <p><asp:Button ID="SignInBtn" runat="server" Text="登录" OnClick="SignInBtn_Click"/></p>
 
         <p><asp:Button ID="SignUpBtn" runat="server" Text="注册"/></p>
 
