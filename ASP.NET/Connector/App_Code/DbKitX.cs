@@ -85,14 +85,49 @@ namespace DbKitX
         void SetConnectionString(string dbName);
 
         // Summary:
-        //   连接模式（On Mode）管理数据 
-        void ManageData(string mager, string sql, params string[] param);
+        //   连接模式（On Mode）管理数据
+        //
+        // TODO: delete or not delete ?
+        // 
+        void ManageData(string sql, params string[] param);
 
-        T ManageData<T>(string mager, string sql, params string[] param); // 泛型
-
-        T ManageData<T>(string sql, params object[] param); // 泛型
-
+        // Summary:
+        //   利用泛型对数据库数据进行增、删、改、查管理
+        // 
+        // Parameters:
+        //   excuteType:
+        //     执行类型，三个值
+        //       0 - 执行增、删、改操作并返回受影响行数
+        //       1 - 执行单条语句查询并返回第一行第一列
+        //       2 - 执行查询语句并返回DataReader数据集
+        //
+        //   cmdText:
+        //     SQL语句，带参或不带参
+        //
+        //   parameter:
+        //     SqlParameter参数数组
+        //
         T ManageData<T>(int executeType, string cmdText, params object[] parameter);
+
+        // Summary:
+        //   利用泛型对数据库数据进行增、删、改、查管理
+        // 
+        // Parameters:
+        //   excuteType:
+        //     执行类型，三个值：
+        //       0 - 执行增、删、改操作并返回受影响行数
+        //       1 - 执行单条语句查询并返回第一行第一列
+        //       2 - 执行查询语句并返回DataReader数据集
+        //
+        //   procdureName:
+        //      存储过程名
+        // 
+        //   parameter:
+        //     SqlParameter参数数组
+        //
+        //  TODO: how to declare this method?
+        //
+        // T ManageData<T>(int executeType, string procdureName, string sec, params object[] parameter);
 
         // Summary:
         //   断开模式（Off Mode）管理数据 
@@ -108,30 +143,27 @@ namespace DbKitX
 
         // Summary:
         //   关闭所有资源
+        //
+        // TODO: has bug or not ?
+        //
         void CloseAll();
     }
 
     // Summary:
-    //   辅助管理类
-    //
-    public class Manager
-    {
-        public static readonly string SELECT = "select";
-        public static readonly string DELETE = "delete";
-        public static readonly string UPDATE = "update";
-        public static readonly string INSERT = "delete";
-        public static readonly string DROP   = "drop";
-    }
-
-    // Summary:
-    //   This class is for 'MSSQL'.
+    //   MsSqlConnector SqlServer连接器
     //
     public class MsSqlConnector : Connector
     {
+        // Summary:
+        //   数据库连接对象
         private SqlConnection DbConnection { set; get; }
 
+        // Summary:
+        //   连接字符串
         private string ConnectionString { set; get; }
 
+        // Summary:
+        //   数据阅读器
         public SqlDataReader DataReader = null;
 
         // Override
@@ -140,6 +172,7 @@ namespace DbKitX
             // TODO
         }
 
+        // Override
         public void Connect(string dbName)
         {
             SetConnectionString(dbName); // 设置连接字符串
@@ -149,6 +182,7 @@ namespace DbKitX
             OpenDb();
         }
 
+        // Override
         public void SetConnectionString(string dbName)
         {
             if (this.ConnectionString != "")
@@ -157,76 +191,19 @@ namespace DbKitX
             }
         }
 
-        public void ManageData(string mager, string sql, params string[] param)
+        // Override
+        //
+        // TODO: need to modify this method.
+        //
+        public void ManageData(string sql, params string[] param)
         {
             using (SqlCommand cmd = new SqlCommand(sql, DbConnection))
             {
-                if (param.Length != 0)
-                {
-                    cmd.Parameters.AddRange(param);
-                }
-
-                if (mager != Manager.SELECT)
-                {
-                    cmd.ExecuteNonQuery();
-                }
-                else
-                {
-                    DataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection); // 查询后关闭连接 CommandBehavior.CloseConnection
-                }
-
-                cmd.Cancel(); // 终止执行sql
+                // TODO
             }
         }
 
-        public T ManageData<T>(string mager, string sql, params string[] param)
-        {
-            using (SqlCommand cmd = new SqlCommand(sql, DbConnection))
-            {
-                T readData = (T)cmd.ExecuteScalar();
-
-                //DataReader = cmd.ExecuteReader(); // 执行SQL语句
-
-                cmd.Cancel(); // 终止执行sql
-
-                return readData;
-            }
-        }
-
-        // Summary:
-        //   Override - 实现查询并返回查询结果集
-        public T ManageData<T>(string sql, params object[] param)
-        {
-            using (SqlCommand cmd = new SqlCommand(sql, DbConnection))
-            {
-                if (param.Length != 0)
-                {
-                    SqlParameter[] parameters = (SqlParameter[])param; // 设置参数
-
-                    cmd.Parameters.AddRange(parameters);
-                }
-
-                DataReader = cmd.ExecuteReader();
-
-                cmd.Cancel(); //  终止执行sql
-
-                return (T)((object)DataReader); // 装箱与拆箱
-            }
-        }
-
-        // Summary:
-        //   Override - 泛型，对数据库数据进行增删改查管理
-        // 
-        // Parameters:
-        //   excuteType:
-        //     执行类型，三个值 - 0，1，2
-        //
-        //   cmdText:
-        //     SQL语句，带参或不带参
-        //
-        //   parameter:
-        //     SqlParameter参数数组
-        //
+        // Override
         public T ManageData<T>(int executeType, string cmdText, params object[] parameter)
         {
             using (SqlCommand cmd = new SqlCommand(cmdText, DbConnection))
@@ -242,18 +219,27 @@ namespace DbKitX
 
                 switch (executeType.ToString()) // 判断执行类型
                 {
+                    // ExecuteNonQuery
                     case "0":  
-                        result = cmd.ExecuteNonQuery(); // ExecuteNonQuery
+                        result = cmd.ExecuteNonQuery();
                         break;
 
+                    // ExecuteScalar
                     case "1":  
-                        result = cmd.ExecuteScalar();   // ExecuteScalar
+                        result = cmd.ExecuteScalar();   
+                        result = result == null ? 0 : result; // 判断result是否为空
                         break;
 
+                    // ExecuteReader
                     case "2":
-                        DataReader = cmd.ExecuteReader();   // ExecuteReader
+                        DataReader = cmd.ExecuteReader();
                         result = DataReader;
                         break;
+                }
+
+                if (cmd.Parameters.Count != 0)
+                {
+                    cmd.Parameters.Clear(); // 清除SqlParameter
                 }
 
                 cmd.Cancel(); //  终止执行sql
@@ -262,11 +248,13 @@ namespace DbKitX
             }
         }
 
+        // Override
         public void ManageDataOffMode()
         {
             throw new NotImplementedException();
         }
 
+        // Override
         public void OpenDb()
         {
             if (this.DbConnection.State != ConnectionState.Open)
@@ -275,16 +263,16 @@ namespace DbKitX
             }
         }
 
+        // Override
         public void CloseDb()
         {
-            if (this.DbConnection.State != ConnectionState.Closed)
+            if (DbConnection.State != ConnectionState.Closed)
             {
-                this.DbConnection.Close(); // 关闭数据库
+                DbConnection.Close(); // 关闭数据库
             }
         }
 
-        // Summary
-        //   关闭阅读器
+        // Override
         public void CloseReader()
         {
             if (DataReader != null && !DataReader.IsClosed)
@@ -293,16 +281,24 @@ namespace DbKitX
             }
         }
 
+        // Override
         public void CloseAll()
         {
             CloseReader(); // 关闭阅读器
 
             CloseDb();     // 关闭数据库
         }
-
-       
+        
+        // Summary:
+        //   This is a constructor of the class without parameter.
         public MsSqlConnector() { }
 
+        // Summary:
+        //   A constructor with a parameter.
+        //
+        // Parameters:
+        //   dbName:
+        //     The name of database connection string in Web.config. 
         public MsSqlConnector(string dbName)
         {
             SetConnectionString(dbName);
@@ -319,52 +315,50 @@ namespace DbKitX
         // Override
         public void Connect() { }
 
+        // Override
         public void Connect(string dbName)
         {
             throw new NotImplementedException();
         }
 
+        // Override
         public void SetConnectionString(string dbName)
         {
             throw new NotImplementedException();
         }
 
-        public void ManageData(string mager, string sql, params string[] param)
+        // Override
+        public void ManageData(string sql, params string[] param)
         {
             throw new NotImplementedException();
         }
 
-        public T ManageData<T>(string mager, string sql, params string[] param)
+        // Override
+        public T ManageData<T>(int executeType, string cmdText, params object[] parameters)
         {
             throw new NotImplementedException();
         }
 
-        public T ManageData<T>(string sql, params object[] param)
-        {
-            throw new NotImplementedException();
-        }
-
+        // Override
         public void ManageDataOffMode()
         {
             throw new NotImplementedException();
         }
 
+        // Override
         public void OpenDb()
         {
             throw new NotImplementedException();
         }
 
+        // Override
         public void CloseDb()
         {
             throw new NotImplementedException();
         }
 
+        // Override
         public void CloseAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public T ManageData<T>(int executeType, string cmdText, params object[] parameters)
         {
             throw new NotImplementedException();
         }
