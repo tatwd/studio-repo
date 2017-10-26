@@ -28,7 +28,8 @@ public partial class Test : System.Web.UI.Page
 
             connector.Connect("TestDB");
 
-            string sql = "select * from user_info where username = @username and password = @password";
+            string selectSql1 = "select * from user_info";
+            string selectSql2 = "select * from user_info where username = @username and password = @password";
 
             // connector.ManageData(Manager.SELECT, sql);
 
@@ -44,12 +45,16 @@ public partial class Test : System.Web.UI.Page
                 new SqlParameter("@password", Password.Text.Trim())
             };
 
-            reader = connector.ManageData<SqlDataReader>(sql, param); // 执行带参SQL语句并返回SqlDataReader对象
+            //reader = connector.ManageData<SqlDataReader>(sql, param); // 执行带参SQL语句并返回SqlDataReader对象
+
+            int id = connector.ManageData<int>(1, selectSql1);
+
+            reader = connector.ManageData<SqlDataReader>(2, selectSql2, param);
 
             ViewData1.DataSource = reader;
             ViewData1.DataBind();
 
-            //prompt.InnerText = "okokokok";
+            prompt.InnerText = id.ToString();
 
             connector.CloseAll();
         }

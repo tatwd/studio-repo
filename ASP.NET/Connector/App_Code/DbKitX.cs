@@ -41,7 +41,7 @@ namespace DbKitX
             {
                 ConnectorClassName = "DbKitX.MsSqlConnector";  // for mssql
             }
-            else if(dbType.Equals("MSSQL", StringComparison.CurrentCultureIgnoreCase))
+            else if(dbType.Equals("MYSQL", StringComparison.CurrentCultureIgnoreCase))
             {
                 ConnectorClassName = "DbKitX.MySqlConnector";  // for mysql
             }
@@ -92,9 +92,7 @@ namespace DbKitX
 
         T ManageData<T>(string sql, params object[] param); // 泛型
 
-        //void ManageData(object dataReader, string sql, params object[] param);
-
-        //void ManageData(ref SqlDataReader reader, string sql, SqlParameter[] param);
+        T ManageData<T>(int executeType, string cmdText, params object[] parameter);
 
         // Summary:
         //   断开模式（Off Mode）管理数据 
@@ -134,7 +132,7 @@ namespace DbKitX
 
         private string ConnectionString { set; get; }
 
-        public SqlDataReader reader = null;
+        public SqlDataReader DataReader = null;
 
         // Override
         public void Connect()
@@ -174,7 +172,7 @@ namespace DbKitX
                 }
                 else
                 {
-                    reader = cmd.ExecuteReader(CommandBehavior.CloseConnection); // 查询后关闭连接 CommandBehavior.CloseConnection
+                    DataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection); // 查询后关闭连接 CommandBehavior.CloseConnection
                 }
 
                 cmd.Cancel(); // 终止执行sql
@@ -187,7 +185,7 @@ namespace DbKitX
             {
                 T readData = (T)cmd.ExecuteScalar();
 
-                reader = cmd.ExecuteReader(); // 执行SQL语句
+                //DataReader = cmd.ExecuteReader(); // 执行SQL语句
 
                 cmd.Cancel(); // 终止执行sql
 
@@ -195,22 +193,72 @@ namespace DbKitX
             }
         }
 
+        // Summary:
+        //   Override - 实现查询并返回查询结果集
         public T ManageData<T>(string sql, params object[] param)
         {
             using (SqlCommand cmd = new SqlCommand(sql, DbConnection))
             {
                 if (param.Length != 0)
                 {
-                    SqlParameter[] parameters = (SqlParameter[])param;
+                    SqlParameter[] parameters = (SqlParameter[])param; // 设置参数
 
                     cmd.Parameters.AddRange(parameters);
                 }
 
-                reader = cmd.ExecuteReader();
+                DataReader = cmd.ExecuteReader();
 
                 cmd.Cancel(); //  终止执行sql
 
-                return (T)((object)reader); // 装箱与拆箱
+                return (T)((object)DataReader); // 装箱与拆箱
+            }
+        }
+
+        // Summary:
+        //   Override - 泛型，对数据库数据进行增删改查管理
+        // 
+        // Parameters:
+        //   excuteType:
+        //     执行类型，三个值 - 0，1，2
+        //
+        //   cmdText:
+        //     SQL语句，带参或不带参
+        //
+        //   parameter:
+        //     SqlParameter参数数组
+        //
+        public T ManageData<T>(int executeType, string cmdText, params object[] parameter)
+        {
+            using (SqlCommand cmd = new SqlCommand(cmdText, DbConnection))
+            {
+                if (parameter.Length != 0)
+                {
+                    SqlParameter[] parameters = (SqlParameter[])parameter; // 设置参数
+
+                    cmd.Parameters.AddRange(parameters);
+                }
+
+                object result = null;
+
+                switch (executeType.ToString()) // 判断执行类型
+                {
+                    case "0":  
+                        result = cmd.ExecuteNonQuery(); // ExecuteNonQuery
+                        break;
+
+                    case "1":  
+                        result = cmd.ExecuteScalar();   // ExecuteScalar
+                        break;
+
+                    case "2":
+                        DataReader = cmd.ExecuteReader();   // ExecuteReader
+                        result = DataReader;
+                        break;
+                }
+
+                cmd.Cancel(); //  终止执行sql
+
+                return (T)result; // 拆箱
             }
         }
 
@@ -239,9 +287,9 @@ namespace DbKitX
         //   关闭阅读器
         public void CloseReader()
         {
-            if (!reader.IsClosed)
+            if (DataReader != null && !DataReader.IsClosed)
             {
-                reader.Close();
+                DataReader.Close();
             }
         }
 
@@ -252,6 +300,7 @@ namespace DbKitX
             CloseDb();     // 关闭数据库
         }
 
+       
         public MsSqlConnector() { }
 
         public MsSqlConnector(string dbName)
@@ -315,5 +364,9 @@ namespace DbKitX
             throw new NotImplementedException();
         }
 
+        public T ManageData<T>(int executeType, string cmdText, params object[] parameters)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
