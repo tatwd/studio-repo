@@ -18,41 +18,76 @@ public partial class Test : System.Web.UI.Page
 
     protected void SignInBtn_Click(object sender, EventArgs e)
     {
+        QueryUser();
+    }
+
+    protected void SignUpBtn_Click(object sender, EventArgs e)
+    {
+        AddUser();
+    }
+
+    protected void QueryUser()
+    {
         try
         {
-            Connector connector = ConnecterFactory.GetConnector("MSSQL");
+            // --------------------
 
-            connector.Connect("TestDB");
+            //Connector connector = ConnecterFactory.GetConnector("MSSQL");
 
-            string selectSql1 = "select * from user_info";
-            string selectSql2 = "select * from user_info where username = @username and password = @password";
+            //connector.Connect("TestDB");
 
-            // connector.ManageData(Manager.SELECT, sql);
+            //string selectSql1 = "select * from user_info";
+            //string selectSql2 = "select * from user_info where username = @username and password = @password";
 
-            //int data = connector.ManageData<int>(Manager.SELECT, sql);
+            //// connector.ManageData(Manager.SELECT, sql);
 
-            //prompt.InnerText = data.ToString();
+            ////int data = connector.ManageData<int>(Manager.SELECT, sql);
 
-            SqlDataReader reader = null;
+            ////prompt.InnerText = data.ToString();
 
-            SqlParameter[] param = new SqlParameter[]
+            //SqlDataReader reader = null;
+
+            //SqlParameter[] param = new SqlParameter[]
+            //{
+            //    new SqlParameter("@username", Username.Text.Trim()),
+            //    new SqlParameter("@password", Password.Text.Trim())
+            //};
+
+            ////reader = connector.ManageData<SqlDataReader>(sql, param); // 执行带参SQL语句并返回SqlDataReader对象
+
+            //int id = connector.ManageData<int>(1, selectSql2, param);
+
+            //reader = connector.ManageData<SqlDataReader>(2, selectSql2, param);
+
+            //ViewData1.DataSource = reader;
+            //ViewData1.DataBind();
+
+            //prompt.InnerText = id.ToString();
+
+            //connector.CloseAll();
+
+            // --------------------
+
+            string username = Username.Text.Trim();
+            string password = Password.Text.Trim();
+
+            string tmp = String.Format("select * from [user_info] where [username] = '{0}' and [password] = '{1}'", username, password);
+
+            string cnnStr = System.Configuration.ConfigurationManager.ConnectionStrings["TestDB"].ConnectionString;
+
+            using (SqlConnection cnn = new SqlConnection(cnnStr))
             {
-                new SqlParameter("@username", Username.Text.Trim()),
-                new SqlParameter("@password", Password.Text.Trim())
-            };
+                SqlDataAdapter adapter = new SqlDataAdapter(tmp, cnn);
 
-            //reader = connector.ManageData<SqlDataReader>(sql, param); // 执行带参SQL语句并返回SqlDataReader对象
+                DataSet ds = new DataSet();
 
-            int id = connector.ManageData<int>(1, selectSql2, param);
+                adapter.Fill(ds);
 
-            reader = connector.ManageData<SqlDataReader>(2, selectSql2, param);
+                ViewData1.DataSource = ds;
+                ViewData1.DataBind();
 
-            ViewData1.DataSource = reader;
-            ViewData1.DataBind();
+            }
 
-            prompt.InnerText = id.ToString();
-
-            connector.CloseAll();
         }
         catch (Exception ex)
         {
@@ -60,35 +95,71 @@ public partial class Test : System.Web.UI.Page
         }
     }
 
-    protected void SignUpBtn_Click(object sender, EventArgs e)
+    protected void AddUser()
     {
         string username = Username.Text.Trim();
         string password = Password.Text.Trim();
 
-        string tmp = String.Format("select count(*) from user_info where username = '{0}'", username);
-        string sql = String.Format("insert into user_info(username, password) values('{0}', '{1}')", username, password);
+        string tmp = String.Format("select count([user_id]) from [user_info] where [username] = '{0}'", username);
+        string sql = String.Format("insert into [user_info](username, password) values('{0}', '{1}')", username, password);
 
         try
         {
-            Connector msConn = ConnecterFactory.GetConnector("MSSQL");
+            // --------------------------
 
-            msConn.Connect("TestDB");       // 连接数据库
+            //Connector msConn = ConnecterFactory.GetConnector("MSSQL");
 
-            if (msConn.ManageData<int>(1, tmp) == 0)
+            //msConn.Connect("TestDB");       // 连接数据库
+
+            //if (msConn.ManageData<int>(1, tmp) == 0)
+            //{
+            //    msConn.ManageData<int>(0, sql); // 插入数据
+            //}
+            //else
+            //{
+            //    prompt.InnerText = "已注册！";
+            //}
+
+            //SqlDataReader reader = msConn.ManageData<SqlDataReader>(2, "select * from user_info");
+
+            //ViewData1.DataSource = reader;
+            //ViewData1.DataBind();
+
+            //msConn.CloseAll();  // a bug here!!! 
+
+            // --------------------------
+
+            string cnnStr = System.Configuration.ConfigurationManager.ConnectionStrings["TestDB"].ConnectionString;
+
+            using (SqlConnection cnn = new SqlConnection(cnnStr))
             {
-                msConn.ManageData<int>(0, sql); // 插入数据
+                SqlDataAdapter adapter = new SqlDataAdapter(tmp, cnn);
+
+                DataSet ds = new DataSet();
+                
+                //DataTable tb = new DataTable();
+
+                adapter.Fill(ds);
+
+                if (ds.Tables[0].Rows[0][0].ToString() == "0")
+                {
+                    //adapter.InsertCommand = new SqlCommand(sql, cnn);
+
+                    //adapter.Update(ds);
+
+                    //ViewData1.DataSource = ds;
+                    //ViewData1.DataBind();
+
+                    prompt.InnerText = "未注册";
+
+                }
+                else
+                {
+                    prompt.InnerText = "已注册";
+
+                }
+
             }
-            else
-            {
-                prompt.InnerText = "已注册！";
-            }
-
-            SqlDataReader reader = msConn.ManageData<SqlDataReader>(2, "select * from user_info");
-
-            ViewData1.DataSource = reader;
-            ViewData1.DataBind();
-
-            msConn.CloseAll();  // a bug here!!! 
 
         }
         catch (Exception ex)
