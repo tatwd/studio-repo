@@ -53,6 +53,10 @@ namespace DbKitX
         {
             SetConnectorClassName(dbType);  // 获取连接器类名
 
+            // TODO: 反射实现带参的类创建
+            //
+            // eg: object[] param = new object[]{ ... } or not ?
+
             return (Connector)Assembly.Load(AssemblyName).CreateInstance(ConnectorClassName); // 利用反射创建一个连接器
         }
 
@@ -120,14 +124,17 @@ namespace DbKitX
         //       2 - 执行查询语句并返回DataReader数据集
         //
         //   procdureName:
-        //      存储过程名
+        //     存储过程名
+        //   
+        //   securityType:
+        //     安全类型 
         // 
         //   parameter:
         //     SqlParameter参数数组
         //
         //  TODO: how to declare this method?
         //
-        // T ManageData<T>(int executeType, string procdureName, string sec, params object[] parameter);
+        // T ManageData<T>(int executeType, string procdureName, string securityType, params object[] parameter);
 
         // Summary:
         //   断开模式（Off Mode）管理数据 
@@ -150,7 +157,7 @@ namespace DbKitX
     }
 
     // Summary:
-    //   MsSqlConnector SqlServer连接器
+    //   MsSqlConnector - SqlServer连接器
     //
     public class MsSqlConnector : Connector
     {
@@ -177,7 +184,7 @@ namespace DbKitX
         {
             SetConnectionString(dbName); // 设置连接字符串
 
-            this.DbConnection = new SqlConnection(this.ConnectionString);
+            DbConnection = new SqlConnection(ConnectionString); // 创建连接对象
 
             OpenDb();
         }
@@ -185,7 +192,7 @@ namespace DbKitX
         // Override
         public void SetConnectionString(string dbName)
         {
-            if (this.ConnectionString != "")
+            if (ConnectionString != "")
             {
                 ConnectionString = ConfigurationManager.ConnectionStrings[dbName].ConnectionString; // 从Web.config中获取连接字符串
             }
@@ -306,7 +313,7 @@ namespace DbKitX
     }
 
     // Summary:
-    //   This class is for 'MYSQL'.
+    //   MySqlConnector - MySql连接器
     //
     // TODO 
     //
