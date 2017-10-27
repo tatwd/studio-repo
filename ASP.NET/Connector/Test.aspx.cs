@@ -107,59 +107,73 @@ public partial class Test : System.Web.UI.Page
         {
             // --------------------------
 
-            //Connector msConn = ConnecterFactory.GetConnector("MSSQL");
+            Connector msConn = ConnecterFactory.GetConnector("TestDB");
 
-            //msConn.Connect("TestDB");       // 连接数据库
+            msConn.Connect("TestDB");       // 连接数据库
 
-            //if (msConn.ManageData<int>(1, tmp) == 0)
-            //{
-            //    msConn.ManageData<int>(0, sql); // 插入数据
-            //}
-            //else
-            //{
-            //    prompt.InnerText = "已注册！";
-            //}
+            if (!msConn.HasData(tmp))
+            {
+                msConn.ManageData<int>(0, sql); // 插入数据
 
-            //SqlDataReader reader = msConn.ManageData<SqlDataReader>(2, "select * from user_info");
+                prompt.InnerText = "注册成功！";
+            }
+            else
+            {
+                prompt.InnerText = "已注册！";
+            }
 
-            //ViewData1.DataSource = reader;
-            //ViewData1.DataBind();
+            string selectSql2 = "select * from [user_info] where username = @username and password = @password";
 
-            //msConn.CloseAll();  // a bug here!!! 
+            SqlParameter[] param = new SqlParameter[]
+            {
+                new SqlParameter("@username", Username.Text.Trim()),
+                new SqlParameter("@password", Password.Text.Trim())
+            };
+
+            //SqlDataReader reader = msConn.ManageData<SqlDataReader>(2, "select * from [user_info]");
+
+            SqlDataReader reader = msConn.ManageData<SqlDataReader>(2, selectSql2, param);
+
+            ViewData1.DataSource = reader;
+            ViewData1.DataBind(); // this case, has no bug. why?
+
+            //prompt.InnerText = "debug";
+
+            msConn.CloseAll();  
 
             // --------------------------
 
-            string cnnStr = System.Configuration.ConfigurationManager.ConnectionStrings["TestDB"].ConnectionString;
+            //string cnnStr = System.Configuration.ConfigurationManager.ConnectionStrings["TestDB"].ConnectionString;
 
-            using (SqlConnection cnn = new SqlConnection(cnnStr))
-            {
-                SqlDataAdapter adapter = new SqlDataAdapter(tmp, cnn);
+            //using (SqlConnection cnn = new SqlConnection(cnnStr))
+            //{
+            //    SqlDataAdapter adapter = new SqlDataAdapter(tmp, cnn);
 
-                DataSet ds = new DataSet();
-                
-                //DataTable tb = new DataTable();
+            //    DataSet ds = new DataSet();
 
-                adapter.Fill(ds);
+            //    //DataTable tb = new DataTable();
 
-                if (ds.Tables[0].Rows[0][0].ToString() == "0")
-                {
-                    //adapter.InsertCommand = new SqlCommand(sql, cnn);
+            //    adapter.Fill(ds);
 
-                    //adapter.Update(ds);
+            //    if (ds.Tables[0].Rows[0][0].ToString() == "0")
+            //    {
+            //        //adapter.InsertCommand = new SqlCommand(sql, cnn);
 
-                    //ViewData1.DataSource = ds;
-                    //ViewData1.DataBind();
+            //        //adapter.Update(ds);
 
-                    prompt.InnerText = "未注册";
+            //        //ViewData1.DataSource = ds;
+            //        //ViewData1.DataBind();
 
-                }
-                else
-                {
-                    prompt.InnerText = "已注册";
+            //        prompt.InnerText = "未注册";
 
-                }
+            //    }
+            //    else
+            //    {
+            //        prompt.InnerText = "已注册";
 
-            }
+            //    }
+
+            //}
 
         }
         catch (Exception ex)

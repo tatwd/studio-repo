@@ -23,41 +23,52 @@ namespace DbKitX
     //
     public class ConnecterFactory
     {
-        // 连接器类名
-        private static string ConnectorClassName { set; get; }
-
-        // 获取当前程序集全名，只读
-        private static readonly string AssemblyName = Assembly.GetExecutingAssembly().FullName;
+        // Summary:
+        //   连接器类名，只读
+        //   如果在Web.config中设置了数据库类型（DbType）的节点，则从其中读取：
+        //    
+        //   private static string ConnectorClassName
+        //   {
+        //       set
+        //       {
+        //           string className = ConfigurationManager.AppSettings["DbType"]; // 获取Web.config中的数据库类型
+        //
+        //           if (className.Equals("MSSQL", StringComparison.CurrentCultureIgnoreCase))
+        //           {
+        //               value = "DbKitX.MsSqlConnector"; // for mssql
+        //           }
+        //           else (className.Equals("MYSQL", StringComparison.CurrentCultureIgnoreCase))
+        //           {
+        //               value = "DbKitX.MySqlConnector"; // for mysql
+        //           }
+        //       }
+        //       get
+        //       {
+        //           return ConnectorClassName;
+        //       }
+        //   }
+        //
+        private static readonly string ConnectorClassName = "DbKitX.MsSqlConnector";
 
         // Summary:
-        //   根据数据库类型来设置连接器类名
-        //
-        // Parameters:
-        //   dbType:
-        //     数据库类型
-        public static void SetConnectorClassName(string dbType)
-        {
-            if (dbType.Equals("MSSQL", StringComparison.CurrentCultureIgnoreCase)) // 忽视大小写
-            {
-                ConnectorClassName = "DbKitX.MsSqlConnector";  // for mssql
-            }
-            else if(dbType.Equals("MYSQL", StringComparison.CurrentCultureIgnoreCase))
-            {
-                ConnectorClassName = "DbKitX.MySqlConnector";  // for mysql
-            }
-        }
+        //   获取当前程序集全名，只读
+        // private static readonly string AssemblyName = Assembly.GetExecutingAssembly().FullName;
 
         // Summary:
         //   根据数据库类型，获取一个通用连接数据库对象
-        public static Connector GetConnector(string dbType)
+        public static Connector GetConnector(string dbConnStrName)
         {
-            SetConnectorClassName(dbType);  // 获取连接器类名
+            // return (Connector)Assembly.Load(AssemblyName).CreateInstance(ConnectorClassName); // 利用Assembly反射创建一个连接器
 
-            // TODO: 反射实现带参的类创建
             //
-            // eg: object[] param = new object[]{ ... } or not ?
+            // TODO: 反射实现带参的类创建
 
-            return (Connector)Assembly.Load(AssemblyName).CreateInstance(ConnectorClassName); // 利用反射创建一个连接器
+            // Test Module ???
+
+            Type     classType = Type.GetType(ConnectorClassName);                // 获取构造类型
+            object[] parameter = new object[] { dbConnStrName };              // 构造函数参数
+
+            return (Connector)Activator.CreateInstance(classType, parameter); // 利用用Activator反射创建类
         }
 
         // -------------------------------------
@@ -109,7 +120,7 @@ namespace DbKitX
         //     SQL语句，带参或不带参
         //
         //   parameter:
-        //     SqlParameter参数数组
+        //     SQL参数数组
         //
         T ManageData<T>(int executeType, string cmdText, params object[] parameter);
 
@@ -137,8 +148,33 @@ namespace DbKitX
         // T ManageData<T>(int executeType, string procdureName, string securityType, params object[] parameter);
 
         // Summary:
-        //   断开模式（Off Mode）管理数据 
+        //   断开模式（Off Mode）管理数据
+        //
         void ManageDataOffMode();
+
+        // Summary:
+        //   断开模式查询数据库，支持带参查询
+        //
+        // Parameters:
+        //   cmdText:
+        //     查询语句字符串
+        //
+        //   parameter:
+        //     SQL参数数组
+        // DataSet ManageDataOffMode(string cmdText, params object[] parameter);
+
+        // void ManageDataOffMode(string tableName, params object[] parameter);
+
+        // Summary:
+        //   判断数据库中是否已存在该项
+        //
+        // Parameters:
+        //   cmdText:
+        //     SQL语句，带参或不带参
+        //
+        //   parameter:
+        //     SQL参数数组
+        bool HasData(string cmdText, params object[] parameter);
 
         // Summary:
         //   打开数据库
@@ -171,12 +207,16 @@ namespace DbKitX
 
         // Summary:
         //   数据阅读器
-        public SqlDataReader DataReader = null;
+        private SqlDataReader DataReader { set; get; }
 
         // Override
         public void Connect()
         {
-            // TODO
+            //SetConnectionString(dbName); // 设置连接字符串
+
+            //DbConnection = new SqlConnection(ConnectionString); // 创建连接对象
+
+            OpenDb();
         }
 
         // Override
@@ -218,7 +258,7 @@ namespace DbKitX
                 if (parameter.Length != 0)
                 {
                     SqlParameter[] parameters = (SqlParameter[])parameter; // 设置参数
-
+                    
                     cmd.Parameters.AddRange(parameters);
                 }
 
@@ -259,6 +299,12 @@ namespace DbKitX
         public void ManageDataOffMode()
         {
             throw new NotImplementedException();
+        }
+
+        // Override
+        public bool HasData(string cmdText, params object[] parameter)
+        {
+            return (ManageData<int>(1, cmdText, parameter) != 0) ? true : false;
         }
 
         // Override
@@ -306,9 +352,9 @@ namespace DbKitX
         // Parameters:
         //   dbName:
         //     The name of database connection string in Web.config. 
-        public MsSqlConnector(string dbName)
+        public MsSqlConnector(string connStrName)
         {
-            SetConnectionString(dbName);
+            Connect(connStrName);
         }
     }
 
@@ -348,6 +394,12 @@ namespace DbKitX
 
         // Override
         public void ManageDataOffMode()
+        {
+            throw new NotImplementedException();
+        }
+
+        // Override
+        public bool HasData(string cmdText, params object[] parameter)
         {
             throw new NotImplementedException();
         }
