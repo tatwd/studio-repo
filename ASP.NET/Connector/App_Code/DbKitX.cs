@@ -237,9 +237,6 @@ namespace DbKitX
 
         // Summary:
         //   关闭所有资源
-        //
-        // TODO: has bug or not ?
-        //
         void CloseAll();
     }
 
@@ -459,6 +456,7 @@ namespace DbKitX
             return dataSet;
         }
 
+        // Override
         public DataTable GetDataTable(string cmdText, params object[] parameter)
         {
             DataTable dataTable = new DataTable();
