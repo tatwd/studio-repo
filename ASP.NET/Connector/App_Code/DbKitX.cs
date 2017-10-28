@@ -24,8 +24,8 @@ namespace DbKitX
     public class ConnecterFactory
     {
         // Summary:
-        //   连接器类名，只读
-        //   如果在Web.config中设置了数据库类型（DbType）的节点，则从其中读取：
+        //   连接器类名
+        //   如果在Web.config中设置了数据库类型（DbType）的节点，则可依下列方法从中读取：
         //    
         //   private static string ConnectorClassName
         //   {
@@ -33,7 +33,7 @@ namespace DbKitX
         //       {
         //           string className = ConfigurationManager.AppSettings["DbType"]; // 获取Web.config中的数据库类型
         //
-        //           if (className.Equals("MSSQL", StringComparison.CurrentCultureIgnoreCase))
+        //           if (className.Equals("MSSQL", StringComparison.CurrentCultureIgnoreCase)) // 忽略大小写
         //           {
         //               value = "DbKitX.MsSqlConnector"; // for mssql
         //           }
@@ -56,17 +56,21 @@ namespace DbKitX
 
         // Summary:
         //   根据数据库类型，获取一个通用连接数据库对象
-        public static Connector GetConnector(string dbConnStrName)
+        //
+        // Parameters:
+        //   dbConnStrName:
+        //     在Web.config中设置的数据库连接字符串名称，可变参数数组
+        //
+        public static Connector GetConnector(params string[] dbConnStrName)
         {
             // return (Connector)Assembly.Load(AssemblyName).CreateInstance(ConnectorClassName); // 利用Assembly反射创建一个连接器
 
             //
-            // TODO: 反射实现带参的类创建
+            // 反射实现带参类的创建
 
-            // Test Module ???
+            Type classType = Type.GetType(ConnectorClassName); // 获取构造类型
 
-            Type     classType = Type.GetType(ConnectorClassName);                // 获取构造类型
-            object[] parameter = new object[] { dbConnStrName };              // 构造函数参数
+            object[] parameter = (dbConnStrName.Length == 1) ? dbConnStrName : null; // 设置构造函数参数，最多传入一个参数
 
             return (Connector)Activator.CreateInstance(classType, parameter); // 利用用Activator反射创建类
         }
@@ -79,17 +83,21 @@ namespace DbKitX
     }
 
     // Summary
-    //   Connector 连接器 - 接口, 定义了一些与ADO.NET相关的通用方法，包含连接模式（SOME OK）和断开模式（TODO）
+    //   Connector 连接器 - 接口, 定义了一些与ADO.NET相关的通用方法，包含连接模式（Maybe OK）和断开模式（TODO）
     //
     public interface Connector
     {
         // Summary:
-        //   Connect database.
+        //   连接数据库
         void Connect();
 
         // Summary:
-        //   Connect database with a connection string.
-        void Connect(string dbName);
+        //   完成连接字符串的获取、连接对象的创建及打开数据库
+        //
+        // Parameters:
+        //   dbConnStrName:
+        //     在Web.config中设置的数据库连接字符串名称
+        void Connect(string dbConnStrName);
 
         // Summary:
         //   设置连接字符串
@@ -97,7 +105,7 @@ namespace DbKitX
         // Parameters:
         //   dbName:
         //     数据库名
-        void SetConnectionString(string dbName);
+        // void SetConnectionString(string dbName);
 
         // Summary:
         //   连接模式（On Mode）管理数据
@@ -198,15 +206,15 @@ namespace DbKitX
     public class MsSqlConnector : Connector
     {
         // Summary:
-        //   数据库连接对象
+        //   数据库连接对象，私有
         private SqlConnection DbConnection { set; get; }
 
         // Summary:
-        //   连接字符串
+        //   连接字符串，私有
         private string ConnectionString { set; get; }
 
         // Summary:
-        //   数据阅读器
+        //   数据阅读器，私有
         private SqlDataReader DataReader { set; get; }
 
         // Override
@@ -220,21 +228,29 @@ namespace DbKitX
         }
 
         // Override
-        public void Connect(string dbName)
+        public void Connect(string dbConnStrName)
         {
-            SetConnectionString(dbName); // 设置连接字符串
+            SetConnectionString(dbConnStrName); // 设置连接字符串
 
-            DbConnection = new SqlConnection(ConnectionString); // 创建连接对象
+            if (DbConnection != null)
+            {
+                DbConnection = new SqlConnection(ConnectionString); // 创建连接对象
+            }
 
             OpenDb();
         }
 
-        // Override
-        public void SetConnectionString(string dbName)
+        // Summary:
+        //   从Web.config中获取连接字符串，私有方法
+        //
+        // Parameters:
+        //   dbConnStrName:
+        //     在Web.config中设置的数据库连接字符串名称  
+        private void SetConnectionString(string dbConnStrName)
         {
             if (ConnectionString != "")
             {
-                ConnectionString = ConfigurationManager.ConnectionStrings[dbName].ConnectionString; // 从Web.config中获取连接字符串
+                ConnectionString = ConfigurationManager.ConnectionStrings[dbConnStrName].ConnectionString; // 从Web.config中获取连接字符串
             }
         }
 
@@ -343,18 +359,18 @@ namespace DbKitX
         }
         
         // Summary:
-        //   This is a constructor of the class without parameter.
+        //   无参构造函数
         public MsSqlConnector() { }
 
         // Summary:
-        //   A constructor with a parameter.
+        //   带参的构造函数，构造对象的同时进行连接字符串的获取、连接对象的创建及打开数据库
         //
         // Parameters:
-        //   dbName:
-        //     The name of database connection string in Web.config. 
-        public MsSqlConnector(string connStrName)
+        //   dbConnStrName:
+        //      在Web.config中设置的数据库连接字符串名称
+        public MsSqlConnector(string dbConnStrName)
         {
-            Connect(connStrName);
+            Connect(dbConnStrName); // 完成连接字符串的获取、连接对象的创建及打开数据库
         }
     }
 

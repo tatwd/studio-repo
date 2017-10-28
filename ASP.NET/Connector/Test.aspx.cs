@@ -109,7 +109,7 @@ public partial class Test : System.Web.UI.Page
 
             Connector msConn = ConnecterFactory.GetConnector("TestDB");
 
-            msConn.Connect("TestDB");       // 连接数据库
+            //msConn.Connect("TestDB");       // 连接数据库
 
             if (!msConn.HasData(tmp))
             {
