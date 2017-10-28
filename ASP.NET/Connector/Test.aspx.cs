@@ -100,80 +100,95 @@ public partial class Test : System.Web.UI.Page
         string username = Username.Text.Trim();
         string password = Password.Text.Trim();
 
-        string tmp = String.Format("select count([user_id]) from [user_info] where [username] = '{0}'", username);
-        string sql = String.Format("insert into [user_info](username, password) values('{0}', '{1}')", username, password);
+        string sql1 = String.Format("insert into [user_info](username, password) values('{0}', '{1}')", username, password);
+        //string sql2 = "select * from [user_info] where username = @username and password = @password";
+        //string sql3 = "select * from [user_info] where username = @username and password = @password";
+
+        //string tmp  = String.Format("select count([user_id]) from [user_info] where [username] = '{0}'", username);
+        string all  = "select * from [user_info]";
+
+
+        SqlParameter[] param = new SqlParameter[]
+        {
+            new SqlParameter("@username", Username.Text.Trim()),
+            new SqlParameter("@password", Password.Text.Trim())
+        };
 
         try
         {
-            // --------------------------
-
             Connector msConn = ConnecterFactory.GetConnector("TestDB");
 
-            //msConn.Connect("TestDB");       // 连接数据库
+            msConn.ManageDataOffMode("insert", "user_info", username, password);
 
-            if (!msConn.HasData(tmp))
-            {
-                msConn.ManageData<int>(0, sql); // 插入数据
+            DataSet ds = msConn.GetDataSet(all);
 
-                prompt.InnerText = "注册成功！";
-            }
-            else
-            {
-                prompt.InnerText = "已注册！";
-            }
-
-            string selectSql2 = "select * from [user_info] where username = @username and password = @password";
-
-            SqlParameter[] param = new SqlParameter[]
-            {
-                new SqlParameter("@username", Username.Text.Trim()),
-                new SqlParameter("@password", Password.Text.Trim())
-            };
-
-            //SqlDataReader reader = msConn.ManageData<SqlDataReader>(2, "select * from [user_info]");
-
-            SqlDataReader reader = msConn.ManageData<SqlDataReader>(2, selectSql2, param);
-
-            ViewData1.DataSource = reader;
+            ViewData1.DataSource = ds;
             ViewData1.DataBind(); // this case, has no bug. why?
 
-            //prompt.InnerText = "debug";
+        }
+        catch (Exception ex)
+        {
+            prompt.InnerText = ex.Message;
+        }
+    }
 
-            msConn.CloseAll();  
+    protected void UpdateBtn_Click(object sender, EventArgs e)
+    {
+        string username = Username.Text.Trim();
+        string password = Password.Text.Trim();
 
-            // --------------------------
+        string sql1 = String.Format("insert into [user_info](username, password) values('{0}', '{1}')", username, password);
+        string all = "select * from [user_info]";
 
-            //string cnnStr = System.Configuration.ConfigurationManager.ConnectionStrings["TestDB"].ConnectionString;
 
-            //using (SqlConnection cnn = new SqlConnection(cnnStr))
-            //{
-            //    SqlDataAdapter adapter = new SqlDataAdapter(tmp, cnn);
+        SqlParameter[] param = new SqlParameter[]
+        {
+            new SqlParameter("@username", Username.Text.Trim()),
+            new SqlParameter("@password", Password.Text.Trim())
+        };
 
-            //    DataSet ds = new DataSet();
+        try
+        {
+            Connector msConn = ConnecterFactory.GetConnector("TestDB");
 
-            //    //DataTable tb = new DataTable();
+            msConn.ManageDataOffMode("update", "user_info", 7, username, password);
 
-            //    adapter.Fill(ds);
+            DataSet ds = msConn.GetDataSet(all);
 
-            //    if (ds.Tables[0].Rows[0][0].ToString() == "0")
-            //    {
-            //        //adapter.InsertCommand = new SqlCommand(sql, cnn);
+            ViewData1.DataSource = ds;
+            ViewData1.DataBind(); // this case, has no bug. why?
 
-            //        //adapter.Update(ds);
+        }
+        catch (Exception ex)
+        {
+            prompt.InnerText = ex.Message;
+        }
+    }
 
-            //        //ViewData1.DataSource = ds;
-            //        //ViewData1.DataBind();
+    protected void DeleteBtn_Click(object sender, EventArgs e)
+    {
+        string username = Username.Text.Trim();
+        string password = Password.Text.Trim();
 
-            //        prompt.InnerText = "未注册";
+        string all = "select * from [user_info]";
 
-            //    }
-            //    else
-            //    {
-            //        prompt.InnerText = "已注册";
 
-            //    }
+        SqlParameter[] param = new SqlParameter[]
+        {
+            new SqlParameter("@username", Username.Text.Trim()),
+            new SqlParameter("@password", Password.Text.Trim())
+        };
 
-            //}
+        try
+        {
+            Connector msConn = ConnecterFactory.GetConnector("TestDB");
+
+            msConn.ManageDataOffMode("delete", "user_info", username, password);
+
+            DataSet ds = msConn.GetDataSet(all);
+
+            ViewData1.DataSource = ds;
+            ViewData1.DataBind();
 
         }
         catch (Exception ex)

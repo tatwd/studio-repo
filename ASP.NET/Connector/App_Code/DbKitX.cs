@@ -174,9 +174,23 @@ namespace DbKitX
         //
         //   parameter:
         //     SQL参数数组
-        // DataSet ManageDataOffMode(string cmdText, params object[] parameter);
+        // 
+        // Returns:
+        //   返回DataSet数据集
+        DataSet GetDataSet(string cmdText, params object[] parameter);
 
-        // void ManageDataOffMode(string tableName, params object[] parameter);
+        DataTable GetDataTable(string cmdText, params object[] parameter);
+
+        // Summary:
+        //   将设置好的数据表（dataTable）更新到数据库表（tableName）中
+        // 
+        // Parameters:
+        //   tableName:
+        //     数据库中表名
+        // 
+        //   dataRow:
+        //     已设置好的数据表行
+        void ManageDataOffMode(string manageType, string tableName, params object[] paramter);
 
         // Summary:
         //   判断数据库中是否已存在该项
@@ -241,7 +255,7 @@ namespace DbKitX
         {
             SetConnectionString(dbConnStrName); // 设置连接字符串
 
-            if (DbConnection != null)
+            if (DbConnection == null)
             {
                 DbConnection = new SqlConnection(ConnectionString); // 创建连接对象
             }
@@ -262,6 +276,30 @@ namespace DbKitX
                 ConnectionString = ConfigurationManager.ConnectionStrings[dbConnStrName].ConnectionString; // 从Web.config中获取连接字符串
             }
         }
+
+        // Summary:
+        //   设置SqlCommand的参数
+        private void setCommandParameter(ref SqlCommand cmd, params object[] parameter)
+        {
+            if (parameter.Length != 0)
+            {
+                SqlParameter[] parameters = (SqlParameter[])parameter; // 设置参数
+
+                cmd.Parameters.AddRange(parameters);
+
+            }
+        }
+
+        private void setDataRow(ref DataRow dataRow, params object[] parameter)
+        {
+            for (int i = 0, length = parameter.Length; i < length; i++)
+            {
+                dataRow[i + 1] = parameter[i]; // 主键为自增型
+            }
+        }
+
+        // Summary:
+        //   设置DataTable
 
         // Override
         //
@@ -327,6 +365,101 @@ namespace DbKitX
         }
 
         // Override
+        public DataSet GetDataSet(string cmdText, params object[] parameter)
+        {
+            DataSet dataSet = new DataSet();
+
+            using (SqlDataAdapter adapter = new SqlDataAdapter())
+            {
+                SqlCommand cmd = new SqlCommand(cmdText, DbConnection);
+
+                setCommandParameter(ref cmd, parameter); // 设置参数
+
+                adapter.SelectCommand = cmd;
+
+                adapter.Fill(dataSet);
+            }
+
+            return dataSet;
+        }
+
+        public DataTable GetDataTable(string cmdText, params object[] parameter)
+        {
+            DataTable dataTable = new DataTable();
+
+            using (SqlDataAdapter adapter = new SqlDataAdapter())
+            {
+                SqlCommand cmd = new SqlCommand(cmdText, DbConnection);
+
+                setCommandParameter(ref cmd, parameter); // 设置参数
+
+                adapter.SelectCommand = cmd;
+
+                adapter.Fill(dataTable);
+            }
+
+            return dataTable;
+        }
+
+        // Override
+        public void ManageDataOffMode(string manageType, string tableName, params object[] parameter)
+        {
+            string sql = String.Format("select * from [{0}]", tableName);
+
+            using (SqlDataAdapter adapter = new SqlDataAdapter(sql, DbConnection))
+            {
+                SqlCommandBuilder cmdBuilder = new SqlCommandBuilder(adapter);
+
+                DataTable dataTable = new DataTable();
+
+                adapter.Fill(dataTable); // 填充表
+
+                if (manageType.Equals("insert", StringComparison.CurrentCultureIgnoreCase)) // 插入
+                {
+                    DataRow newRow = dataTable.NewRow(); // 添加新纪录
+
+                    setDataRow(ref newRow, parameter);   // 设置数据行
+
+                    dataTable.Rows.Add(newRow);          // 添加到表中
+                    
+                    adapter.Update(dataTable);           // 更新数据库
+                }
+                else if (manageType.Equals("update", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns[0] }; // 设置主键
+
+                    DataRow row = dataTable.Rows.Find(parameter[0]);
+
+                    if (row != null)
+                    {
+                        row.BeginEdit();
+                        for (int i = 1, length = parameter.Length; i < length; i++)
+                        {
+                            row[i] = parameter[i];
+                        }
+                        row.EndEdit();
+                        adapter.Update(dataTable);
+                    }
+
+                }
+                else if (manageType.Equals("delete", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns[0] }; // 设置主键
+                    DataRow row = dataTable.Rows.Find(parameter[0]);
+
+                    // string selectRow = String.Format("username='{0}'", parameter[0]);
+                    // DataRow row = dataTable.Select(selectRow)[0];
+
+                    if (row != null)
+                    {
+                        row.Delete();
+                        adapter.Update(dataTable);
+                    }
+                }
+            }
+        }
+
+        // Override
         public bool HasData(string cmdText, params object[] parameter)
         {
             return (ManageData<int>(1, cmdText, parameter) != 0) ? true : false;
@@ -379,7 +512,12 @@ namespace DbKitX
         //      在Web.config中设置的数据库连接字符串名称
         public MsSqlConnector(string dbConnStrName)
         {
-            Connect(dbConnStrName); // 完成连接字符串的获取、连接对象的创建及打开数据库
+            SetConnectionString(dbConnStrName); // 设置连接字符串
+
+            if (DbConnection == null)
+            {
+                DbConnection = new SqlConnection(ConnectionString); // 创建连接对象
+            }
         }
     }
 
@@ -443,6 +581,26 @@ namespace DbKitX
 
         // Override
         public void CloseAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public DataSet GetDataSet(string cmdText, params object[] parameter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ManageDataOffMode(string manageType, string tableName, params object[] paramters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ManageDataOffMode(string manageType, string cmdText)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DataTable GetDataTable(string cmdText, params object[] parameter)
         {
             throw new NotImplementedException();
         }

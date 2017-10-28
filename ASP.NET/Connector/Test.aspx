@@ -21,6 +21,10 @@
         <p><asp:Button ID="SignInBtn" runat="server" Text="登录" OnClick="SignInBtn_Click"/></p>
 
         <p><asp:Button ID="SignUpBtn" runat="server" Text="注册" OnClick="SignUpBtn_Click"/></p>
+        
+        <p><asp:Button ID="UpdateBtn" runat="server" Text="更新" OnClick="UpdateBtn_Click"/></p>
+
+        <p><asp:Button ID="DeleteBtn" runat="server" Text="删除" OnClick="DeleteBtn_Click"/></p>
 
         <asp:GridView ID="ViewData1" runat="server"></asp:GridView>
         <asp:GridView ID="ViewData2" runat="server"></asp:GridView>
