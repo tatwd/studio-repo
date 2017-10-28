@@ -85,6 +85,8 @@ namespace DbKitX
     // Summary
     //   Connector 连接器 - 接口, 定义了一些与ADO.NET相关的通用方法，包含连接模式（Maybe OK）和断开模式（TODO）
     //
+    // TODO: 实行异步操作
+    //
     public interface Connector
     {
         // Summary:
@@ -129,6 +131,9 @@ namespace DbKitX
         //
         //   parameter:
         //     SQL参数数组
+        //
+        // Returns:
+        //   返回T类型数据
         //
         T ManageData<T>(int executeType, string cmdText, params object[] parameter);
 
@@ -182,6 +187,10 @@ namespace DbKitX
         //
         //   parameter:
         //     SQL参数数组
+        //
+        // Returns:
+        //   返回bool值，true表示存在，false表示不存在
+        //
         bool HasData(string cmdText, params object[] parameter);
 
         // Summary:
