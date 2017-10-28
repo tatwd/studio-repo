@@ -32,12 +32,12 @@ public partial class Test : System.Web.UI.Page
         {
             // --------------------
 
-            //Connector connector = ConnecterFactory.GetConnector("MSSQL");
+            Connector connector = ConnecterFactory.GetConnector();
 
-            //connector.Connect("TestDB");
+            connector.Connect("TestDB");
 
             //string selectSql1 = "select * from user_info";
-            //string selectSql2 = "select * from user_info where username = @username and password = @password";
+            string selectSql2 = "select * from user_info where username = @username and password = @password";
 
             //// connector.ManageData(Manager.SELECT, sql);
 
@@ -45,48 +45,26 @@ public partial class Test : System.Web.UI.Page
 
             ////prompt.InnerText = data.ToString();
 
-            //SqlDataReader reader = null;
+            SqlDataReader reader = null;
 
-            //SqlParameter[] param = new SqlParameter[]
-            //{
-            //    new SqlParameter("@username", Username.Text.Trim()),
-            //    new SqlParameter("@password", Password.Text.Trim())
-            //};
+            SqlParameter[] param = new SqlParameter[]
+            {
+                new SqlParameter("@username", Username.Text.Trim()),
+                new SqlParameter("@password", Password.Text.Trim())
+            };
 
             ////reader = connector.ManageData<SqlDataReader>(sql, param); // 执行带参SQL语句并返回SqlDataReader对象
 
-            //int id = connector.ManageData<int>(1, selectSql2, param);
+            int id = (int)connector.GetScalar(selectSql2, param);
 
-            //reader = connector.ManageData<SqlDataReader>(2, selectSql2, param);
+            //reader = (SqlDataReader)connector.GetDataReader(selectSql1);
 
             //ViewData1.DataSource = reader;
             //ViewData1.DataBind();
 
-            //prompt.InnerText = id.ToString();
+            prompt.InnerText = id.ToString();
 
-            //connector.CloseAll();
-
-            // --------------------
-
-            string username = Username.Text.Trim();
-            string password = Password.Text.Trim();
-
-            string tmp = String.Format("select * from [user_info] where [username] = '{0}' and [password] = '{1}'", username, password);
-
-            string cnnStr = System.Configuration.ConfigurationManager.ConnectionStrings["TestDB"].ConnectionString;
-
-            using (SqlConnection cnn = new SqlConnection(cnnStr))
-            {
-                SqlDataAdapter adapter = new SqlDataAdapter(tmp, cnn);
-
-                DataSet ds = new DataSet();
-
-                adapter.Fill(ds);
-
-                ViewData1.DataSource = ds;
-                ViewData1.DataBind();
-
-            }
+            connector.CloseAll();
 
         }
         catch (Exception ex)

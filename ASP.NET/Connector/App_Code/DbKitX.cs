@@ -83,7 +83,7 @@ namespace DbKitX
     }
 
     // Summary
-    //   Connector 连接器 - 接口, 定义了一些与ADO.NET相关的通用方法，包含连接模式（Maybe OK）和断开模式（TODO）
+    //   Connector 连接器 - 接口, 定义了一些与ADO.NET相关的通用方法，包含连接模式（Maybe OK）和断开模式（Maybe OK）
     //
     // TODO: 实行异步操作
     //
@@ -102,19 +102,32 @@ namespace DbKitX
         void Connect(string dbConnStrName);
 
         // Summary:
-        //   设置连接字符串
+        //   获取ExecuteReader执行的结果
         //
         // Parameters:
-        //   dbName:
-        //     数据库名
-        // void SetConnectionString(string dbName);
+        //   cmdText:
+        //     SQL语句字符串
+        //
+        //   parameter:
+        //     SQL参数数组
+        //
+        // Returns:
+        //   返回DataReader数据集
+        object GetDataReader(string cmdText, params object[] parameter);
 
         // Summary:
-        //   连接模式（On Mode）管理数据
+        //   获取ExecuteScalar执行的结果
         //
-        // TODO: delete or not delete ?
-        // 
-        void ManageData(string sql, params string[] param);
+        // Parameters:
+        //   cmdText:
+        //     SQL语句字符串
+        //
+        //   parameter:
+        //     SQL参数数组
+        //
+        // Returns:
+        //   返回一个object类型的数据
+        object GetScalar(string cmdText, params object[] parameter);
 
         // Summary:
         //   利用泛型对数据库数据进行增、删、改、查管理
@@ -161,11 +174,6 @@ namespace DbKitX
         // T ManageData<T>(int executeType, string procdureName, string securityType, params object[] parameter);
 
         // Summary:
-        //   断开模式（Off Mode）管理数据
-        //
-        void ManageDataOffMode();
-
-        // Summary:
         //   断开模式查询数据库，支持带参查询
         //
         // Parameters:
@@ -179,6 +187,18 @@ namespace DbKitX
         //   返回DataSet数据集
         DataSet GetDataSet(string cmdText, params object[] parameter);
 
+        // Summary:
+        //   断开模式下获取数据表
+        // 
+        // Parameters:
+        //   cmdText:
+        //     SQL语句字符串
+        //
+        //   parameters:
+        //     SQL参数数组
+        //
+        // Returns:
+        //   返回DataTable数据集
         DataTable GetDataTable(string cmdText, params object[] parameter);
 
         // Summary:
@@ -243,8 +263,8 @@ namespace DbKitX
         // Override
         public void Connect()
         {
-            //SetConnectionString(dbName); // 设置连接字符串
-
+            //setConnectionString(dbName); // 设置连接字符串
+            
             //DbConnection = new SqlConnection(ConnectionString); // 创建连接对象
 
             OpenDb();
@@ -253,14 +273,9 @@ namespace DbKitX
         // Override
         public void Connect(string dbConnStrName)
         {
-            SetConnectionString(dbConnStrName); // 设置连接字符串
-
-            if (DbConnection == null)
-            {
-                DbConnection = new SqlConnection(ConnectionString); // 创建连接对象
-            }
-
-            OpenDb();
+            setConnectionString(dbConnStrName); // 设置连接字符串
+            setDbConnection();                  // 创建连接对象
+            OpenDb();                           // 打开数据库
         }
 
         // Summary:
@@ -269,7 +284,7 @@ namespace DbKitX
         // Parameters:
         //   dbConnStrName:
         //     在Web.config中设置的数据库连接字符串名称  
-        private void SetConnectionString(string dbConnStrName)
+        private void setConnectionString(string dbConnStrName)
         {
             if (ConnectionString != "")
             {
@@ -278,7 +293,24 @@ namespace DbKitX
         }
 
         // Summary:
+        //   创建连接对象
+        private void setDbConnection()
+        {
+            if (DbConnection == null)
+            {
+                DbConnection = new SqlConnection(ConnectionString); // 创建连接对象
+            }
+        }
+
+        // Summary:
         //   设置SqlCommand的参数
+        //
+        // Parameters:
+        //   cmd:
+        //     SqlCommand对象，引用参数
+        //
+        //   parameters:
+        //     SQL参数数组
         private void setCommandParameter(ref SqlCommand cmd, params object[] parameter)
         {
             if (parameter.Length != 0)
@@ -286,10 +318,19 @@ namespace DbKitX
                 SqlParameter[] parameters = (SqlParameter[])parameter; // 设置参数
 
                 cmd.Parameters.AddRange(parameters);
-
             }
         }
 
+        // Summary:
+        //   设置数据行
+        // 
+        // Parameters:
+        //   dataRow:
+        //     数据行，引用参数
+        //
+        //   parameeter:
+        //     SQL参数数组
+        //
         private void setDataRow(ref DataRow dataRow, params object[] parameter)
         {
             for (int i = 0, length = parameter.Length; i < length; i++)
@@ -298,18 +339,59 @@ namespace DbKitX
             }
         }
 
-        // Summary:
-        //   设置DataTable
-
         // Override
-        //
-        // TODO: need to modify this method.
-        //
-        public void ManageData(string sql, params string[] param)
+        public object GetDataReader(string sql, params object[] parameter)
         {
             using (SqlCommand cmd = new SqlCommand(sql, DbConnection))
             {
-                // TODO
+                if (parameter.Length != 0)
+                {
+                    SqlParameter[] parameters = (SqlParameter[])parameter; // 设置参数
+
+                    cmd.Parameters.AddRange(parameters);
+                }
+
+                DataReader = cmd.ExecuteReader();
+
+                // cmd.Cancel();
+
+                return DataReader;
+            }
+        }
+
+        // Override
+        public object GetScalar(string sql, params object[] parameter)
+        {
+            using (SqlCommand cmd = new SqlCommand(sql, DbConnection))
+            {
+                if (parameter.Length != 0)
+                {
+                    SqlParameter[] parameters = (SqlParameter[])parameter; // 设置参数
+
+                    cmd.Parameters.AddRange(parameters);
+                }
+
+                return cmd.ExecuteScalar();
+            }
+        }
+
+        // Override
+        public int SetData(string sql, params object[] parameter)
+        {
+            using (SqlCommand cmd = new SqlCommand(sql, DbConnection))
+            {
+                if (parameter.Length != 0)
+                {
+                    SqlParameter[] parameters = (SqlParameter[])parameter; // 设置参数
+
+                    cmd.Parameters.AddRange(parameters);
+                }
+
+                int result = cmd.ExecuteNonQuery(); // 返回受影响的行数
+
+                // cmd.Cancel();
+
+                return result;
             }
         }
 
@@ -352,16 +434,10 @@ namespace DbKitX
                     cmd.Parameters.Clear(); // 清除SqlParameter
                 }
 
-                cmd.Cancel(); //  终止执行sql
+                // cmd.Cancel(); //  终止执行sql
 
                 return (T)result; // 拆箱
             }
-        }
-
-        // Override
-        public void ManageDataOffMode()
-        {
-            throw new NotImplementedException();
         }
 
         // Override
@@ -512,12 +588,8 @@ namespace DbKitX
         //      在Web.config中设置的数据库连接字符串名称
         public MsSqlConnector(string dbConnStrName)
         {
-            SetConnectionString(dbConnStrName); // 设置连接字符串
-
-            if (DbConnection == null)
-            {
-                DbConnection = new SqlConnection(ConnectionString); // 创建连接对象
-            }
+            setConnectionString(dbConnStrName); // 设置连接字符串
+            setDbConnection();                  // 创建连接对象
         }
     }
 
@@ -538,13 +610,13 @@ namespace DbKitX
         }
 
         // Override
-        public void SetConnectionString(string dbName)
+        public object GetDataReader(string sql, params object[] parameter)
         {
             throw new NotImplementedException();
         }
 
         // Override
-        public void ManageData(string sql, params string[] param)
+        public object GetScalar(string sql, params object[] parameter)
         {
             throw new NotImplementedException();
         }
@@ -556,7 +628,19 @@ namespace DbKitX
         }
 
         // Override
-        public void ManageDataOffMode()
+        public DataSet GetDataSet(string cmdText, params object[] parameter)
+        {
+            throw new NotImplementedException();
+        }
+
+        // Override
+        public DataTable GetDataTable(string cmdText, params object[] parameter)
+        {
+            throw new NotImplementedException();
+        }
+
+        // Override
+        public void ManageDataOffMode(string manageType, string tableName, params object[] paramters)
         {
             throw new NotImplementedException();
         }
@@ -584,25 +668,6 @@ namespace DbKitX
         {
             throw new NotImplementedException();
         }
-
-        public DataSet GetDataSet(string cmdText, params object[] parameter)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ManageDataOffMode(string manageType, string tableName, params object[] paramters)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ManageDataOffMode(string manageType, string cmdText)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DataTable GetDataTable(string cmdText, params object[] parameter)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
