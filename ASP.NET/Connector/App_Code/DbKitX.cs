@@ -336,6 +336,21 @@ namespace DbKitX
             }
         }
 
+        // Summary:
+        //   清除SqlParameter参数
+        //
+        // Parameters:
+        //   SqlCommand对象
+        private SqlCommand clearSqlParameter(SqlCommand cmd)
+        {
+            if (cmd.Parameters.Count != 0)
+            {
+                cmd.Parameters.Clear(); // 清除SqlParameter
+            }
+
+            return cmd;
+        }
+
         // Override
         public object GetDataReader(string sql, params object[] parameter)
         {
@@ -430,6 +445,8 @@ namespace DbKitX
                 {
                     cmd.Parameters.Clear(); // 清除SqlParameter
                 }
+
+                // clearSqlParameter(cmd);
 
                 // cmd.Cancel(); //  终止执行sql
 
