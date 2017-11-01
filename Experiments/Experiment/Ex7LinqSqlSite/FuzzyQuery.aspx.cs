@@ -22,24 +22,31 @@ public partial class FuzzyQuery : System.Web.UI.Page
 
         string searchMsg = txtSearch.Text.Trim();
 
-        var results = searchMsg != "" ? 
-                        from c in db.Category where SqlMethods.Like(c.Name, "%" + searchMsg + "%") select c:
-                        null;
+        var results = searchMsg != "" ? from c in db.Category where SqlMethods.Like(c.Name, "%" + searchMsg + "%") select c : null;
 
-        if (results.Count() != 0 && results != null) // bug here!
+        if (results != null)
         {
-            if (lbMsg.Text != null)
+            if (results.Count() != 0)
             {
-                lbMsg.Text = "";
-            }
+                if (lbMsg.Text != null)
+                {
+                    lbMsg.Text = "";
+                }
 
-            gvCategory.DataSource = results;
-            gvCategory.DataBind();
+                gvCategory.DataSource = results;
+                gvCategory.DataBind();
+
+            }
+            else
+            {
+                lbMsg.Text = "没有满足条件的数据！";
+            }
         }
         else
         {
-            lbMsg.Text = "没有满足条件的数据！";
+            lbMsg.Text = "不能为空！";
         }
+
     }
 
     protected void btnReturn_Click(object sender, EventArgs e)

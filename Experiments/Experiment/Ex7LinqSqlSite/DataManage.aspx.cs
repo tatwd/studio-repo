@@ -44,13 +44,16 @@ public partial class DataManage : System.Web.UI.Page
 
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        var results = from c in db.Category
-                      where c.CategoryId == int.Parse(txtCategoryId.Text.Trim())
-                      select c;
+        if (txtCategoryId.Text.Trim() != "")
+        {
+            var results = from c in db.Category
+                          where c.CategoryId == int.Parse(txtCategoryId.Text.Trim())
+                          select c;
 
-        db.Category.DeleteAllOnSubmit(results);
-        db.SubmitChanges();
+            db.Category.DeleteAllOnSubmit(results);
+            db.SubmitChanges();
 
-        Bind();
+            Bind();
+        }
     }
 }
