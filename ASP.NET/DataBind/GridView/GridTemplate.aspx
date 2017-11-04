@@ -29,7 +29,7 @@
             </UpdateParameters>
         </asp:SqlDataSource>
 
-        <asp:GridView ID="ViewData" runat="server" DataSourceID="StuDbSrc" AutoGenerateColumns="False">
+        <asp:GridView ID="ViewData" runat="server" DataSourceID="StuDbSrc" AutoGenerateColumns="False" DataKeyNames="MajorId">
             <Columns>
 
                 <asp:TemplateField>
@@ -43,12 +43,13 @@
 
                 <asp:BoundField DataField="MajorId" HeaderText="MajorId" ReadOnly="True" SortExpression="MajorId" />
                 <asp:BoundField DataField="MajorName" HeaderText="MajorName" SortExpression="MajorName" />
+                
                 <asp:CommandField HeaderText="编辑" ShowEditButton="True" ShowHeader="True" />
                 <asp:CommandField HeaderText="删除" ShowDeleteButton="True" ShowHeader="True" />
             </Columns>
         </asp:GridView>
 
-        <asp:LinkButton ID="DeleteAll" runat="server" OnClick="DeleteAll_Click">批量删除</asp:LinkButton>
+        <asp:LinkButton ID="DeleteMajor" runat="server" OnClick="DeleteMajor_Click">批量删除</asp:LinkButton>
     </div>
     </form>
 </body>
