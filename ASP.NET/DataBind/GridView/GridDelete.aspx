@@ -6,14 +6,6 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
-    <script>
-        function isDelete() {
-            return confirm('确定删除？');
-        }
-
-
-
-    </script>
 </head>
 <body>
     <form id="form1" runat="server">
