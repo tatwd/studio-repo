@@ -11,8 +11,6 @@ using System.Configuration;   // must
 using System.Data;
 using System.Data.SqlClient;  // for 'mssql'
 
-using MySql.Data.MySqlClient; // for 'mysql'
-
 namespace DbKitX
 {
     // 抽象工厂模式（Abstract factory pattern） + 反射（Reflection）
@@ -172,6 +170,27 @@ namespace DbKitX
         //  TODO: how to declare this method?
         //
         // T ManageData<T>(int executeType, string procdureName, string securityType, params object[] parameter);
+        // T ExecuteBySp<T>(string storedProcdurePName, pramas object[] parameter);
+        // x T ExecuteBySp<T>(string storedProcdurePName, string securityType, pramas object[] parameter);
+
+        // TODO
+        // object GetDataReader(string cmdText, params object[] parameter);
+        // object GetDataReader(string cmdText, string securityType, params object[] parameter);
+        // object GetDataReader(string stroredProcdureName, object cmdType, params object[] parameter);
+        // x object GetDataReader(string stroredProcdureName, object cmdType, string securityType, params object[] parameter);
+
+        // TODO
+        // object GetScalar(string cmdText, params object[] parameter);
+        // object GetScalar(string cmdText, string securityType, params object[] parameter);
+        // object GetScalar(string stroredProcdureName, object cmdType, params object[] parameter);
+        // x object GetScalar(string stroredProcdureName, object cmdType, string securityType, params object[] parameter);
+
+        // or GetData/GetXml/GetJson ?
+
+        // Execute(string cmdText, params object[] parameter);
+        // Execute(string cmdText, string securityType, params object[] parameter);
+        // Execute(string stroredProcdureName, object cmdType, params object[] parameter);
+        // x Execute(string stroredProcdureName, object cmdType, string securityType, params object[] parameter);
 
         // Summary:
         //   断开模式查询数据库，支持带参查询
@@ -606,83 +625,5 @@ namespace DbKitX
             setConnectionString(dbConnStrName); // 设置连接字符串
             setDbConnection();                  // 创建连接对象
         }
-    }
-
-    // Summary:
-    //   MySqlConnector - MySql连接器
-    //
-    // TODO 
-    //
-    public class MySqlConnector : Connector
-    {
-        // Override
-        public void Connect() { }
-
-        // Override
-        public void Connect(string dbName)
-        {
-            throw new NotImplementedException();
-        }
-
-        // Override
-        public object GetDataReader(string sql, params object[] parameter)
-        {
-            throw new NotImplementedException();
-        }
-
-        // Override
-        public object GetScalar(string sql, params object[] parameter)
-        {
-            throw new NotImplementedException();
-        }
-
-        // Override
-        public T ManageData<T>(int executeType, string cmdText, params object[] parameters)
-        {
-            throw new NotImplementedException();
-        }
-
-        // Override
-        public DataSet GetDataSet(string cmdText, params object[] parameter)
-        {
-            throw new NotImplementedException();
-        }
-
-        // Override
-        public DataTable GetDataTable(string cmdText, params object[] parameter)
-        {
-            throw new NotImplementedException();
-        }
-
-        // Override
-        public void ManageDataOffMode(string manageType, string tableName, params object[] paramters)
-        {
-            throw new NotImplementedException();
-        }
-
-        // Override
-        public bool HasData(string cmdText, params object[] parameter)
-        {
-            throw new NotImplementedException();
-        }
-
-        // Override
-        public void OpenDb()
-        {
-            throw new NotImplementedException();
-        }
-
-        // Override
-        public void CloseDb()
-        {
-            throw new NotImplementedException();
-        }
-
-        // Override
-        public void CloseAll()
-        {
-            throw new NotImplementedException();
-        }
-        
     }
 }
