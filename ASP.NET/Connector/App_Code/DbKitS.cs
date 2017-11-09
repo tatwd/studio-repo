@@ -77,7 +77,11 @@ namespace DbKitS
 
     public interface Connector
     {
-        // TODO: GetData/GetXml/GetJson ?
+        // TODO
+        // Summary:
+        //   设置安全参数
+        //
+        // void SetParameter(...)
 
         // Summary:
         //   执行SQL语句并返回结果
@@ -127,30 +131,87 @@ namespace DbKitS
         object Execute(string executeType, string cmdText, CommandType cmdType, params object[] cmdParams);
 
         // Summary:
-        //   断开模式下管理数据
-        //
-        // object ExecuteDisc(...)
-
-        // Summary:
         //   断开模式下，获取数据表（DataTable）
         //
+        // Parameters:
+        //   cmdText:
+        //     SQL语句，支持带安全参数
+        //
+        //   cmdParams:
+        //     安全参数数组
+        // 
+        // Returns:
+        //   返回数据表
         DataTable GetDataTable(string cmdText, params object[] cmdParams);
 
         // Summary:
+        //   断开模式下，获取数据表（DataTable）
         //   支持存储过程
         //
+        // Parameters:
+        //   cmdText:
+        //     SQL语句或存储过程名，支持带安全参数
+        //
+        //   cmdType:
+        //     CommandType类型，设置命令的类型
+        //
+        //   cmdParams:
+        //     安全参数数组
+        // 
+        // Returns:
+        //   返回数据表
         DataTable GetDataTable(string cmdText, CommandType cmdType, params object[] cmdParams);
 
         // Summary:
         //   断开模式下，获取数据集（DataSet）
+        //   支持存储过程
         //
+        // Parameters:
+        //   cmdText:
+        //     SQL语句或存储过程名，支持带安全参数
+        //
+        //   cmdParams:
+        //     安全参数数组
+        // 
+        // Returns:
+        //   返回数据集
         DataSet GetDataSet(string cmdText, params object[] cmdParams);
 
         // Summary:
+        //   断开模式下，获取数据集（DataSet）
         //   支持存储过程
         //
+        // Parameters:
+        //   cmdText:
+        //     SQL语句或存储过程名，支持带安全参数
+        //
+        //   cmdType:
+        //     CommandType类型，设置命令的类型
+        //
+        //   cmdParams:
+        //     安全参数数组
+        // 
+        // Returns:
+        //   返回数据集
         DataSet GetDataSet(string cmdText, CommandType cmdType, params object[] cmdParams);
 
+        // ---------
+        // TODO LIST
+        // ---------
+
+        // Crezy idea! ^-^
+
+        // Summary:
+        //   断开模式下删除数据行
+        //
+        // void DeleteRow(string cmdText, params object[] cmdParams);
+
+        // Summary:
+        //   断开模式下管理数据
+        //
+        // object ExecuteDisc(...)
+
+        // TODO: GetData/GetXml/GetJson ?
     }
 
     public class MsSqlConnector : Connector
