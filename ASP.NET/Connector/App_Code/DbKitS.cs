@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data;            // must
 using System.Data.SqlClient;  // must
-using System.Reflection;      // must 
 using System.Configuration;   // must
 
 using MySql.Data.MySqlClient;
@@ -24,15 +23,15 @@ namespace DbKitS
         //   {
         //       set
         //       {
-        //           string className = ConfigurationManager.AppSettings["DbType"]; // 获取Web.config中的数据库类型
+        //           string className = ConfigurationManager.AppSettings["DbType"]; // 获取配置文件中的数据库类型
         //
         //           if (className.Equals("MSSQL", StringComparison.CurrentCultureIgnoreCase)) // 忽略大小写
         //           {
-        //               value = "DbKitX.MsSqlConnector"; // for mssql
+        //               value = "DbKitS.MsSqlConnector"; // for mssql
         //           }
         //           else (className.Equals("MYSQL", StringComparison.CurrentCultureIgnoreCase))
         //           {
-        //               value = "DbKitX.MySqlConnector"; // for mysql
+        //               value = "DbKitS.MySqlConnector"; // for mysql
         //           }
         //       }
         //       get
@@ -56,7 +55,8 @@ namespace DbKitS
         //
         public static Connector GetConnector(params string[] dbConnStrName)
         {
-            // return (Connector)Assembly.Load(AssemblyName).CreateInstance(ConnectorClassName); // 利用Assembly反射创建一个连接器
+            // 需 using "System.Reflection"
+            // return (Connector)Assembly.Load(AssemblyName).CreateInstance(ConnectorClassName); // 利用 Assembly 反射创建一个连接器
 
             //
             // 反射实现带参类的创建
@@ -65,7 +65,7 @@ namespace DbKitS
 
             object[] parameter = (dbConnStrName.Length == 1) ? dbConnStrName : null; // 设置构造函数参数，最多传入一个参数
 
-            return (Connector)Activator.CreateInstance(classType, parameter); // 利用用Activator反射创建类
+            return (Connector)Activator.CreateInstance(classType, parameter); // 利用用 Activator 反射创建类
         }
 
         // -------------------------------------
@@ -234,7 +234,7 @@ namespace DbKitS
         {
             if (dbConnectionString != "")
             {
-                dbConnectionString = ConfigurationManager.ConnectionStrings[dbConnStrName].ConnectionString; // 从Web.config中获取连接字符串
+                dbConnectionString = ConfigurationManager.ConnectionStrings[dbConnStrName].ConnectionString; // 从配置文件中获取连接字符串
             }
         }
 
@@ -276,7 +276,7 @@ namespace DbKitS
         //
         // Parameters:
         //   dbConnStrName:
-        //     数据库连接字符串名，在web.config中
+        //     数据库连接字符串名，在配置文件中
         public MsSqlConnector(string dbConnStrName)
         {
             setDbConnectionString(dbConnStrName);
