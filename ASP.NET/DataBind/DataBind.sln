@@ -25,6 +25,27 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GridView", "GridView\", "{A
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Task", "Task\", "{987415DC-CB10-4401-ADB8-F2A18AC1C4C4}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_53173"
+		Debug.AspNetCompiler.PhysicalPath = "Task\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_53173\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_53173"
+		Release.AspNetCompiler.PhysicalPath = "Task\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_53173\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "53173"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +53,8 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A368B52B-ACBB-464F-A3D0-F8EF059F17B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A368B52B-ACBB-464F-A3D0-F8EF059F17B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{987415DC-CB10-4401-ADB8-F2A18AC1C4C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{987415DC-CB10-4401-ADB8-F2A18AC1C4C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
