@@ -171,6 +171,24 @@ a.active-link {
     margin: 0 auto;
 }
 
+.news-pager {
+    margin-top: 15px;
+    font-size: 15px;
+
+    text-align: center;
+}
+
+.num-btn {
+    padding: 0 5px;
+}
+
+.active-num {
+    color: #068dd2;
+    border: 1px solid #068dd2;
+    border-radius: 5px;
+    padding: 0 5px;
+}
+
 /* footer */
 
 .footer {
@@ -204,6 +222,8 @@ a.active-link {
     .news-container {
         width: 100%;
     }
+
+    .news-item  {
+        flex-direction: column;
+    }
 }
-
-
