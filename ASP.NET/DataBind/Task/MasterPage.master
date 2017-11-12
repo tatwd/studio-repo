@@ -1,0 +1,52 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link href="Styles/main.css" rel="stylesheet"/>
+
+    <asp:ContentPlaceHolder id="head" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="FormContainer" runat="server">
+    <div>
+        <div class="header">
+            <div class="logo">
+                <img src="Images/logo_60_60.png" alt="logo image"/>
+                <h1 class="site-name">我的网站</h1>
+            </div>
+            <div class="navi">
+                <div class="sign-box">
+                    <a class="active-link" href="Default.aspx">首页</a>
+                    <a href="#">登录</a>
+                    <a href="#">注册</a>
+                </div>
+                <div class="menu">
+                    <ul class="menu-nomarl">
+                        <li class="item"><a href="#">课程介绍</a></li>
+                        <li class="item"><a href="#">教学资源</a></li>
+                        <li class="item"><a href="#">教学成果</a></li>
+                        <li class="item"><a href="#">下载中心</a></li>
+                        <li class="item"><a href="#">精彩读物</a></li>
+                        <li class="item"><a href="#">在线答疑</a></li>
+                        <li class="item"><a href="#">在线练习</a></li>
+                        <li class="item"><a href="#">课程讨论</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="mainer">
+            <asp:ContentPlaceHolder id="ContentPlace" runat="server"></asp:ContentPlaceHolder>
+        </div>
+
+        <div class="footer">
+            <p class="copyright">@2017 _KING</p>
+        </div>
+    </div>
+    </form>
+</body>
+</html>

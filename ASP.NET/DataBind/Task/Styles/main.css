@@ -1,0 +1,209 @@
+﻿/* 
+ * Reset default styles
+ */
+
+body {
+    margin: 0;
+}
+
+h1,
+h2,
+h3 {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #234;
+}
+
+a:hover {
+    color: #068dd2;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.header {
+    padding-top: 15px;
+    border-top: 2px solid #068dd2;
+    background-color: #fff;
+}
+
+.logo {
+    text-align: center;
+}
+
+.site-name {
+    color: #068dd2;
+}
+
+.navi {
+}
+
+.sign-box {
+    padding: 15px 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sign-box a:nth-child(2) {
+    margin: 0 15px;
+}
+
+.sign-box a {
+    border-bottom: 1px solid #fff;
+}
+
+a.active-link {
+    border-bottom: 1px solid #068dd2;
+    color: #068dd2;
+}
+
+.menu {
+    border-top: 1px solid #068dd2;
+    border-bottom: 1px solid #068dd2;
+}
+
+.menu-nomarl {
+    display: flex;
+}
+
+.menu-nomarl .item {
+    flex: 1;
+    padding: 15px;
+    text-align: center;
+}
+
+/* mainer */
+
+.mainer {
+    padding: 15px;
+    background-color: #ddd;
+}
+
+.row-container {
+    display: flex;
+}
+
+.left {
+    flex: 2;
+    padding: 15px;
+}
+
+.right {
+    flex: 1;
+    padding: 15px;
+}
+
+.title {
+    display: flex;
+    justify-content: space-between;
+
+    background-color: #b7d6ec;
+    color: #068dd2;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.list {
+    margin-top: 15px;
+}
+
+.row {
+}
+
+.group {
+    display: flex;
+    margin-bottom: 25px;
+}
+
+.group .item {
+    flex: 1;
+    background-color: #fff;
+}
+
+.group .item:nth-child(2) {
+    margin: 0 45px;
+}
+
+.group .item:hover {
+    box-shadow: 0 0 5px #888;
+}
+ 
+.avatar {
+    text-align: center;
+    padding-top: 0px;
+    font-size: 0;
+}
+
+.avatar img {
+    height: 250px;
+    max-width: 100%;
+}
+
+.author {
+    text-align: center;
+}
+
+.news-list {
+    background-color: #fff;
+    padding: 15px;
+}
+
+.news-item {
+    border-bottom: 1px dashed #068dd2;
+    padding: 10px 0;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+/* News.aspx */
+
+.news-container {
+    width: 70%;
+    margin: 0 auto;
+}
+
+/* footer */
+
+.footer {
+    padding: 15px;
+}
+
+.copyright {
+    text-align: center;
+    color: #068dd2;
+}
+
+/* media */
+
+@media screen and (max-width: 768px) {
+    .menu-nomarl {
+        flex-direction: column;
+    }
+
+    .row-container {
+        flex-direction: column;
+    }
+
+    .group {
+        flex-direction: column;
+    }
+
+    .group .item:nth-child(2) {
+        margin: 25px 0;
+    }
+
+    .news-container {
+        width: 100%;
+    }
+}
+
+
