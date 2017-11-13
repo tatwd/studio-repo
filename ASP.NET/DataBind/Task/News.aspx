@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="News.aspx.cs" Inherits="News" %>
+﻿<%@ Page Title="News" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="News.aspx.cs" Inherits="News" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server"></asp:Content>
 
@@ -22,9 +22,9 @@
                     <div class="news-pager">
                         <asp:DataPager ID="NewsDataPager" runat="server" PageSize="8">
                             <Fields>
-                                <asp:NextPreviousPagerField FirstPageText="首页" ShowFirstPageButton="true" ShowPreviousPageButton="false"/>
+                                <asp:NextPreviousPagerField FirstPageText="首页" ShowFirstPageButton="true" ShowNextPageButton="false" PreviousPageText="&lt"/>
                                 <asp:NumericPagerField ButtonCount="3" CurrentPageLabelCssClass="active-num" NumericButtonCssClass="num-btn"/>
-                                <asp:NextPreviousPagerField LastPageText="尾页" ShowLastPageButton="true" ShowPreviousPageButton="false"/>
+                                <asp:NextPreviousPagerField LastPageText="尾页" ShowLastPageButton="true" ShowPreviousPageButton="false" NextPageText="&gt"/>
                             </Fields>
                         </asp:DataPager>
                     </div>
