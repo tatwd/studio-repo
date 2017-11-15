@@ -80,8 +80,15 @@ public partial class TestDbKitS : System.Web.UI.Page
             // 支持存储过程的执行
             SqlDataReader reader = (SqlDataReader)conn.Execute("reader", "GetUserInfo", CommandType.StoredProcedure, cmdParams);
 
-            ViewData.DataSource = reader;
-            ViewData.DataBind();
+            if (reader.Depth != 0)
+            {
+                ViewData.DataSource = reader;
+                ViewData.DataBind();
+            }
+            else
+            {
+                display.InnerText = "NULL";
+            }
         }
         catch (Exception ex)
         {
@@ -114,8 +121,10 @@ public partial class TestDbKitS : System.Web.UI.Page
 
             DataSet data = conn.GetDataSet("GetUserInfo", CommandType.StoredProcedure, cmdParams); // 支持存储过程
 
+            
             ViewData.DataSource = data;
             ViewData.DataBind();
+            
         }
         catch (Exception ex)
         {
