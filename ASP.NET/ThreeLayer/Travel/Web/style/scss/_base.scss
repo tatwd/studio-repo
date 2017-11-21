@@ -17,6 +17,10 @@ $main-display: flex;
 
 body {
     background-color: $wiht-color;
+    overflow-x: hidden;
+    margin: 0;
+
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 h4 {
@@ -185,8 +189,6 @@ ul {
     padding: $main-size;
 
     > .container {
-        //display: $main-display;
-        //flex-direction: column;
         max-width: 600px;
         margin: 0 auto;
 
@@ -224,6 +226,8 @@ ul {
             padding: $main-size / 3 $main-size;
             border-radius: $border-size * 2;
             cursor: pointer;
+
+            opacity: 0.5;
         }
     }
 }
@@ -239,7 +243,7 @@ ul {
         outline: 1px solid $main-color;
     }*/
 
-    > .placeholder {
+    /*> .placeholder {
         position: absolute;
         z-index: 1;
         margin-left: $main-size;
@@ -261,7 +265,7 @@ ul {
 
         display: block;
         overflow: auto;
-    }
+    }*/
 
     > textarea.edit-area {
         height: 100px;
@@ -347,7 +351,7 @@ ul {
     background-color: rgba(0, 0, 0, 0.3);
 
     opacity: 0;
-    transition: opacity 1s linear;
+    transition: opacity .5s linear;
 
     > .container {
         max-width: 600px;
@@ -404,4 +408,9 @@ ul {
     position: absolute;
     right: 15px;
     top: 15px;
+}
+
+textarea {
+    font-family: inherit;
+    background: #fff;
 }

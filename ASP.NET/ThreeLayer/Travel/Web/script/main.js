@@ -19,31 +19,33 @@
     // 处理富文本
     var richEditorGo = function () {
         var richEditor = $.document.getElementsByClassName('rich-editor')[0];
-        var editArea = $.document.getElementsByClassName('edit-area')[0];
-        var placeHolder = $.document.getElementsByClassName('placeholder')[0];
+        var editArea = richEditor.getElementsByClassName('edit-area')[0];
+        //var placeHolder = $.document.getElementsByClassName('placeholder')[0];
 
-        if (!editArea || !placeHolder) {
+        var submitCmnt = $.document.getElementsByClassName('submit-cmnt')[0];
+        var input      = submitCmnt.getElementsByTagName('input')[0];
+
+
+        if (!editArea || !submitCmnt || !input) {
             return;
         }
 
         editArea.addEventListener('keydown', function () {
-            placeHolder.style.display = "none";
+            //placeHolder.style.display = "none";
+
+            input.style.opacity = '1';
+
         }, false);
 
         editArea.addEventListener('keyup', function () {
 
-            //console.log(editArea);
-
             if (editArea.value == "") {
-                placeHolder.style.display = "block";
+                //placeHolder.style.display = 'block';
+
+                input.style.opacity = '0.6';
+                input.disabled = 'true';
             }
         }, false);
-
-        //editArea.addEventListener('focus', function () {
-
-        //    console.log("oh");
-        //    richEditor.style.outline = "1px solid #068dd2";
-        //}, true);
     };
 
     var showReplyBox = function () {
@@ -90,7 +92,7 @@
 
                 replyBox.style.zIndex = "-1";
 
-            }, 1000);
+            }, 500);
 
         }, false);
 

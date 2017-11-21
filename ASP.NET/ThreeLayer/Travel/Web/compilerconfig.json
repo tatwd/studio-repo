@@ -1,6 +1,9 @@
 ﻿[
   {
     "outputFile": "style/main.css",
-    "inputFile": "style/scss/main.scss"
+    "inputFile": "style/scss/main.scss",
+    "options": {
+      "outputStyle": "expanded"
+    }
   }
 ]
