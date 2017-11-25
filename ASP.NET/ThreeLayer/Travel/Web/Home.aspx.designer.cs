@@ -10,7 +10,7 @@
 namespace Web {
     
     
-    public partial class Home2 {
+    public partial class Home {
         
         /// <summary>
         /// form1 控件。

@@ -131,7 +131,7 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BAL\BLL.csproj">
+    <ProjectReference Include="..\BLL\BLL.csproj">
       <Project>{dedd7f27-187f-4f54-b842-85ceaaeaa3b5}</Project>
       <Name>BLL</Name>
     </ProjectReference>
