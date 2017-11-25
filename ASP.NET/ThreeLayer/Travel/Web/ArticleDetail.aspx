@@ -45,10 +45,10 @@
         <div class="write-cmnt">
             <div class="container">
                 <div class="rich-editor">
-                    <asp:TextBox CssClass="edit-area" ID="CmntContent" runat="server" TextMode="MultiLine" placeholder="请输入文字（不得超过100个字）"></asp:TextBox>
+                    <asp:TextBox CssClass="edit-area" ID="CmntContent" runat="server" TextMode="MultiLine" placeholder="请输入文字（不得超过100个字）" disabled="true"></asp:TextBox>
                 </div>
                 <div class="submit-cmnt">
-                    <asp:Button ID="SubmitCmnt" runat="server" Text="评论" OnClick="SubmitCmnt_Click"/>
+                    <asp:Button ID="SubmitCmnt" runat="server" Text="评论" OnClick="SubmitCmnt_Click" disabled="true"/>
                 </div>
             </div>
         </div>

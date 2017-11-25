@@ -35,9 +35,11 @@ namespace Web
         {
             Session.Clear();
 
-            SignOutLb.Style["display"] = "none";
-            SignInLb.Style["display"] = "block";
-            SignUpLb.Style["display"] = "block";
+            Response.Redirect(Request.Url.ToString());
+
+            //SignOutLb.Style["display"] = "none";
+            //SignInLb.Style["display"] = "block";
+            //SignUpLb.Style["display"] = "block";
         }
     }
 }

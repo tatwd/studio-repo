@@ -1,5 +1,11 @@
 ﻿!function ($) {
 
+    //$.onload = function () {
+    //    var cmntContent = $.document.getElementById('CmntContent');
+
+    //    cmntContent.attributes.removeNamedItem('disabled');
+    //};
+
     // 显示下拉菜单
     var showMenu = function () {
         var userSign = $.document.getElementsByClassName('user-sign')[0];
@@ -39,7 +45,7 @@
 
         editArea.addEventListener('keyup', function () {
 
-            if (editArea.value == "") {
+            if (editArea.value == '') {
                 //placeHolder.style.display = 'block';
 
                 input.style.opacity = '0.6';
@@ -48,6 +54,7 @@
         }, false);
     };
 
+    // 显示回复框
     var showReplyBox = function () {
         var replyBox = $.document.getElementsByClassName('reply-container')[0];
         var comment = $.document.getElementsByClassName('comment')[0];
@@ -70,12 +77,12 @@
 
 
             content[i].addEventListener('click', function () {
-                replyBox.style.zIndex = "999";
-                replyBox.style.opacity = "1";
+                replyBox.style.zIndex = '999';
+                replyBox.style.opacity = '1';
 
                 //console.log(author[i].innerText);
                 //console.log(replyWho);
-                replyWho.innerHTML = "回复: <a href='#'>" + author[i].innerText + "</a>";
+                replyWho.innerHTML = '@' + author[i].innerText;
 
             }, false);
         };
@@ -86,11 +93,11 @@
         }
 
         cancel.addEventListener('click', function () {
-            replyBox.style.opacity = "0";
+            replyBox.style.opacity = '0';
 
             var timer = $.setTimeout(function () {
 
-                replyBox.style.zIndex = "-1";
+                replyBox.style.zIndex = '-1';
 
             }, 500);
 

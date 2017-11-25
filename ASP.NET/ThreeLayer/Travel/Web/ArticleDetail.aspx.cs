@@ -32,11 +32,11 @@ namespace Web
             }
             else
             {
-                CmntContent.Attributes["disabled"] = "true";
+                //CmntContent.Attributes["disabled"] = "true";
                 CmntContent.Attributes["placeholder"] = "请先登录，再进行评论！";
 
-                SubmitCmnt.Attributes["disabled"] = "true";
-
+                //SubmitCmnt.Attributes["disabled"] = "true";
+                
                 SignOutLb.Style["display"] = "none";
 
                 ReplyMainBox.Style["display"] = "none";
@@ -124,6 +124,7 @@ namespace Web
             return id;
         }
 
+        // 注销
         protected void SignOutLb_Click(object sender, EventArgs e)
         {
             Session.Clear();
