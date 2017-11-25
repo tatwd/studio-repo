@@ -213,6 +213,8 @@ ul {
         max-width: 600px;
         margin: 0 auto;
         //border: $border-size $border-style;
+
+        // font-size: 14px;
     }
 
     .submit-cmnt {
@@ -233,7 +235,7 @@ ul {
 }
 
 .rich-editor {
-    border: $border-size dashed $black-color;
+    border: $border-size $border-style $temp-color;
     border-radius: $border-size * 2;
     padding: $main-size;
     color: $black-color;
@@ -270,7 +272,7 @@ ul {
     > textarea.edit-area {
         height: 100px;
         width: 100%;
-        border: 0px dashed $black-color;
+        border: 0px;
         margin: 0;
         
         resize: none;
@@ -279,9 +281,9 @@ ul {
         outline: 0;
     }
 
-    p {
+    /*p {
         font-size: 14px;
-    }
+    }*/
 }
 
 
@@ -415,4 +417,5 @@ ul {
 textarea {
     font-family: inherit;
     background: #fff;
+    font-size: 14px;
 }
