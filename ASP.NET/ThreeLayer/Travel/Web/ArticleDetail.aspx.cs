@@ -21,7 +21,7 @@ namespace Web
                 CmntContent.Attributes.Remove("disabled");
                 CmntContent.Attributes["placeholder"] = "请输入文字（不得超过100个字）";
 
-                SubmitCmnt.Attributes.Remove("disabled");
+                //SubmitCmnt.Attributes.Remove("disabled");
 
                 SignOutLb.Style["display"] = "block";
 

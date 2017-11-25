@@ -24,34 +24,45 @@
 
     // 处理富文本
     var richEditorGo = function () {
-        var richEditor = $.document.getElementsByClassName('rich-editor')[0];
-        var editArea = richEditor.getElementsByClassName('edit-area')[0];
-        //var placeHolder = $.document.getElementsByClassName('placeholder')[0];
 
-        var submitCmnt = $.document.getElementsByClassName('submit-cmnt')[0];
-        var input      = submitCmnt.getElementsByTagName('input')[0];
+        var richEditor  = $.document.getElementsByClassName('rich-editor');
+        var submitCmnt  = $.document.getElementsByClassName('submit-cmnt')[0];
+        var submitReply = $.document.getElementsByClassName('submit-reply')[0];
 
-
-        if (!editArea || !submitCmnt || !input) {
+        if (!richEditor || !submitCmnt || !submitReply) {
+            console.error('Error: not found `richEditor` or `submitCmnt` or `submitReply`!');
             return;
         }
 
-        editArea.addEventListener('keydown', function () {
-            //placeHolder.style.display = "none";
+        var addEventToRichEditor = function (i) {
+            var editArea = richEditor[i].getElementsByClassName('edit-area')[0];
 
-            input.style.opacity = '1';
+            var input = (i === 0) ? submitCmnt.getElementsByTagName('input')[0] : submitReply.getElementsByTagName('input')[0];
 
-        }, false);
+            editArea.addEventListener('keydown', function () {
+                input.style.opacity = '1';
 
-        editArea.addEventListener('keyup', function () {
+            }, false);
 
-            if (editArea.value == '') {
-                //placeHolder.style.display = 'block';
+            editArea.addEventListener('keyup', function () {
 
-                input.style.opacity = '0.6';
-                input.disabled = 'true';
-            }
-        }, false);
+                if (editArea.value == '') {
+                    input.style.opacity = '0.6';
+                    input.disabled = 'true';
+                } else {
+                    if (input.hasAttribute('disabled')) {
+                        input.attributes.removeNamedItem('disabled');
+                    }
+                }
+
+            }, false);
+        };
+
+
+        for (var i = 0, len = richEditor.length; i < len; ++ i){
+            addEventToRichEditor(i); // 闭包
+        }
+
     };
 
     // 显示回复框
@@ -72,7 +83,6 @@
 
         //console.log(author);
 
-
         var clickForReply = function (i) {
 
 
@@ -80,8 +90,6 @@
                 replyBox.style.zIndex = '999';
                 replyBox.style.opacity = '1';
 
-                //console.log(author[i].innerText);
-                //console.log(replyWho);
                 replyWho.innerHTML = '@' + author[i].innerText;
 
             }, false);

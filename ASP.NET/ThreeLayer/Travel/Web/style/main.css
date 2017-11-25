@@ -192,7 +192,7 @@ ul {
   padding: 5px 15px;
   border-radius: 2px;
   cursor: pointer;
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .rich-editor {
@@ -348,6 +348,7 @@ ul {
   padding: 5px 15px;
   border-radius: 2px;
   cursor: pointer;
+  opacity: 0.6;
 }
 
 .icon-cancel {

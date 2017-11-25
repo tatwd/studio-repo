@@ -87,7 +87,7 @@
                         <asp:TextBox CssClass="edit-area" ID="ReplyContent" runat="server" TextMode="MultiLine" placeholder="请输入文字（不得超过100个字）"></asp:TextBox>
                     </div>
                     <div class="submit-reply">
-                        <asp:Button ID="SubmitReply" runat="server" Text="回复"/>
+                        <asp:Button ID="SubmitReply" runat="server" Text="回复" disabled="true"/>
                     </div>
                 </div>
             </div>
