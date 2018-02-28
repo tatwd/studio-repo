@@ -40,7 +40,9 @@
         </div>
 
         <div class="mainer">
-            <asp:ContentPlaceHolder id="ContentPlace" runat="server"></asp:ContentPlaceHolder>
+            <asp:ContentPlaceHolder id="ContentPlace" runat="server">
+                <!-- 内容也添加部分 -->
+            </asp:ContentPlaceHolder>
         </div>
 
         <div class="footer">

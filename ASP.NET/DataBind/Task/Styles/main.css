@@ -2,6 +2,7 @@
  * Reset default styles
  */
 
+/* 模板页样式开始 */
 body {
     margin: 0;
 }
@@ -79,6 +80,9 @@ a.active-link {
     padding: 15px;
     text-align: center;
 }
+
+/* 模板页样式结束 */
+
 
 /* mainer */
 
