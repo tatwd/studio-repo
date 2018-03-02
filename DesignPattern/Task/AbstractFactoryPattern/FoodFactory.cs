@@ -5,25 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Configuration;
-using System.Reflection;
+// using System.Reflection;
 
 namespace AbstractFactoryPattern
 {
     class FoodFactory
     {
-        public static IList<IFood> GetFood(string area, params string[] foods)
+        public static IList<Food> GetFoods(string area, params string[] foodNames)
         {
-            IList<IFood> foodList = new List<IFood>();
+            string _area = ConfigurationManager.AppSettings[area];
+            Type type = Type.GetType($"AbstractFactoryPattern.{ _area }FoodShop");
 
-            foreach (var food in foods)
-            {
-                string _area = ConfigurationManager.AppSettings[area];
-                Type type = Type.GetType($"AbstractFactoryPattern.{ _area }FoodShop");
-
-                foodList.Add((IFood)Activator.CreateInstance(type, food)); // add to list
-            }
-
-            return foodList;
+            return ((IFoodShop)Activator.CreateInstance(type, foodNames)).Foods;
         }
     }
 }

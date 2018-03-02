@@ -43,9 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Food.cs" />
     <Compile Include="FoodFactory.cs" />
-    <Compile Include="IFood.cs" />
     <Compile Include="FoodShop.cs" />
+    <Compile Include="IFoodShop.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

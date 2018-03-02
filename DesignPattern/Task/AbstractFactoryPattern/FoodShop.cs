@@ -7,70 +7,86 @@ using System.Threading.Tasks;
 namespace AbstractFactoryPattern
 {
     // 江西
-    class JxFoodShop: IFood
+    class JxFoodShop : IFoodShop
     {
-        public string Name { get; set; }
-        public string Taste { get; set; }
+        public IList<Food> Foods { get; set; }
         public string Area { get; set; }
 
-        public JxFoodShop(string name)
+        public JxFoodShop(params string[] foodNames)
         {
-            Name = name;
-            Taste = "偏辣";
+            Foods = new List<Food>();
             Area = "江西";
 
-            Console.WriteLine($"菜名：{ Name } 口味：{ Taste } 地区：{ Area }");
+            Console.WriteLine($"=={ Area }==");
+
+            // add to food list
+            foreach (var foodName in foodNames)
+            {
+                Foods.Add(new Food(foodName, "偏辣"));
+            }
         }
     }
 
     // 四川
-    class ScFoodShop : IFood
+    class ScFoodShop : IFoodShop
     {
-        public string Name { get; set; }
-        public string Taste { get; set; }
+        public IList<Food> Foods { get; set; }
         public string Area { get; set; }
 
-        public ScFoodShop(string name)
+        public ScFoodShop(params string[] foodNames)
         {
-            Name = name;
-            Taste = "偏麻";
+            Foods = new List<Food>();
             Area = "四川";
 
-            Console.WriteLine($"菜名：{ Name } 口味：{ Taste } 地区：{ Area }");
+            Console.WriteLine($"=={ Area }==");
+
+            // add to food list
+            foreach (var foodName in foodNames)
+            {
+                Foods.Add(new Food(foodName, "偏麻"));
+            }
         }
     }
 
     // 广东
-    class GdFoodShop : IFood
+    class GdFoodShop : IFoodShop
     {
-        public string Name { get; set; }
-        public string Taste { get; set; }
+        public IList<Food> Foods { get; set; }
         public string Area { get; set; }
 
-        public GdFoodShop(string name)
+        public GdFoodShop(params string[] foodNames)
         {
-            Name = name;
-            Taste = "偏淡";
+            Foods = new List<Food>();
             Area = "广东";
 
-            Console.WriteLine($"菜名：{ Name } 口味：{ Taste } 地区：{ Area }");
+            Console.WriteLine($"=={ Area }==");
+
+            // add to food list
+            foreach (var foodName in foodNames)
+            {
+                Foods.Add(new Food(foodName, "偏淡"));
+            }
         }
     }
 
     // 上海
-    class ShFoodShop : IFood
+    class ShFoodShop : IFoodShop
     {
-        public string Name { get; set; }
-        public string Taste { get; set; }
+        public IList<Food> Foods { get; set; }
         public string Area { get; set; }
 
-        public ShFoodShop(string name)
+        public ShFoodShop(params string[] foodNames)
         {
-            Name = name;
-            Taste = "偏甜";
+            Foods = new List<Food>();
             Area = "上海";
 
-            Console.WriteLine($"菜名：{ Name } 口味：{ Taste } 地区：{ Area }");
+            Console.WriteLine($"=={ Area }==");
+
+            // add to food list
+            foreach (var foodName in foodNames)
+            {
+                Foods.Add(new Food(foodName, "偏甜"));
+            }
         }
     }
 }

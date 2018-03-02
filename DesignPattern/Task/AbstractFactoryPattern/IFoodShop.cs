@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace AbstractFactoryPattern
 {
-    interface IFood
+    interface IFoodShop
     {
-        string Name { get; set; }
-        string Taste { get; set; }
+        IList<Food> Foods { get; set; }
+        
         string Area { get; set; }
     }
 }
