@@ -12,7 +12,6 @@ namespace AbstractFactoryPattern
     class FoodShopFactory
     {
         private static string area = ConfigurationManager.AppSettings["Area"];
-
         private static string assembly = ConfigurationManager.AppSettings["Assembly"];
 
         public static IFoodShop GetFoodShop()
