@@ -12,18 +12,22 @@ namespace AbstractFactoryPattern
         public IList<Food> Foods { get; set; }
         public string Area { get; set; }
 
-        public JxFoodShop(params string[] foodNames)
+        public JxFoodShop()
         {
             Foods = new List<Food>();
             Area = "江西";
+        }
 
-            Console.WriteLine($"=={ Area }==");
+        public IList<Food> CookFoods(params string[] foodNames)
+        {
+            Console.WriteLine("所在地区：{0}", Area);
 
-            // add to food list
             foreach (var foodName in foodNames)
             {
                 Foods.Add(new Food(foodName, "偏辣"));
             }
+
+            return Foods;
         }
     }
 
@@ -33,18 +37,22 @@ namespace AbstractFactoryPattern
         public IList<Food> Foods { get; set; }
         public string Area { get; set; }
 
-        public ScFoodShop(params string[] foodNames)
+        public ScFoodShop()
         {
             Foods = new List<Food>();
             Area = "四川";
+        }
 
-            Console.WriteLine($"=={ Area }==");
+        public IList<Food> CookFoods(params string[] foodNames)
+        {
+            Console.WriteLine("所在地区：{0}", Area);
 
-            // add to food list
             foreach (var foodName in foodNames)
             {
                 Foods.Add(new Food(foodName, "偏麻"));
             }
+
+            return Foods;
         }
     }
 
@@ -54,18 +62,22 @@ namespace AbstractFactoryPattern
         public IList<Food> Foods { get; set; }
         public string Area { get; set; }
 
-        public GdFoodShop(params string[] foodNames)
+        public GdFoodShop()
         {
             Foods = new List<Food>();
             Area = "广东";
+        }
 
-            Console.WriteLine($"=={ Area }==");
+        public IList<Food> CookFoods(params string[] foodNames)
+        {
+            Console.WriteLine("所在地区：{0}", Area);
 
-            // add to food list
             foreach (var foodName in foodNames)
             {
                 Foods.Add(new Food(foodName, "偏淡"));
             }
+
+            return Foods;
         }
     }
 
@@ -75,18 +87,22 @@ namespace AbstractFactoryPattern
         public IList<Food> Foods { get; set; }
         public string Area { get; set; }
 
-        public ShFoodShop(params string[] foodNames)
+        public ShFoodShop()
         {
             Foods = new List<Food>();
             Area = "上海";
+        }
 
-            Console.WriteLine($"=={ Area }==");
+        public IList<Food> CookFoods(params string[] foodNames)
+        {
+            Console.WriteLine("所在地区：{0}", Area);
 
-            // add to food list
             foreach (var foodName in foodNames)
             {
                 Foods.Add(new Food(foodName, "偏甜"));
             }
+
+            return Foods;
         }
     }
 }

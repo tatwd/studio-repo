@@ -11,5 +11,7 @@ namespace AbstractFactoryPattern
         IList<Food> Foods { get; set; }
         
         string Area { get; set; }
+
+        IList<Food> CookFoods(params string[] foodNames);
     }
 }
