@@ -1,0 +1,30 @@
+﻿@model MovieMvc.Models.Movie
+
+@{
+    ViewBag.Title = "Query";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Query Movie</h2>
+
+<ul class="list-group">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        @Model.Name
+        <span class="badge badge-primary badge-pill">@Model.Id</span>
+    </li>
+</ul>
+
+@*<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">@ViewBag.Id</th>
+            <td>@ViewBag.Name</td>
+        </tr>
+    </tbody>
+</table>*@

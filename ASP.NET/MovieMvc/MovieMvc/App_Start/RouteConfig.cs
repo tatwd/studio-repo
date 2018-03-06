@@ -13,6 +13,14 @@ namespace MovieMvc
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            // add query movie route
+            routes.MapRoute(
+                "QueryMovieByName",
+                "Hello/Query/{name}/{id}",
+                new { controller = "Hello", action = "Query" }
+            );
+
+            // default route
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
