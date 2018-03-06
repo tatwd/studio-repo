@@ -32,7 +32,7 @@ namespace MovieMvc.Migrations
                 m => m.Id,
                 new Movie
                 {
-                    Name = "æ–°é¾™é—¨å®¢æ ˆ",
+                    Name = "ÐÂÁúÃÅ¿ÍÕ»",
                     Rating = "8.5"
                 });
         }
