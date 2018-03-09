@@ -1,0 +1,25 @@
+﻿@model MovieManager.Models.Movie
+@{
+    ViewBag.Title = "Info";
+}
+<div id="movie-info">
+    <ul class="collection with-header">
+        <li class="collection-header">
+            <h4>@Model.Name</h4>
+        </li>
+        <li class="collection-item">ID#: @Model.Id</li>
+        <li class="collection-item">Director: @Model.Director</li>
+        <li class="collection-item">Release Date: @Model.ReleaseDate</li>
+        <li class="collection-item">
+            Rating: @Model.Rating
+            <i class="fa fa-star"></i>
+        </li>
+    </ul>
+    @Html.ActionLink("Back", "Index", null, new { @class="btn grey" })
+    <button class="btn red">Delete</button>
+    <div class="fixed-action-btn">
+        <a href=@String.Format("/movies/edit/{0}", Model.Id) class="btn btn-floating btn-large red">
+            <i class="fa fa-pencil"></i>
+        </a>
+    </div>
+</div>

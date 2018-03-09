@@ -1,0 +1,29 @@
+﻿@model List<MovieManager.Models.Movie>
+@{
+    ViewBag.Title = "Dashboard";
+}
+<div id="dashboard">
+    <ul class="collection with-header">
+        <li class="collection-header">
+            <h4>Movie List</h4>
+        </li>
+    @foreach (var movie in Model)
+    {
+        <li class="collection-item">
+            <div class="chip">
+                @*<i class="fa fa-star"></i>*@
+                @movie.Rating
+            </div>
+            @String.Format($"#{movie.Id}: {movie.Name}")
+            <a href=@String.Format("/movies/info/{0}", movie.Id) class="secondary-content">
+                <i class="fa fa-eye"></i>
+            </a>
+        </li>
+    }
+    </ul>
+    <div class="fixed-action-btn">
+        <a href="/movies/new" class="btn btn-floating btn-large red">
+            <i class="fa fa-plus"></i>
+        </a>
+    </div>
+</div>

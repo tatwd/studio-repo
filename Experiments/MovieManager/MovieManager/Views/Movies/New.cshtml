@@ -1,0 +1,38 @@
+﻿@model MovieManager.Models.Movie
+@{
+    ViewBag.Title = "New";
+}
+
+<div id="new-movie">
+    <h4>New Movie</h4>
+    <div class="row">
+    @using (Html.BeginForm("New", "Movies", FormMethod.Post, new { @class = "col s12" }))
+    {
+        <div class="row">
+            <div class="input-field col s12">
+                @Html.EditorFor(model => model.Id)
+                <label>ID#</label>
+            </div>
+            <div class="input-field col s12">
+                @Html.EditorFor(model => model.Name)
+                <label>Name</label>
+            </div>
+            <div class="input-field col s12">
+                @Html.EditorFor(model => model.Director)
+                <label>Director</label>
+            </div>
+            <div class="input-field col s12">
+                @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @type = "text" } })
+                @*<input type="datetime" value="" id="" />*@
+                <label>ReleaseDate</label>
+            </div>
+            <div class="input-field col s12">
+                @Html.EditorFor(model => model.Rating)
+                <label>Rating</label>
+            </div>
+        </div>
+        <button type="submit" class="btn">Submit</button>
+        @Html.ActionLink("Cancel", "Index", null, new { @class = "btn grey" })
+    }
+    </div>
+</div>

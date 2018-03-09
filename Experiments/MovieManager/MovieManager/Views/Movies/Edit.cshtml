@@ -1,0 +1,31 @@
+﻿@model MovieManager.Models.Movie
+@{
+    ViewBag.Title = "Edit";
+}
+<div id="edit-movie">
+    <h4>Edit Movie</h4>
+    <div class="row">
+    @using (Html.BeginForm("New", "Movies", FormMethod.Post, new { @class = "col s12" }))
+    {
+        <div class="row">
+            <div class="input-field col s12">
+                @Html.EditorFor(model => model.Id, new { htmlAttributes = new { disabled = "true" } })
+            </div>
+            <div class="input-field col s12">
+                @Html.EditorFor(model => model.Name, null)
+            </div>
+            <div class="input-field col s12">
+                @Html.EditorFor(model => model.Director)
+            </div>
+            <div class="input-field col s12">
+                @Html.EditorFor(model => model.ReleaseDate)
+            </div>
+            <div class="input-field col s12">
+                @Html.EditorFor(model => model.Rating)
+            </div>
+        </div>
+        <button type="submit" class="btn">Submit</button>
+        @Html.ActionLink("Cancel", "Index", null, new { @class = "btn grey" })
+    }
+    </div>
+</div>
