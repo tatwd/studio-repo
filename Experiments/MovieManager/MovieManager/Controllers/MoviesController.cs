@@ -46,16 +46,6 @@ namespace MovieManager.Controllers
         {
             Movie movie = new Movie();
 
-            // query movie by id
-            //foreach (var item in movies)
-            //{
-            //    if (item.Id == id)
-            //    {
-            //        movie = item;
-            //        break;
-            //    }
-            //}
-
             movie = db.Movies.Find(id);
 
             return View(movie);
@@ -70,16 +60,6 @@ namespace MovieManager.Controllers
         public ActionResult Edit(string id)
         {
             Movie movie = new Movie();
-
-            // query movie by id
-            //foreach (var item in movies)
-            //{
-            //    if (item.Id == id)
-            //    {
-            //        movie = item;
-            //        break;
-            //    }
-            //}
 
             movie = db.Movies.Find(id);
 
@@ -99,7 +79,24 @@ namespace MovieManager.Controllers
             if (movie.Id != null)
                 return RedirectToAction("Index");
 
+            // TODO: add a new movie to db
+
             return View(movie);
+        }
+
+        public ActionResult Delete(FormCollection fcNotUsed, string id)
+        {
+            Movie movie = db.Movies.Find(id);
+
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+
+            db.Movies.Remove(movie);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         // test stuff

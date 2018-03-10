@@ -16,10 +16,17 @@
         </li>
     </ul>
     @Html.ActionLink("Back", "Index", null, new { @class="btn grey" })
-    <button class="btn red">Delete</button>
+    <a href=@String.Format("/movies/delete/{0}", Model.Id) id="delete-btn" class="btn red">Delete</a>
     <div class="fixed-action-btn">
         <a href=@String.Format("/movies/edit/{0}", Model.Id) class="btn btn-floating btn-large red">
             <i class="fa fa-pencil"></i>
         </a>
     </div>
 </div>
+<script>
+    const deletetBtn = document.querySelector("#delete-btn");
+    deletetBtn.addEventListener('click', function (ev) {
+        if (!confirm('Are you sure?'))
+            ev.preventDefault(); // 取消跳转
+    });
+</script>
