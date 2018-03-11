@@ -1,7 +1,9 @@
 namespace MvcSignPage.Migrations
 {
-    using Models;
+    using System;
+    using System.Data.Entity;
     using System.Data.Entity.Migrations;
+    using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<MvcSignPage.Models.BmdDbContext>
     {
@@ -16,16 +18,6 @@ namespace MvcSignPage.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
-
-            //context.Users.AddOrUpdate(
-            //    u => u.Username,
-            //    new User
-            //    {
-            //        Username = "test",
-            //        Password = "test123",
-            //        Email = "test@test.com",
-            //        Telephone = "18170826687"
-            //    });
         }
     }
 }

@@ -4,6 +4,8 @@
 }
 @using (Html.BeginForm("SignUp", "User", FormMethod.Post, new { id = "signForm" }))
 {
+    @Html.AntiForgeryToken()
+
     <h2>Hello Sign Up Page!</h2>
 
     <div class="container">
@@ -13,12 +15,14 @@
 
             <div class="name">
                 @Html.TextBoxFor(m => m.Username, new { id = "nameBox", placeholder = "用户名" })
+                @Html.ValidationMessageFor(model => model.Username, "", new {id = "notNullName", @class = "validator" })
                 @*<asp:TextBox ID="nameBox" runat="server" placeholder="用户名"></asp:TextBox>*@
                 @*<asp:RequiredFieldValidator ID="notNullName" CssClass="validator" runat="server" ControlToValidate="passwdBox" Display="Dynamic" ErrorMessage="不能为空"></asp:RequiredFieldValidator>*@
             </div>
 
             <div class="email">
                 @Html.TextBoxFor(m => m.Email, new { id = "emailBox", placeholder = "邮箱" })
+                @Html.ValidationMessageFor(model => model.Email, "", new { id = "notNullEmail", @class = "validator" })
                 @*<asp:TextBox ID="emailBox" runat="server" TextMode="Email" placeholder="邮箱"></asp:TextBox>*@
                 <!-- 邮箱验证 -->
                 @*<asp:RequiredFieldValidator ID="notNullEmail" CssClass="validator" runat="server" ControlToValidate="passwdBox" Display="Dynamic" ErrorMessage="不能为空"> </asp:RequiredFieldValidator>*@
@@ -26,6 +30,7 @@
 
             <div class="phone">
                 @Html.TextBoxFor(m => m.Telephone, new { id = "phoneBox", placeholder = "手机号" })
+                @Html.ValidationMessageFor(model => model.Telephone, "", new { id = "notNullEmail", @class = "validator" })
                 @*<asp:TextBox ID="phoneBox" runat="server" TextMode="Phone" placeholder="手机号"></asp:TextBox>*@
                 <!-- 手机号码验证 -->
                 @*<asp:RequiredFieldValidator ID="notNullPhone" CssClass="validator" runat="server" ControlToValidate="passwdBox" Display="Dynamic" ErrorMessage="不能为空"></asp:RequiredFieldValidator>*@
@@ -34,6 +39,7 @@
 
             <div class="passwd">
                 @Html.PasswordFor(m => m.Password, new { id = "passwdBox", placeholder = "密码（6~20位）" })
+                @Html.ValidationMessageFor(model => model.Password, "", new { id = "notNullEmail", @class = "validator" })
                 @*<asp:TextBox ID="passwdBox" runat="server" TextMode="Password" placeholder="密码（6~20位）"></asp:TextBox>*@
                 <!-- 密码验证 -->
                 @*<asp:RequiredFieldValidator ID="notNull" CssClass="validator" runat="server" ControlToValidate="passwdBox" Display="Dynamic" ErrorMessage="不能为空"></asp:RequiredFieldValidator>*@
@@ -43,6 +49,7 @@
 
             <div class="confirm-passwd">
                 @Html.PasswordFor(m => m.Password, new { id = "confirmPasswdBox", placeholder = "确认密码" })
+                @Html.ValidationMessageFor(model => model.Password, "", new { id = "notNullEmail", @class = "validator" })
                 @*<asp:TextBox ID="confirmPasswdBox" runat="server" TextMode="Password" placeholder="确认密码"></asp:TextBox>*@
                 <!-- 确认密码验证 -->
                 @*<asp:RequiredFieldValidator ID="notNullConfirm" CssClass="validator" runat="server" ControlToValidate="passwdBox" Display="Dynamic" ErrorMessage="不能为空"></asp:RequiredFieldValidator>*@
@@ -60,7 +67,18 @@
     </div>
 
     <div class="label">
-        <span ID="tipLabel" runat="server"></span>
+    @if (ViewBag.IsSignIn != null)
+    {
+        <span id="tipLabel">注册失败</span>
+    }
     </div>
 }
-
+<script>
+    window.onload = function () {
+        (new FocusEvent('nameBox', 'validator')).addFocus();
+        (new FocusEvent('emailBox', 'validator')).addFocus();
+        (new FocusEvent('phoneBox', 'validator')).addFocus();
+        (new FocusEvent('passwdBox', 'validator')).addFocus();
+        (new FocusEvent('confirmPasswdBox', 'validator')).addFocus();
+    };
+</script>

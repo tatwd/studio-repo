@@ -114,9 +114,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803110807254_CreateUsers.cs" />
-    <Compile Include="Migrations\201803110807254_CreateUsers.Designer.cs">
-      <DependentUpon>201803110807254_CreateUsers.cs</DependentUpon>
+    <Compile Include="Migrations\201803111002278_AddDataAnnotations.cs" />
+    <Compile Include="Migrations\201803111002278_AddDataAnnotations.Designer.cs">
+      <DependentUpon>201803111002278_AddDataAnnotations.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BmdDbContext.cs" />
@@ -141,8 +141,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803110807254_CreateUsers.resx">
-      <DependentUpon>201803110807254_CreateUsers.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803111002278_AddDataAnnotations.resx">
+      <DependentUpon>201803111002278_AddDataAnnotations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

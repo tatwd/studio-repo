@@ -7,13 +7,13 @@ namespace MvcSignPage.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class CreateUsers : IMigrationMetadata
+    public sealed partial class AddDataAnnotations : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateUsers));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddDataAnnotations));
         
         string IMigrationMetadata.Id
         {
-            get { return "201803110807254_CreateUsers"; }
+            get { return "201803111002278_AddDataAnnotations"; }
         }
         
         string IMigrationMetadata.Source

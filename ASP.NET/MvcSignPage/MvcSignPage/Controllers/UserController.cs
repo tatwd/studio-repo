@@ -1,5 +1,6 @@
 ﻿using MvcSignPage.Models;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace MvcSignPage.Controllers
 {
@@ -16,9 +17,16 @@ namespace MvcSignPage.Controllers
         [HttpPost]
         public ActionResult SignIn(User user)
         {
-            // User hasUser = db.Users.;
+            var users = from u in db.Users
+                         select u;
 
-            return Json(hasUser);
+            users = users.Where(
+                u => u.Username.Equals(user.Username) && u.Password.Equals(user.Password));
+
+            ViewBag.IsSignIn = users.ToArray().Length != 0 ? true : false;
+
+            return View();
+            // return Json(users);
         }
 
         // GET: User/SignUp
@@ -28,16 +36,24 @@ namespace MvcSignPage.Controllers
         }
 
         [HttpPost]
-        public ActionResult SignUp(User user)
+        [ValidateAntiForgeryToken]
+        public ActionResult SignUp([Bind(Include = "Id,Usename,Email,Telephone,Password")]User user)
         {
-            if (ModelState.IsValid)
-            {
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("SignIn");
-            }
+            //if (ModelState.IsValid)
+            //{
+            //    db.Users.Add(user);
+            //    db.SaveChanges();
+            //    return RedirectToAction("SignIn");
+            //}
 
-            return Json(user);
+            //ViewBag.IsSignUp = false;
+
+            //return View();
+
+            if (ModelState.IsValid)
+                return Json(user);
+
+            return View();
         }
     }
 }

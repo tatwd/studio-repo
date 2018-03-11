@@ -1,6 +1,11 @@
-﻿body {
+﻿:root {
+    --base-bg-color: #f1f1f1;
+    --base-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+body {
     height: 100%;
-    background-color: #ddd;
+    background-color: var(--base-bg-color);
 }
 
 #signForm {
@@ -10,11 +15,12 @@
 }
 
 .container {
-    border: 2px solid #ddd;
+    /*border: 2px solid #ddd;*/
     background-color: #fff;
     padding: 25px 35px 25px 35px;
     display: inline-block;
     width: 20%;
+    box-shadow: var(--base-box-shadow);
 }
 
 @media screen and (max-width:768px) {

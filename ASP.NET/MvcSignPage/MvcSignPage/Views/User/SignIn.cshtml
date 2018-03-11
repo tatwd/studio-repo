@@ -28,7 +28,7 @@
         </div>
 
         <div class="sign-btn">
-            <input type="submit" value="提交" id="signInBtn"/>
+            <input type="submit" value="提交" id="signInBtn" />
             @*<asp:Button ID="signInBtn" runat="server" Text="提交" OnClick="signInBtn_Click" />*@
         </div>
 
@@ -38,6 +38,22 @@
     </div>
 
     <div class="label">
-        <span id="tipLabel"></span>
+@if (ViewBag.IsSignIn != null)
+{
+    if (ViewBag.IsSignIn)
+    {
+        <span id="tipLabel">登录成功</span>
+    }
+    else
+    {
+        <span id="tipLabel">登录失败</span>
+    }
+}
     </div>
 }
+<script>
+    window.onload = function () {
+        (new FocusEvent('nameBox', 'validator')).addFocus();
+        (new FocusEvent('emailBox', 'validator')).addFocus();
+    };
+</script>
