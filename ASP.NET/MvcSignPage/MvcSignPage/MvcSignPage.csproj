@@ -122,10 +122,15 @@
     <Compile Include="Migrations\201803111145434_UpdateDataAnnotations.Designer.cs">
       <DependentUpon>201803111145434_UpdateDataAnnotations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803111318250_RemoveDataAnnotations.cs" />
+    <Compile Include="Migrations\201803111318250_RemoveDataAnnotations.Designer.cs">
+      <DependentUpon>201803111318250_RemoveDataAnnotations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BmdDbContext.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -150,6 +155,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803111145434_UpdateDataAnnotations.resx">
       <DependentUpon>201803111145434_UpdateDataAnnotations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803111318250_RemoveDataAnnotations.resx">
+      <DependentUpon>201803111318250_RemoveDataAnnotations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

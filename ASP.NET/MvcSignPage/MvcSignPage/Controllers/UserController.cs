@@ -1,4 +1,5 @@
 ﻿using MvcSignPage.Models;
+using MvcSignPage.ViewModels;
 using System.Web.Mvc;
 using System.Linq;
 
@@ -15,19 +16,22 @@ namespace MvcSignPage.Controllers
         }
 
         [HttpPost]
-        // [ValidateAntiForgeryToken]
-        public ActionResult SignIn(User user)
+        [ValidateAntiForgeryToken]
+        public ActionResult SignIn(SignInViewModel user)
         {
-            //var users = from u in db.Users
-            //             select u;
+            if (!ModelState.IsValid)
+                return View();
 
-            //users = users.Where(
-            //    u => u.Username.Equals(user.Username) && u.Password.Equals(user.Password));
+            var users = from u in db.Users
+                        select u;
 
-            //ViewBag.IsSignIn = users.ToArray().Length != 0 ? true : false;
+            users = users.Where(
+                u => u.Username.Equals(user.Username) && u.Password.Equals(user.Password));
 
-            //return View();
-            return Json(user);
+            ViewBag.IsSignIn = users.ToArray().Length != 0 ? true : false;
+
+            return View();
+            // return Json(users);
         }
 
         // GET: User/SignUp
@@ -37,25 +41,32 @@ namespace MvcSignPage.Controllers
         }
 
         [HttpPost]
-        // [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         // [Bind(Include = "Usename,Email,Telephone,Password")]
-        public ActionResult SignUp(User user)
+        public ActionResult SignUp(SignUpViewModel user)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    db.Users.Add(user);
-            //    db.SaveChanges();
-            //    return RedirectToAction("SignIn");
-            //}
-
-            //ViewBag.IsSignUp = false;
-
-            //return View();
-
             if (ModelState.IsValid)
-                return Json(user);
+            {
+                User iuser = new User
+                {
+                    Username = user.Username,
+                    Email = user.Email,
+                    Password = user.Password,
+                    Telephone = user.Telephone
+                };
+
+                db.Users.Add(iuser);
+                db.SaveChanges();
+                return RedirectToAction("SignIn");
+            }
+
+            ViewBag.IsSignUp = false;
 
             return View();
+
+            //if (ModelState.IsValid)
+            //    return Json(user);
+            //return View();
         }
     }
 }

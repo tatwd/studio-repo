@@ -1,12 +1,12 @@
-﻿@model MvcSignPage.Models.User
+﻿@model MvcSignPage.ViewModels.SignInViewModel
 @{
     ViewBag.Title = "登录";
 }
 
 @using (Html.BeginForm("SignIn", "User", FormMethod.Post, new { id = "signForm" }))
 {
-    // @Html.AntiForgeryToken()
-
+    @Html.AntiForgeryToken()
+    
     <h2>Sign In Page</h2>
     <div class="container">
         <div class="title-box">登录</div>

@@ -1,10 +1,10 @@
-﻿@model MvcSignPage.Models.User
+﻿@model MvcSignPage.ViewModels.SignUpViewModel
 @{
     ViewBag.Title = "注册";
 }
 @using (Html.BeginForm("SignUp", "User", FormMethod.Post, new { id = "signForm" }))
 {
-    // @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
 
     <h2>Sign Up Page</h2>
     <div class="container">
@@ -34,8 +34,8 @@
             </div>
 
             <div class="confirm-passwd">
-                @Html.PasswordFor(m => m.Password, new { id = "confirmPasswdBox", placeholder = "确认密码" })
-                @Html.ValidationMessageFor(model => model.Password, "", new { id = "notNullEmail", @class = "validator" })
+                @Html.PasswordFor(m => m.ConfirmPassword, new { id = "confirmPasswdBox", placeholder = "确认密码" })
+                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { id = "notNullEmail", @class = "validator" })
                 @*<asp:CompareValidator ID="confirmPasswd" CssClass="validator" runat="server" ControlToCompare="passwdBox" ControlToValidate="confirmPasswdBox" ErrorMessage="密码输入不一致"></asp:CompareValidator>*@
             </div>
         </div>
