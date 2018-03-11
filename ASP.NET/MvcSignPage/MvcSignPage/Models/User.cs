@@ -7,6 +7,7 @@ namespace MvcSignPage.Models
         public int Id { get; set; }
 
         [StringLength(60, MinimumLength = 3, ErrorMessage = "长度不对")]
+        [Required(ErrorMessage = "不能为空")]
         public string Username { get; set; }
 
         [StringLength(20, MinimumLength = 6, ErrorMessage = "长度不对")]

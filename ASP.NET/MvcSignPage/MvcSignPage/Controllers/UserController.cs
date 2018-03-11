@@ -15,18 +15,19 @@ namespace MvcSignPage.Controllers
         }
 
         [HttpPost]
+        // [ValidateAntiForgeryToken]
         public ActionResult SignIn(User user)
         {
-            var users = from u in db.Users
-                         select u;
+            //var users = from u in db.Users
+            //             select u;
 
-            users = users.Where(
-                u => u.Username.Equals(user.Username) && u.Password.Equals(user.Password));
+            //users = users.Where(
+            //    u => u.Username.Equals(user.Username) && u.Password.Equals(user.Password));
 
-            ViewBag.IsSignIn = users.ToArray().Length != 0 ? true : false;
+            //ViewBag.IsSignIn = users.ToArray().Length != 0 ? true : false;
 
-            return View();
-            // return Json(users);
+            //return View();
+            return Json(user);
         }
 
         // GET: User/SignUp
@@ -36,8 +37,9 @@ namespace MvcSignPage.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult SignUp([Bind(Include = "Id,Usename,Email,Telephone,Password")]User user)
+        // [ValidateAntiForgeryToken]
+        // [Bind(Include = "Usename,Email,Telephone,Password")]
+        public ActionResult SignUp(User user)
         {
             //if (ModelState.IsValid)
             //{

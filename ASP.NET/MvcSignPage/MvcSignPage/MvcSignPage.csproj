@@ -118,6 +118,10 @@
     <Compile Include="Migrations\201803111002278_AddDataAnnotations.Designer.cs">
       <DependentUpon>201803111002278_AddDataAnnotations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803111145434_UpdateDataAnnotations.cs" />
+    <Compile Include="Migrations\201803111145434_UpdateDataAnnotations.Designer.cs">
+      <DependentUpon>201803111145434_UpdateDataAnnotations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BmdDbContext.cs" />
     <Compile Include="Models\User.cs" />
@@ -143,6 +147,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201803111002278_AddDataAnnotations.resx">
       <DependentUpon>201803111002278_AddDataAnnotations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803111145434_UpdateDataAnnotations.resx">
+      <DependentUpon>201803111145434_UpdateDataAnnotations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

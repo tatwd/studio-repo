@@ -1,35 +1,28 @@
 ﻿@model MvcSignPage.Models.User
 @{
-    ViewBag.Title = "SignIn";
+    ViewBag.Title = "登录";
 }
 
 @using (Html.BeginForm("SignIn", "User", FormMethod.Post, new { id = "signForm" }))
 {
-    <h2>Hello Sign In Page!</h2>
+    // @Html.AntiForgeryToken()
 
+    <h2>Sign In Page</h2>
     <div class="container">
         <div class="title-box">登录</div>
-
         <div class="input-box">
-
             <div class="name">
                 @Html.TextBoxFor(m => m.Username, new { id = "nameBox", placeholder = "用户名" })
-                @*@Html.EditorFor(model => model.Username, new { htmlAttributes = new { placeholder = "用户名" } })*@
-                @*<asp:TextBox ID="nameBox" runat="server" placeholder="用户名"></asp:TextBox>*@
-                @*<asp:RequiredFieldValidator ID="notNullName" CssClass="validator" runat="server" ControlToValidate="passwdBox" Display="Dynamic" ErrorMessage="不能为空"></asp:RequiredFieldValidator>*@
+                @Html.ValidationMessageFor(model => model.Username, "", new { id = "notNullName", @class = "validator" })
             </div>
-
             <div class="passwd">
                 @Html.PasswordFor(m => m.Password, new { id = "passwdBox", placeholder = "密码（6~20位）" })
-                @*<asp:TextBox ID="passwdBox" runat="server" TextMode="Password" placeholder="密码（6~20位）"></asp:TextBox>*@
-                <!-- 密码验证 -->
-                @*<asp:RequiredFieldValidator ID="notNull" CssClass="validator" runat="server" ControlToValidate="passwdBox" Display="Dynamic" ErrorMessage="不能为空"></asp:RequiredFieldValidator>*@
+                @Html.ValidationMessageFor(model => model.Password, "", new { id = "notNullEmail", @class = "validator" })
             </div>
         </div>
 
         <div class="sign-btn">
             <input type="submit" value="提交" id="signInBtn" />
-            @*<asp:Button ID="signInBtn" runat="server" Text="提交" OnClick="signInBtn_Click" />*@
         </div>
 
         <div class="tip">
@@ -52,8 +45,8 @@
     </div>
 }
 <script>
-    window.onload = function () {
-        (new FocusEvent('nameBox', 'validator')).addFocus();
-        (new FocusEvent('emailBox', 'validator')).addFocus();
-    };
+    //window.onload = function () {
+    //    (new FocusEvent('nameBox', 'validator')).addFocus();
+    //    (new FocusEvent('emailBox', 'validator')).addFocus();
+    //};
 </script>
