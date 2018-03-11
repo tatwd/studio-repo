@@ -5,34 +5,45 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">@Html.DisplayNameFor(model => model.Name)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Rating)</th>
-            <th scope="col">Operations</th>
-        </tr>
-    </thead>
-
-
-
-@foreach (var item in Model)
-{
-    <tbody>
-        <tr>
-            <th scope="row">@Html.DisplayFor(modelItem => item.Name)</th>
-            <td>@Html.DisplayFor(modelItem => item.Rating)</td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-    </tbody>
-}
-</table>
+<div id="movie-index">
+    <ul class="list-group">
+        <li class="list-group-item">
+            <h2 class="m-0">Movie List</h2>
+        </li>
+        @foreach (var item in Model)
+        {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>
+                    <b>@Html.DisplayFor(modelItem => item.Name)</b>
+                    <span class="badge badge-success">@Html.DisplayFor(modelItem => item.Genre)</span>
+                </span>
+                <span class="badge badge-light">
+                    @Html.ActionLink("详情", "Details", new { id = item.Id }) ·
+                    @Html.ActionLink("编辑", "Edit", new { id = item.Id }) ·
+                    @Html.ActionLink("删除", "Delete", new { id = item.Id }, new { id = "delete-btn" })
+                </span>
+            </li>
+        }
+    </ul>
+    <div class="d-flex mt-3">
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+        @using (Html.BeginForm("Index", "Movies", FormMethod.Get))
+        {
+        <div class="d-flex ml-2">
+            <input type="submit" value="Filter" class="btn btn-info"/>
+            @Html.DropDownList("movieGenre", null, "All", new { @class = "custom-select mx-3" })
+            @Html.TextBox("SearchString", null, new { @class = "form-control", placeholder = "输入电影名" })
+            @*<input type="text" id="SearchString" name="SearchString" class="form-control ml-3" placeholder="输入电影名" />*@
+        </div>
+        }
+    </div>
+</div>
+<script>
+    document.querySelector('#movie-index').addEventListener('click', ev => {
+        if (ev.target.id == 'delete-btn') {
+            if (!confirm('Are you sure to delete this movie?')) {
+                ev.preventDefault();
+            }
+        }
+    });
+</script>

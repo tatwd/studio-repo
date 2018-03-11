@@ -5,23 +5,34 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Movie</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-    </dl>
+<div id="movie-details">
+    <ul class="list-group">
+        <li class="list-group-item">
+            <h3 class="m-0">@Model.Name</h3>
+        </li>
+        <li class="list-group-item">
+            @Html.DisplayNameFor(model => model.Id) :
+            @Html.DisplayFor(model => model.Id)
+        </li>
+        <li class="list-group-item">
+            @Html.DisplayNameFor(model => model.Director) :
+            @Html.DisplayFor(model => model.Director)
+        </li>
+        <li class="list-group-item">
+            @Html.DisplayNameFor(model => model.Genre) :
+            @Html.DisplayFor(model => model.Genre)
+        </li>
+        <li class="list-group-item">
+            @Html.DisplayNameFor(model => model.ReleaseDate) :
+            @Html.DisplayFor(model => model.ReleaseDate)
+        </li>
+        <li class="list-group-item">
+            @Html.DisplayNameFor(model => model.Rating) :
+            @Html.DisplayFor(model => model.Rating)
+        </li>
+    </ul>
+    <p class="mt-3">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class="btn btn-primary" })
+        @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-secondary" })
+    </p>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

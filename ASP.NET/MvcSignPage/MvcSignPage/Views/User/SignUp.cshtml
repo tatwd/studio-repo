@@ -1,0 +1,66 @@
+﻿@model MvcSignPage.Models.User
+@{
+    ViewBag.Title = "SignUp";
+}
+@using (Html.BeginForm("SignUp", "User", FormMethod.Post, new { id = "signForm" }))
+{
+    <h2>Hello Sign Up Page!</h2>
+
+    <div class="container">
+        <div class="title-box">注册</div>
+
+        <div class="input-box">
+
+            <div class="name">
+                @Html.TextBoxFor(m => m.Username, new { id = "nameBox", placeholder = "用户名" })
+                @*<asp:TextBox ID="nameBox" runat="server" placeholder="用户名"></asp:TextBox>*@
+                @*<asp:RequiredFieldValidator ID="notNullName" CssClass="validator" runat="server" ControlToValidate="passwdBox" Display="Dynamic" ErrorMessage="不能为空"></asp:RequiredFieldValidator>*@
+            </div>
+
+            <div class="email">
+                @Html.TextBoxFor(m => m.Email, new { id = "emailBox", placeholder = "邮箱" })
+                @*<asp:TextBox ID="emailBox" runat="server" TextMode="Email" placeholder="邮箱"></asp:TextBox>*@
+                <!-- 邮箱验证 -->
+                @*<asp:RequiredFieldValidator ID="notNullEmail" CssClass="validator" runat="server" ControlToValidate="passwdBox" Display="Dynamic" ErrorMessage="不能为空"> </asp:RequiredFieldValidator>*@
+            </div>
+
+            <div class="phone">
+                @Html.TextBoxFor(m => m.Telephone, new { id = "phoneBox", placeholder = "手机号" })
+                @*<asp:TextBox ID="phoneBox" runat="server" TextMode="Phone" placeholder="手机号"></asp:TextBox>*@
+                <!-- 手机号码验证 -->
+                @*<asp:RequiredFieldValidator ID="notNullPhone" CssClass="validator" runat="server" ControlToValidate="passwdBox" Display="Dynamic" ErrorMessage="不能为空"></asp:RequiredFieldValidator>*@
+                @*<asp:RegularExpressionValidator ID="checkPhone" CssClass="validator" runat="server" ControlToValidate="phoneBox" ErrorMessage="请输入正确的手机号" ValidationExpression="^1(3|4|5|7|8)\d{9}$"></asp:RegularExpressionValidator>*@
+            </div>
+
+            <div class="passwd">
+                @Html.PasswordFor(m => m.Password, new { id = "passwdBox", placeholder = "密码（6~20位）" })
+                @*<asp:TextBox ID="passwdBox" runat="server" TextMode="Password" placeholder="密码（6~20位）"></asp:TextBox>*@
+                <!-- 密码验证 -->
+                @*<asp:RequiredFieldValidator ID="notNull" CssClass="validator" runat="server" ControlToValidate="passwdBox" Display="Dynamic" ErrorMessage="不能为空"></asp:RequiredFieldValidator>*@
+                @*<asp:CustomValidator ID="checkPasswdLength" CssClass="validator" runat="server" ControlToValidate="passwdBox" ErrorMessage="请输入6~20位的密码" ClientValidationFunction="checkLength"></asp:CustomValidator>*@
+                <!--OnServerValidate="checkPasswdLength_ServerValidate"-->
+            </div>
+
+            <div class="confirm-passwd">
+                @Html.PasswordFor(m => m.Password, new { id = "confirmPasswdBox", placeholder = "确认密码" })
+                @*<asp:TextBox ID="confirmPasswdBox" runat="server" TextMode="Password" placeholder="确认密码"></asp:TextBox>*@
+                <!-- 确认密码验证 -->
+                @*<asp:RequiredFieldValidator ID="notNullConfirm" CssClass="validator" runat="server" ControlToValidate="passwdBox" Display="Dynamic" ErrorMessage="不能为空"></asp:RequiredFieldValidator>*@
+                @*<asp:CompareValidator ID="confirmPasswd" CssClass="validator" runat="server" ControlToCompare="passwdBox" ControlToValidate="confirmPasswdBox" ErrorMessage="密码输入不一致"></asp:CompareValidator>*@
+            </div>
+        </div>
+        <div class="sign-btn">
+            <input type="submit" value="提交" id="signUpBtn" />
+            @*<asp:Button ID="signUpBtn" runat="server" Text="提交" OnClick="signUpBtn_Click" />*@
+        </div>
+
+        <div class="tip">
+            @Html.ActionLink("已有账号？马上登录！", "SignIn")
+        </div>
+    </div>
+
+    <div class="label">
+        <span ID="tipLabel" runat="server"></span>
+    </div>
+}
+

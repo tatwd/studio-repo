@@ -15,9 +15,33 @@ namespace MovieMvc.Controllers
         private MovieDbContext db = new MovieDbContext();
 
         // GET: Movies
-        public ActionResult Index()
+        public ActionResult Index(string movieGenre, string searchString)
         {
-            return View(db.Movies.ToList());
+            var GenreLst = new List<string>();
+
+            var GenreQry = from d in db.Movies
+                           orderby d.Genre
+                           select d.Genre;
+
+            GenreLst.AddRange(GenreQry.Distinct());
+            ViewBag.movieGenre = new SelectList(GenreLst);
+
+            var movies = from m in db.Movies
+                         select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                movies = movies.Where(s => s.Name.Contains(searchString));
+            }
+
+            if (!string.IsNullOrEmpty(movieGenre))
+            {
+                movies = movies.Where(x => x.Genre == movieGenre);
+            }
+
+            return View(movies);
+
+            // return View(db.Movies.ToList());
         }
 
         // GET: Movies/Details/5
@@ -46,7 +70,7 @@ namespace MovieMvc.Controllers
         // 详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Movie movie)
+        public ActionResult Create([Bind(Include = "Id,Name,Director,Genre,ReleaseDate,Rating")] Movie movie)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +102,7 @@ namespace MovieMvc.Controllers
         // 详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] Movie movie)
+        public ActionResult Edit([Bind(Include = "Id,Name,Director,Genre,ReleaseDate,Rating")] Movie movie)
         {
             if (ModelState.IsValid)
             {
@@ -90,26 +114,41 @@ namespace MovieMvc.Controllers
         }
 
         // GET: Movies/Delete/5
-        public ActionResult Delete(int? id)
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Movie movie = db.Movies.Find(id);
+        //    if (movie == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(movie);
+        //}
+
+        //// POST: Movies/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    Movie movie = db.Movies.Find(id);
+        //    db.Movies.Remove(movie);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
+
+        // 另一个常见的方法，来避免具有相同名称和签名的方法，是人为地改变 POST 方法，包括
+        // 未使用参数的签名。例如，有些开发人员添加参数类型 FormCollection，FormCollection
+        // 是会传递给 POST 方法的，然后根本不使用此参数：
+        public ActionResult Delete(FormCollection fcNotUsed, int id = 0)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Movie movie = db.Movies.Find(id);
             if (movie == null)
             {
                 return HttpNotFound();
             }
-            return View(movie);
-        }
-
-        // POST: Movies/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Movie movie = db.Movies.Find(id);
             db.Movies.Remove(movie);
             db.SaveChanges();
             return RedirectToAction("Index");
