@@ -23,7 +23,8 @@ namespace FactoryPattern
     // 宝马
     class BMWCar : Car
     {
-        public BMWCar(string engine, int wheel, string chassis) : base(engine, wheel, chassis)
+        public BMWCar(string engine, int wheel, string chassis) 
+            : base(engine, wheel, chassis)
         {
             Console.WriteLine("生产了一辆宝马！");
         }
@@ -32,7 +33,8 @@ namespace FactoryPattern
     // 别克
     class BuickCar : Car
     {
-        public BuickCar(string engine, int wheel, string chassis) : base(engine, wheel, chassis)
+        public BuickCar(string engine, int wheel, string chassis) 
+            : base(engine, wheel, chassis)
         {
             Console.WriteLine("生产了一辆别克！");
         }
@@ -41,7 +43,8 @@ namespace FactoryPattern
     // 大众
     class VolkswagenCar : Car
     {
-        public VolkswagenCar(string engine, int wheel, string chassis) : base(engine, wheel, chassis)
+        public VolkswagenCar(string engine, int wheel, string chassis) 
+            : base(engine, wheel, chassis)
         {
             Console.WriteLine("生产了一辆大众！");
         }

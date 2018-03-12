@@ -15,6 +15,7 @@ namespace FactoryPattern
         }
     }
 
+    // 别克
     class BuickCarFactory : ICarFactory
     {
         public Car CreateCar()
