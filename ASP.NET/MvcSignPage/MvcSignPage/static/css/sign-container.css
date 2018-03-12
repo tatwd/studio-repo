@@ -9,18 +9,16 @@ body {
 }
 
 #signForm {
-    padding: 15px;
-    /*background-color: #ddd;*/
     text-align: center;
+    padding: 15px;
 }
 
 .container {
-    /*border: 2px solid #ddd;*/
+    display: inline-block;
+    box-shadow: var(--base-box-shadow);
     background-color: #fff;
     padding: 25px 35px 25px 35px;
-    display: inline-block;
     width: 20%;
-    box-shadow: var(--base-box-shadow);
 }
 
 @media screen and (max-width:768px) {
@@ -63,11 +61,6 @@ body {
     cursor: pointer;
 }
 
-/*.validatorBox {
-    border: 0;
-    visibility: hidden;
-}*/
-
 .validator {
     color: red;
     font-size: 12px;
@@ -75,9 +68,6 @@ body {
     position: absolute;
     top: 12px;
     right: 15px;
-
-    /*transform: translate(0,0);*/
-    /*transition: 0.25s ease-out;*/
 }
 
 .tip {
