@@ -12,11 +12,13 @@ namespace AbstractFactoryPattern
         {
             IFoodShop foodShop = FoodShopFactory.GetFoodShop();
 
+            if (foodShop == null)
+                return;
+
+            foodShop.CookFoods("宫爆鸡丁");
+            foodShop.CookFoods("宫爆鸡丁", "鱼香茄子");
+            foodShop.CookFoods("宫爆鸡丁", "鱼香茄子", "西红柿炒蛋");
             foodShop.CookFoods("宫爆鸡丁", "鱼香茄子", "西红柿炒蛋", "麻婆豆腐");
-            
-            // FoodFactory.GetFoods("四川", "宫爆鸡丁", "鱼香茄子");
-            // FoodFactory.GetFoods("广东", "宫爆鸡丁", "鱼香茄子", "西红柿炒蛋");
-            // FoodFactory.GetFoods("上海", "宫爆鸡丁", "鱼香茄子", "西红柿炒蛋", "麻婆豆腐");
         }
     }
 }
