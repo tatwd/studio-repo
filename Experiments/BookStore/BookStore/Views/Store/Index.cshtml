@@ -1,0 +1,27 @@
+﻿@model IEnumerable<BookStore.Models.Books>
+@{
+    Layout = "~/Views/_Layout.cshtml";
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<div class="col s12 m6">
+@foreach (var item in Model)
+{
+<div class="card horizontal book-card">
+    <div class="card-image">
+        <img class="responsive-img book-img" src="../../assets/img/@Html.DisplayFor(modelItem => item.BookCoverUrl)">
+    </div>
+    <div class="card-stacked">
+        <div class="card-content">
+            <h3>@Html.DisplayFor(m => item.Title)</h3>
+            <h4>@Html.DisplayFor(m => item.Authors) 著</h4>
+            <h5>￥@Html.DisplayFor(m => item.Price)</h5>
+        </div>
+        <div class="card-action">
+            @Html.ActionLink("buy", "Order", new { id = item.BookId }, new { @class = "btn" })
+        </div>
+    </div>
+</div>
+}
+</div>
