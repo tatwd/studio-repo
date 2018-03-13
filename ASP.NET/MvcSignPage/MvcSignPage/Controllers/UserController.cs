@@ -17,21 +17,25 @@ namespace MvcSignPage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SignIn(SignInViewModel user)
+        public ActionResult SignIn(SignInViewModel vmuser)
         {
             if (!ModelState.IsValid)
                 return View();
 
-            var users = from u in db.Users
-                        select u;
+            var user = db.Users
+                .Where(u => u.Username.Equals(vmuser.Username) && u.Password.Equals(vmuser.Password))
+                .FirstOrDefault();
 
-            users = users.Where(
-                u => u.Username.Equals(user.Username) && u.Password.Equals(user.Password));
+            //var users = from u in db.Users
+            //            select u;
 
-            ViewBag.IsSignIn = users.ToArray().Length != 0 ? true : false;
+            //users = users.Where(
+            //    u => u.Username.Equals(user.Username) && u.Password.Equals(user.Password));
 
-            return View();
-            // return Json(users);
+            ViewBag.IsSignIn = user != null;
+
+            // return View();
+            return Json(user);
         }
 
         // GET: User/SignUp
@@ -57,6 +61,7 @@ namespace MvcSignPage.Controllers
 
                 db.Users.Add(iuser);
                 db.SaveChanges();
+
                 return RedirectToAction("SignIn");
             }
 
