@@ -1,4 +1,5 @@
 ﻿using BookStore.Models;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace BookStore.Controllers
@@ -16,8 +17,18 @@ namespace BookStore.Controllers
             return View(books);
         }
 
-        public ActionResult Order()
+        public ActionResult Order(int? id)
         {
+
+            var book = context.Books.Where(b => b.BookId == id).FirstOrDefault();
+
+            // add book info to `ViewData`
+            ViewBag.BookId = book.BookId;
+            ViewBag.Authors = book.Authors;
+            ViewBag.BookTitle = book.Title;
+            ViewBag.Price = book.Price;
+            ViewBag.BookCoverUrl = book.BookCoverUrl;
+
             return View();
         }
 

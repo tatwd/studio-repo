@@ -5,18 +5,18 @@
 }
 
 <h2>Index</h2>
-<div class="col s12 m6">
+<div id="index">
 @foreach (var item in Model)
 {
 <div class="card horizontal book-card">
     <div class="card-image">
-        <img class="responsive-img book-img" src="../../assets/img/@Html.DisplayFor(modelItem => item.BookCoverUrl)">
+        <img class="book-img" src="../../assets/img/@Html.DisplayFor(modelItem => item.BookCoverUrl)">
     </div>
     <div class="card-stacked">
         <div class="card-content">
-            <h3>@Html.DisplayFor(m => item.Title)</h3>
-            <h4>@Html.DisplayFor(m => item.Authors) 著</h4>
-            <h5>￥@Html.DisplayFor(m => item.Price)</h5>
+            <h4>@Html.DisplayFor(m => item.Title)</h4>
+            <p>@Html.DisplayFor(m => item.Authors) 著</p>
+            <p>￥@Html.DisplayFor(m => item.Price)</p>
         </div>
         <div class="card-action">
             @Html.ActionLink("buy", "Order", new { id = item.BookId }, new { @class = "btn" })

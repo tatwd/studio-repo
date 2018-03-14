@@ -3,9 +3,9 @@
 }
 
 .book-card {
-    /*height: 400px;*/
+   /*max-height: 200px;*/
 }
 
 .book-img {
-    /*height: 200px;*/
+    max-height: 200px;
 }
