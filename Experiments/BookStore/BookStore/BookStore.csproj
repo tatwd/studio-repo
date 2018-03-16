@@ -192,6 +192,7 @@
     <Content Include="Views\_Layout.cshtml" />
     <Content Include="Views\Store\Order.cshtml" />
     <Content Include="Views\Store\Details.cshtml" />
+    <Content Include="Views\Shared\_Navbar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

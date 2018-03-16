@@ -18,7 +18,7 @@
             <li class="collection-item">作者：@ViewBag.Authors</li>
             <li class="collection-item">价格：￥@ViewBag.Price</li>
         </ul>
-        @using (Html.BeginForm("Order", "Store", FormMethod.Post, new { @class = "" }))
+        @using (Html.BeginForm("Order", "Store", FormMethod.Post, new { id = "order-form" }))
         {
             <div class="input-field">
                 <label>编号</label>
@@ -34,6 +34,7 @@
             </div>
 
             <input type="submit" value="提交" class="btn red"/>
+            <a href="/" class="btn grey">返回</a>
         }
     </div>
 </div>
