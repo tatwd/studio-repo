@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrototypePattern", "Prototy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactoryPattern", "FactoryPattern\FactoryPattern.csproj", "{E07B7ECA-1EDE-41E3-9B74-D4C5132A99A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingletonPattern", "SingletonPattern\SingletonPattern.csproj", "{30E19698-CC8D-4312-ABDE-29D32FDC168A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuilderPattern", "BuilderPattern\BuilderPattern.csproj", "{3251DD25-E883-47FD-9C45-D4FE48AE3961}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{E07B7ECA-1EDE-41E3-9B74-D4C5132A99A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E07B7ECA-1EDE-41E3-9B74-D4C5132A99A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E07B7ECA-1EDE-41E3-9B74-D4C5132A99A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30E19698-CC8D-4312-ABDE-29D32FDC168A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30E19698-CC8D-4312-ABDE-29D32FDC168A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30E19698-CC8D-4312-ABDE-29D32FDC168A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30E19698-CC8D-4312-ABDE-29D32FDC168A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3251DD25-E883-47FD-9C45-D4FE48AE3961}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3251DD25-E883-47FD-9C45-D4FE48AE3961}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3251DD25-E883-47FD-9C45-D4FE48AE3961}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3251DD25-E883-47FD-9C45-D4FE48AE3961}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
