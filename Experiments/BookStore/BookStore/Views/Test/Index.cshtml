@@ -5,55 +5,55 @@
 <h2>Book List</h2>
 <div id="book-list"></div>
 <script>
-    // render data to DOM
-    function $render(config) {
-        let { ele, tmp, data } = config;
-        tmp = tmp.replace(/{{(.*?)}}/g, (match, item) => data[item.trim()]);
-        return !ele ? tmp : (ele.innerHTML = tmp || ele);
-    }
+  // render data to DOM
+  function $render(config) {
+    let { ele, tmp, data } = config;
+    tmp = tmp.replace(/{{(.*?)}}/g, (match, item) => data[item.trim()]);
+    return !ele ? tmp : (ele.innerHTML = tmp || ele);
+  }
 
-    // render for each
-    $render.each = function (config) {
-        let { ele, tmp, data } = config;
+  // render for each
+  $render.each = function (config) {
+    let { ele, tmp, data } = config;
 
-        return Array.isArray(data) && data
-            .map(item => this({ ele, tmp, data: item }))
-            .toString()
-            .replace(/,/g, '');
-    };
+    return Array.isArray(data) && 
+      data.map(item => this({ ele, tmp, data: item }))
+        .toString()
+        .replace(/,/g, '');
+  };
 
-    // init
-    function init(data) {
-        let app = document.getElementById('book-list');
-        //let html = '';
+  // init
+  function init(data) {
+    let app = document.getElementById('book-list');
+    //let html = '';
 
-        //html = $render.each({
-        //    tmp: '<li class ="collection-item">#{{ BookId }} 《{{ Title }}》</li>',
-        //    data: data
-        //})
+    //html = $render.each({
+    //    tmp: '<li class ="collection-item">#{{ BookId }} 《{{ Title }}》</li>',
+    //    data: data
+    //})
 
-        $render({
-            ele: app,
-            tmp: '<ul class="collection">{{ html }}</ul>',
-            data: {
-                html: $render.each({
-                    tmp: '<li class ="collection-item">#{{ BookId }} 《{{ Title }}》</li>',
-                    data: data
-                })
-            }
-        });
-    }
+    $render({
+      ele: app,
+      tmp: '<ul class="collection">{{ html }}</ul>',
+      data: {
+        html: $render.each({
+          tmp: '<li class ="collection-item">#{{ BookId }} 《{{ Title }}》</li>',
+          data: data
+        })
+      }
+    });
+  }
 
-    // start
-    function appStart() {
-        fetch('/test/books')
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                init(data);
-            })
-            .catch(err => console.log(err));
-    }
+  // start
+  function appStart() {
+    fetch('/test/books')
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        init(data);
+      })
+      .catch(err => console.log(err));
+  }
 
-    appStart();
+  appStart();
 </script>

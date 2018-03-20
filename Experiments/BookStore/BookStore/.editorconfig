@@ -1,0 +1,10 @@
+﻿# top-most EditorConfig file
+root = true
+
+# [*]
+# end_of_line = lf
+
+[*.{cshtml, html, js, css, scss}]
+charset = utf-8
+indent_size = 2
+indent_style = space
