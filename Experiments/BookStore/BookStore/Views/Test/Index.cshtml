@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Test Index</h2>
+<div id="books-app"></div>
+<script>
+    function render(tmp, obj) {
+        return tmp.replace(/{{(.*?)}}/g, (match, item) => obj[item.trim()]);
+    }
+
+    //let str = render("i am {{ name }} and {{ age }} years old.", { name: 'leo', age: 20 });
+    //console.log(str);
+
+    
+
+    function appStart(data) {
+        let app = document.getElementById('books-app');
+        let template = `<li class ="collection-item">{{ Title }} #{{ BookId }}</li>`;
+
+        app.innerHTML = `
+            <ul class="collection">
+                ${ Array.isArray(data) && data.map(item => render(template, item))}
+            </ul>
+        `;
+        
+    }
+
+
+    fetch('/test/books')
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            appStart(data);
+        })
+        .catch(err => console.log(err));
+</script>
