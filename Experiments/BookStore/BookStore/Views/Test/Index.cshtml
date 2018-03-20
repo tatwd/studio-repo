@@ -3,36 +3,58 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Test Index</h2>
-<div id="books-app"></div>
+<h2>Book List</h2>
+<div id="book-list"></div>
 <script>
-    function render(tmp, obj) {
-        return tmp.replace(/{{(.*?)}}/g, (match, item) => obj[item.trim()]);
+    // render data to DOM
+    function $render(config) {
+        let { ele, tmp, data } = config;
+        tmp = tmp.replace(/{{(.*?)}}/g, (match, item) => data[item.trim()]);
+        return !ele ? tmp : (ele.innerHTML = tmp || ele);
     }
 
-    //let str = render("i am {{ name }} and {{ age }} years old.", { name: 'leo', age: 20 });
-    //console.log(str);
+    // render for each
+    $render.each = function (config) {
+        let { ele, tmp, data } = config;
 
-    
+        return Array.isArray(data) && data
+            .map(item => this({ ele, tmp, data: item }))
+            .toString()
+            .replace(/,/g, '');
+    };
 
-    function appStart(data) {
-        let app = document.getElementById('books-app');
-        let template = `<li class ="collection-item">{{ Title }} #{{ BookId }}</li>`;
+    // init
+    function init(data) {
+        let app = document.getElementById('book-list');
+        //let html = '';
 
-        app.innerHTML = `
-            <ul class="collection">
-                ${ Array.isArray(data) && data.map(item => render(template, item))}
-            </ul>
-        `;
-        
+        //html = $render.each({
+        //    tmp: '<li class ="collection-item">#{{ BookId }} 《{{ Title }}》</li>',
+        //    data: data
+        //})
+
+        $render({
+            ele: app,
+            tmp: '<ul class="collection">{{ html }}</ul>',
+            data: {
+                html: $render.each({
+                    tmp: '<li class ="collection-item">#{{ BookId }} 《{{ Title }}》</li>',
+                    data: data
+                })
+            }
+        });
     }
 
-
-    fetch('/test/books')
+    // start
+    function appStart() {
+        fetch('/test/books')
         .then(res => res.json())
         .then(data => {
             console.log(data);
-            appStart(data);
+            init(data);
         })
         .catch(err => console.log(err));
+    }
+
+    appStart();
 </script>
