@@ -28,7 +28,7 @@
     //let html = '';
 
     //html = $render.each({
-    //    tmp: '<li class ="collection-item">#{{ BookId }} 《{{ Title }}》</li>',
+    //    tmp: '<li class ="collection-item">#{{ BookId }} {{ Title }}</li>',
     //    data: data
     //})
 
@@ -37,7 +37,7 @@
       tmp: '<ul class="collection">{{ html }}</ul>',
       data: {
         html: $render.each({
-          tmp: '<li class ="collection-item">#{{ BookId }} 《{{ Title }}》</li>',
+          tmp: '<li class ="collection-item">#{{ BookId }} {{ Title }}</li>',
           data: data
         })
       }
